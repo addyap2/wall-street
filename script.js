@@ -65,20 +65,30 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // ===== Open-now live status (from real opening hours) =====
 // Minutes from midnight. Fri/Sat close at 01:00 (=1500, next day).
-// Sun 16:30–00:00 · Mon–Thu 08:00–00:00 · Fri–Sat 08:00–01:00
+// Dim fermé · Mon–Thu 08:00–00:00 · Fri–Sat 08:00–01:00
 (function () {
   const statusEls = document.querySelectorAll('[data-status]');
   if (!statusEls.length) return;
 
   const sch = {
-    0: [990, 1440],  // Dim 16h30–00h00
+    0: null,  // Dimanche fermé
     1: [480, 1440], 2: [480, 1440], 3: [480, 1440], 4: [480, 1440], // Lun–Jeu 8h–00h
     5: [480, 1500], 6: [480, 1500]  // Ven–Sam 8h–01h
   };
 
+  const days = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+
   function fmt(m) {
     const h = Math.floor(m / 60) % 24, mm = m % 60;
     return mm ? h + 'h' + (mm < 10 ? '0' + mm : mm) : h + 'h';
+  }
+
+  function nextOpen(fromDay) {
+    for (let i = 1; i <= 7; i++) {
+      const d = (fromDay + i) % 7;
+      if (sch[d]) return { day: d, offset: i, opens: sch[d][0] };
+    }
+    return null;
   }
 
   function compute() {
@@ -88,16 +98,18 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     const today = sch[day];
     const yest = sch[(day + 6) % 7];
 
-    let open = mins >= today[0] && mins < today[1];
-    if (!open && yest[1] > 1440 && mins < yest[1] - 1440) open = true; // early-morning spill
+    let open = today ? mins >= today[0] && mins < today[1] : false;
+    if (!open && yest && yest[1] > 1440 && mins < yest[1] - 1440) open = true; // early-morning spill
 
     let text;
     if (open) {
       text = 'Ouvert maintenant';
-    } else if (mins < today[0]) {
+    } else if (today && mins < today[0]) {
       text = 'Fermé · ouvre à ' + fmt(today[0]);
     } else {
-      text = 'Fermé · ouvre demain à ' + fmt(sch[(day + 1) % 7][0]);
+      const nxt = nextOpen(day);
+      const when = nxt.offset === 1 ? 'demain' : days[nxt.day];
+      text = 'Fermé · ouvre ' + when + ' à ' + fmt(nxt.opens);
     }
 
     statusEls.forEach(function (el) {
