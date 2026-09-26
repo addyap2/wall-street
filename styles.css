@@ -234,13 +234,30 @@ h1, h2, h3 { line-height: 1.05; }
   color: var(--blue-deep);
   font-size: .82rem;
 }
-.hero__art { position: relative; }
+.hero__art {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+}
+.hero__art::before {
+  content: "";
+  position: absolute;
+  inset: -4rem;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from -12deg, rgba(232,84,102,.12) 0deg 9deg, transparent 9deg 24deg);
+  -webkit-mask-image: radial-gradient(ellipse, #000 55%, transparent 80%);
+  mask-image: radial-gradient(ellipse, #000 55%, transparent 80%);
+}
 .hero__poster {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  aspect-ratio: auto;
+  object-fit: contain;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   transform: rotate(2.5deg);
@@ -387,7 +404,43 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
 /* ============================================================
    MENU
    ============================================================ */
+/* Decorative layers stay behind content and never capture clicks. */
+.concept, .menu, .events { position: relative; isolation: isolate; }
+.concept::before, .concept::after, .menu::before, .events::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.concept::before, .concept::after {
+  top: 2rem;
+  width: 10rem;
+  height: 24rem;
+  background: url("images/pub-sketches.svg") center / contain no-repeat;
+  opacity: .10;
+}
+.concept::before { left: 0; transform: rotate(-8deg); }
+.concept::after { right: 0; transform: rotate(10deg) scaleX(-1); }
 .menu { background: transparent; }
+.menu::before {
+  inset: 0;
+  background-color: rgba(255,255,255,.12);
+  background-image: radial-gradient(rgba(58,75,135,.10) .6px, transparent .9px), radial-gradient(rgba(128,96,58,.08) .6px, transparent .9px);
+  background-size: 7px 9px, 11px 13px;
+  background-position: 0 0, 3px 5px;
+  -webkit-mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent);
+}
+.events::before {
+  inset: 0;
+  background: url("images/sound-waves.svg") right 1rem bottom 1rem / min(65rem, 95%) auto no-repeat;
+  opacity: .09;
+}
+@media (max-width: 900px) {
+  .concept::before, .concept::after { width: 5rem; height: 14rem; opacity: .06; }
+  .hero__art::before { inset: -1.5rem; }
+  .events::before { opacity: .06; }
+}
 .menu__tabs {
   display: flex;
   flex-wrap: wrap;
