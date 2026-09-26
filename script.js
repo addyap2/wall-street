@@ -19,18 +19,43 @@ if (toggle && mobileMenu) {
   );
 }
 
-// Menu tabs
-const tabs = document.querySelectorAll('.tab');
-const panels = document.querySelectorAll('.menu__panel');
+// Menu tabs — accessible tabs pattern (ARIA + keyboard)
+const tabs = Array.from(document.querySelectorAll('.tab'));
+const panels = Array.from(document.querySelectorAll('.menu__panel'));
 
-tabs.forEach((tab) => {
-  tab.addEventListener('click', () => {
-    const target = tab.dataset.tab;
-    tabs.forEach((t) => t.classList.remove('is-active'));
+tabs.forEach((tab, i) => {
+  const target = tab.dataset.tab;
+  const panel = document.querySelector(`[data-panel="${target}"]`);
+  const selected = tab.classList.contains('is-active');
+  tab.id = tab.id || `tab-${target}`;
+  tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+  tab.setAttribute('tabindex', selected ? '0' : '-1');
+  if (panel) {
+    panel.id = panel.id || `panel-${target}`;
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('tabindex', '0');
+    panel.setAttribute('aria-labelledby', tab.id);
+    tab.setAttribute('aria-controls', panel.id);
+  }
+
+  function activate(focus) {
+    tabs.forEach((t) => { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); t.setAttribute('tabindex', '-1'); });
     panels.forEach((p) => p.classList.remove('is-active'));
     tab.classList.add('is-active');
-    const panel = document.querySelector(`[data-panel="${target}"]`);
+    tab.setAttribute('aria-selected', 'true');
+    tab.setAttribute('tabindex', '0');
     if (panel) panel.classList.add('is-active');
+    if (focus) tab.focus();
+  }
+
+  tab.addEventListener('click', () => activate(false));
+  tab.addEventListener('keydown', (e) => {
+    let idx = null;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') idx = (i + 1) % tabs.length;
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') idx = (i - 1 + tabs.length) % tabs.length;
+    else if (e.key === 'Home') idx = 0;
+    else if (e.key === 'End') idx = tabs.length - 1;
+    if (idx !== null) { e.preventDefault(); tabs[idx].click(); tabs[idx].focus(); }
   });
 });
 

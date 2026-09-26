@@ -6,13 +6,26 @@
   <title>Wall Street — Pub Restaurant à Fréjus</title>
   <meta name="description" content="Wall Street, bar · brasserie · pub restaurant à Fréjus. Concerts live & DJ sets, tous les matchs sur écran géant, cuisine 100% maison, bières & cocktails. Good food, good drinks, good people." />
   <meta name="theme-color" content="#7B93D4" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Wall Street — Pub Restaurant" />
+  <link rel="canonical" href="https://wall-street-pied.vercel.app/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="restaurant" />
+  <meta property="og:site_name" content="Wall Street — Pub Restaurant" />
+  <meta property="og:url" content="https://wall-street-pied.vercel.app/" />
   <meta property="og:title" content="Wall Street — Pub Restaurant à Fréjus" />
   <meta property="og:description" content="Concerts live, matchs en direct, cuisine 100% maison. Good food · good drinks · good people." />
-  <meta property="og:image" content="images/hero-poster.jpg" />
+  <meta property="og:image" content="https://wall-street-pied.vercel.app/images/hero-poster.jpg" />
+  <meta property="og:image:width" content="1080" />
+  <meta property="og:image:height" content="1350" />
   <meta property="og:locale" content="fr_FR" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Wall Street — Pub Restaurant à Fréjus" />
+  <meta name="twitter:description" content="Concerts live, matchs en direct, cuisine 100% maison. Good food · good drinks · good people." />
+  <meta name="twitter:image" content="https://wall-street-pied.vercel.app/images/hero-poster.jpg" />
 
   <link rel="icon" href="images/logo.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -62,10 +75,12 @@
 </head>
 <body class="is-locked">
 
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
   <!-- ===== PRELOADER (brand curtain) ===== -->
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader__inner">
-      <img class="preloader__logo" src="images/logo.jpg" alt="" />
+      <picture><source srcset="images/logo.webp" type="image/webp" /><img class="preloader__logo" src="images/logo.jpg" alt="" width="128" height="128" decoding="async" /></picture>
       <p class="preloader__word">Wall Street</p>
       <div class="preloader__bar"><span></span></div>
     </div>
@@ -77,7 +92,7 @@
   <!-- ===== HEADER / NAV ===== -->
   <header class="site-header" id="top">
     <a class="brand" href="#top" aria-label="Wall Street — accueil">
-      <img src="images/logo.jpg" alt="Wall Street Pub Restaurant" class="brand__logo" />
+      <picture><source srcset="images/logo.webp" type="image/webp" /><img src="images/logo.jpg" alt="Wall Street Pub Restaurant" class="brand__logo" width="52" height="52" decoding="async" fetchpriority="high" /></picture>
     </a>
     <nav class="nav" aria-label="Navigation principale">
       <a href="#concept">Le concept</a>
@@ -102,7 +117,7 @@
   </div>
 
   <!-- ===== HERO ===== -->
-  <section class="hero">
+  <section class="hero" id="contenu">
     <div class="hero__inner">
       <p class="hero__kicker">Bar · Brasserie · Good Times</p>
       <h1 class="hero__title">
@@ -123,7 +138,7 @@
       <p class="hero__tag">Good food &nbsp;•&nbsp; Good drinks &nbsp;•&nbsp; Good people</p>
     </div>
     <div class="hero__art" aria-hidden="true">
-      <img src="images/hero-poster.jpg" alt="" class="hero__poster" />
+      <picture><source srcset="images/hero-poster.webp" type="image/webp" /><img src="images/hero-poster.jpg" alt="" class="hero__poster" width="800" height="1000" decoding="async" fetchpriority="high" /></picture>
     </div>
   </section>
 
@@ -330,7 +345,7 @@
         <a href="#infos" class="btn btn--primary">Programme &amp; réservations</a>
       </div>
       <div class="events__media">
-        <img src="images/delirium.jpg" alt="Enseigne néon Delirium Beers au Wall Street" data-parallax="0.05" />
+        <picture><source srcset="images/delirium.webp" type="image/webp" /><img src="images/delirium.jpg" alt="Enseigne néon Delirium Beers au Wall Street" data-parallax="0.05" width="800" height="1000" loading="lazy" decoding="async" /></picture>
       </div>
     </div>
   </section>
@@ -343,10 +358,10 @@
       <p class="section-head__lede">Tonneaux, bois, néons et tireuses&nbsp;: bienvenue dans votre salon fréjusien.</p>
     </div>
     <div class="gallery">
-      <figure class="gallery__item gallery__item--tall"><img src="images/ambiance-2.jpg" alt="Salle du Wall Street avec ses tables tonneaux et son bar" loading="lazy" /></figure>
-      <figure class="gallery__item"><img src="images/pumps.jpg" alt="Tireuses à bière Paulaner au bar" loading="lazy" class="img-pos-taps" /></figure>
-      <figure class="gallery__item"><img src="images/ambiance-1.jpg" alt="Service de planches apéro au comptoir" loading="lazy" class="img-pos-top" /></figure>
-      <figure class="gallery__item gallery__item--wide"><img src="images/ambiance-3.jpg" alt="Clients attablés en terrasse intérieure du Wall Street" loading="lazy" /></figure>
+      <figure class="gallery__item gallery__item--tall"><picture><source srcset="images/ambiance-2.webp" type="image/webp" /><img src="images/ambiance-2.jpg" alt="Salle du Wall Street avec ses tables tonneaux et son bar" width="800" height="1000" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="gallery__item"><picture><source srcset="images/pumps.webp" type="image/webp" /><img src="images/pumps.jpg" alt="Tireuses à bière Paulaner au bar" class="img-pos-taps" width="800" height="1000" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="gallery__item"><picture><source srcset="images/ambiance-1.webp" type="image/webp" /><img src="images/ambiance-1.jpg" alt="Service de planches apéro au comptoir" class="img-pos-top" width="800" height="1000" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="gallery__item gallery__item--wide"><picture><source srcset="images/ambiance-3.webp" type="image/webp" /><img src="images/ambiance-3.jpg" alt="Clients attablés en terrasse intérieure du Wall Street" width="800" height="1000" loading="lazy" decoding="async" /></picture></figure>
     </div>
   </section>
 
@@ -388,7 +403,7 @@
   <!-- ===== FOOTER ===== -->
   <footer class="site-footer">
     <div class="site-footer__brand">
-      <img src="images/logo.jpg" alt="Wall Street Pub Restaurant" />
+      <picture><source srcset="images/logo.webp" type="image/webp" /><img src="images/logo.jpg" alt="Wall Street Pub Restaurant" width="80" height="80" loading="lazy" decoding="async" /></picture>
     </div>
     <p class="site-footer__tag">Good food &nbsp;•&nbsp; Good drinks &nbsp;•&nbsp; Good people</p>
     <p class="site-footer__meta">36 Rue de l'Intendance, 83600 Fréjus · 04 98 13 54 45</p>
