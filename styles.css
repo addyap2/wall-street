@@ -623,6 +623,7 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
   margin-right: 1rem;
 }
 .link-arrow:hover { text-decoration: underline; }
+.social-links { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; }
 .info-card--accent { border-top-color: var(--red); background: #fff; }
 .btn-call {
   display: inline-flex;
