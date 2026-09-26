@@ -236,7 +236,9 @@ h1, h2, h3 { line-height: 1.05; }
 }
 .hero__art { position: relative; }
 .hero__poster {
+  display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: var(--radius);
