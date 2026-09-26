@@ -161,41 +161,31 @@
   onScroll();
 
   /* ============================================================
-     LIVE DATELINE  (front-page date, all visitors)
-     ============================================================ */
-  var dateEl = $('#dateline-date');
-  if (dateEl) {
-    try {
-      var d = new Date();
-      var s = d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-      dateEl.textContent = s.charAt(0).toUpperCase() + s.slice(1);
-    } catch (e) { /* leave placeholder */ }
-  }
-
-  /* ============================================================
-     HERO 3D TILT  (desktop only)
-     The whole front page tilts to the cursor; its depth planes
-     (translateZ) parallax for free. One transform, rAF-driven.
+     HERO 3D POINTER TILT  (desktop only)
+     Poster reacts to cursor as a shallow camera parallax.
      ============================================================ */
   if (MOTION && finePointer && hero) {
-    var paper = $('.hero__paper');
-    if (paper) {
-      var raf = null, nx = 0, ny = 0;
+    var poster = $('.hero__poster');
+    var art = $('.hero__art');
+    if (poster && art) {
+      art.style.perspective = '900px';
+      var raf = null, tx = 0, ty = 0;
       hero.addEventListener('mousemove', function (ev) {
         var r = hero.getBoundingClientRect();
-        nx = ((ev.clientX - r.left) / r.width - 0.5);   // -0.5..0.5
-        ny = ((ev.clientY - r.top) / r.height - 0.5);
+        tx = ((ev.clientX - r.left) / r.width - 0.5);   // -0.5..0.5
+        ty = ((ev.clientY - r.top) / r.height - 0.5);
         if (!raf) raf = requestAnimationFrame(applyTilt);
       });
       hero.addEventListener('mouseleave', function () {
-        nx = 0; ny = 0;
-        paper.style.setProperty('--rx', '0deg');
-        paper.style.setProperty('--ry', '0deg');
+        tx = 0; ty = 0;
+        poster.classList.add('is-idle');
+        poster.style.transform = 'rotate(2.5deg)';
       });
       function applyTilt() {
         raf = null;
-        paper.style.setProperty('--rx', (-ny * 4).toFixed(2) + 'deg');
-        paper.style.setProperty('--ry', (nx * 5).toFixed(2) + 'deg');
+        poster.classList.remove('is-idle');
+        poster.style.transform =
+          'rotate(2.5deg) rotateX(' + (-ty * 5).toFixed(2) + 'deg) rotateY(' + (tx * 6).toFixed(2) + 'deg)';
       }
     }
   }

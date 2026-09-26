@@ -128,14 +128,13 @@ html.motion .site-header.is-ready { transform: none; }
    Trigger: curtain lift. Order: kicker → title lines (masked
    rise) → sub → lede → CTA → tag. Poster settles from depth.
    ============================================================ */
-/* text bits inside the (mid-depth) lead column */
-html.motion .hero__rule,
 html.motion .hero__kicker,
-html.motion .hero__standfirst,
+html.motion .hero__sub,
+html.motion .hero__lede,
 html.motion .hero__cta,
-html.motion .hero__byline {
+html.motion .hero__tag {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(22px);
   transition: opacity var(--d-hero) var(--ease-out),
               transform var(--d-hero) var(--ease-out);
 }
@@ -145,35 +144,28 @@ html.motion .hero__line {
   transform: translateY(115%);
   transition: transform var(--d-hero) var(--ease-out);
 }
-/* whole layers keep their translateZ depth through the entrance */
-html.motion .dateline {
+html.motion .hero__art {
   opacity: 0;
-  transform: translateZ(46px) translateY(20px);
-  transition: opacity var(--d-hero) var(--ease-out),
-              transform var(--d-hero) var(--ease-out);
-}
-html.motion .hero__press {
-  opacity: 0;
-  transform: translateZ(14px) translateY(40px) scale(.95);
+  transform: translateY(46px) scale(.94);
   transition: opacity 1100ms var(--ease-out),
               transform 1100ms var(--ease-out);
 }
 
 /* staged delays, fired when .is-in lands on .hero */
-html.motion .hero.is-in .dateline        { opacity: 1; transform: translateZ(46px); transition-delay: 80ms; }
-html.motion .hero.is-in .hero__rule       { opacity: 1; transform: none; transition-delay: 140ms; }
-html.motion .hero.is-in .hero__kicker     { opacity: 1; transform: none; transition-delay: 240ms; }
-html.motion .hero.is-in .hero__line                              { transform: none; }
-html.motion .hero.is-in .hero__line-wrap:nth-child(1) .hero__line { transition-delay: 320ms; }
-html.motion .hero.is-in .hero__line-wrap:nth-child(2) .hero__line { transition-delay: 420ms; }
-html.motion .hero.is-in .hero__standfirst { opacity: 1; transform: none; transition-delay: 560ms; }
-html.motion .hero.is-in .hero__cta        { opacity: 1; transform: none; transition-delay: 660ms; }
-html.motion .hero.is-in .hero__byline     { opacity: 1; transform: none; transition-delay: 740ms; }
-html.motion .hero.is-in .hero__press      { opacity: 1; transform: translateZ(14px); transition-delay: 380ms; }
+html.motion .hero.is-in .hero__kicker { opacity: 1; transform: none; transition-delay: 120ms; }
+html.motion .hero.is-in .hero__line              { transform: none; }
+html.motion .hero.is-in .hero__line-wrap:nth-child(1) .hero__line { transition-delay: 220ms; }
+html.motion .hero.is-in .hero__line-wrap:nth-child(2) .hero__line { transition-delay: 320ms; }
+html.motion .hero.is-in .hero__sub  { opacity: 1; transform: none; transition-delay: 460ms; }
+html.motion .hero.is-in .hero__lede { opacity: 1; transform: none; transition-delay: 560ms; }
+html.motion .hero.is-in .hero__cta  { opacity: 1; transform: none; transition-delay: 660ms; }
+html.motion .hero.is-in .hero__tag  { opacity: 1; transform: none; transition-delay: 760ms; }
+html.motion .hero.is-in .hero__art  { opacity: 1; transform: none; transition-delay: 420ms; }
 
-/* the whole front page tilts to the pointer (vars set by JS) */
-html.motion .hero__paper {
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+/* pointer 3D tilt lives on the poster; parallax on the wrapper */
+html.motion .hero__poster {
+  transition: transform 500ms var(--ease-out);
+  transform-style: preserve-3d;
   will-change: transform;
 }
 
@@ -221,7 +213,7 @@ html.motion .hero__poster.is-idle { will-change: auto; }
 /* ============================================================
    5 · MARQUEE  (already scrolling; pause on hover = intent)
    ============================================================ */
-.ticker:hover .ticker__track { animation-play-state: paused; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
 
 /* ============================================================
    6 · BUTTON FEEDBACK  (sheen + press)
@@ -294,11 +286,7 @@ html.motion .events__text > * { transition-delay: var(--delay, 0ms); }
     scroll-behavior: auto !important;
   }
   .preloader { display: none !important; }
-  .ticker__track { animation: none !important; }
-  /* flatten the front-page depth so nothing scales/shifts */
-  .hero { perspective: none !important; }
-  .hero__paper,
-  .hero__layer--fore, .hero__layer--mid, .hero__layer--near { transform: none !important; }
+  .marquee__track { animation: none !important; }
 }
 
 /* Coarse pointers (touch): no magnetic / tilt jitter, keep reveals */
