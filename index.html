@@ -19,6 +19,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BarOrPub",
+    "name": "Wall Street — Pub Restaurant",
+    "description": "Bar · brasserie · pub restaurant à Fréjus. Concerts live, matchs en direct, cuisine 100% maison.",
+    "servesCuisine": ["Burgers", "Pizza", "Française", "Grillades"],
+    "image": "images/hero-poster.jpg",
+    "telephone": "+33498135445",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "36 Rue de l'Intendance",
+      "postalCode": "83600",
+      "addressLocality": "Fréjus",
+      "addressCountry": "FR"
+    },
+    "sameAs": ["https://www.instagram.com/wallstreetfrejus/"],
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "08:00", "closes": "00:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "08:00", "closes": "01:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "16:30", "closes": "00:00" }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -307,7 +332,11 @@
       </div>
       <div class="info-card">
         <h3>Horaires</h3>
-        <p>Ouvert tous les jours<br />Service midi &amp; soir · fermeture à 1h</p>
+        <ul class="hours">
+          <li><span>Lun – Jeu</span><span>8h00 – 00h00</span></li>
+          <li><span>Ven – Sam</span><span>8h00 – 01h00</span></li>
+          <li><span>Dimanche</span><span>16h30 – 00h00</span></li>
+        </ul>
         <span class="info-note">Terrasse · options végétariennes</span>
       </div>
       <div class="info-card">

@@ -443,6 +443,11 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
 }
 .link-arrow:hover { text-decoration: underline; }
 .info-note { display: block; margin-top: .6rem; font-size: .74rem; color: #9aa2b8; font-style: italic; }
+.hours { list-style: none; margin-bottom: .3rem; }
+.hours li { display: flex; justify-content: space-between; gap: .8rem; padding: .35rem 0; border-bottom: 1px dashed rgba(58,75,135,.18); font-size: .92rem; }
+.hours li:last-child { border-bottom: none; }
+.hours li span:first-child { color: var(--ink-soft); font-family: var(--font-cond); text-transform: uppercase; letter-spacing: .03em; font-size: .82rem; }
+.hours li span:last-child { font-weight: 700; color: var(--blue-ink); white-space: nowrap; }
 
 /* ============================================================
    FOOTER
