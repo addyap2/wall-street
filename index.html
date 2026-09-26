@@ -17,7 +17,7 @@
   <link rel="icon" href="images/logo.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,500&family=Kaushan+Script&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="motion.css" />
 
@@ -101,35 +101,73 @@
     <a href="#infos">Infos &amp; réservation</a>
   </div>
 
-  <!-- ===== HERO ===== -->
-  <section class="hero">
-    <div class="hero__inner">
-      <p class="hero__kicker">Bar · Brasserie · Good Times</p>
-      <h1 class="hero__title">
-        <span class="hero__line-wrap"><span class="hero__line">WALL</span></span>
-        <span class="hero__line-wrap"><span class="hero__line">STREET</span></span>
-      </h1>
-      <p class="hero__sub">Pub Restaurant &nbsp;·&nbsp; Fréjus</p>
-      <p class="hero__lede">
-        Concerts live, matchs en direct sur écran géant et cuisine 100&nbsp;% maison.
-        Ici, on vient pour les bonnes bières, la bonne assiette et la bonne ambiance.
-      </p>
-      <div class="hero__cta">
-        <a href="#menu" class="btn btn--primary">Voir la carte</a>
-        <a href="#infos" class="btn btn--ghost">Nous trouver</a>
+  <!-- ===== HERO — "The Front Page of a Good Night" ===== -->
+  <section class="hero" id="top-hero">
+    <div class="hero__paper" data-tilt>
+      <div class="hero__grain" aria-hidden="true"></div>
+
+      <!-- Dateline -->
+      <div class="dateline hero__layer hero__layer--fore">
+        <span class="dateline__unit">Vol.&nbsp;83 — Fréjus</span>
+        <span class="dateline__unit dateline__edition">Édition du soir</span>
+        <span class="dateline__unit" id="dateline-date">—</span>
       </div>
-      <p class="hero__tag">Good food &nbsp;•&nbsp; Good drinks &nbsp;•&nbsp; Good people</p>
-    </div>
-    <div class="hero__art" aria-hidden="true">
-      <img src="images/hero-poster.jpg" alt="" class="hero__poster" />
+      <div class="hero__rule" aria-hidden="true"></div>
+
+      <div class="hero__grid">
+        <!-- Lead story -->
+        <div class="hero__lead hero__layer hero__layer--mid">
+          <p class="hero__kicker">Bar · Brasserie · Good Times</p>
+          <h1 class="hero__title">
+            <span class="hero__line-wrap"><span class="hero__line">WALL</span></span>
+            <span class="hero__line-wrap"><span class="hero__line">STREET</span></span>
+          </h1>
+          <p class="hero__standfirst">
+            Ce soir à Fréjus, le <em>cours du bonheur</em> s'envole. Concerts live,
+            matchs en direct sur écran géant et cuisine 100&nbsp;% maison&nbsp;:
+            la seule bourse où tout ne fait que monter.
+          </p>
+          <div class="hero__cta">
+            <a href="#menu" class="btn btn--primary">Voir la carte</a>
+            <a href="#infos" class="btn btn--ghost">Réserver une table</a>
+          </div>
+          <p class="hero__byline">Good food &nbsp;•&nbsp; Good drinks &nbsp;•&nbsp; Good people</p>
+        </div>
+
+        <!-- Press photo -->
+        <figure class="hero__press hero__layer hero__layer--near" aria-hidden="true">
+          <div class="hero__press-frame">
+            <img src="images/hero-poster.jpg" alt="" class="hero__poster" />
+          </div>
+          <figcaption class="hero__caption">
+            <span class="hero__seal"><img src="images/logo.jpg" alt="" /></span>
+            En direct du comptoir — la maison ne tire que du bon.
+          </figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
-  <!-- ===== MARQUEE ===== -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      <span>Live Music</span><span>•</span><span>Matchs en direct</span><span>•</span><span>Cuisine maison</span><span>•</span><span>Bières &amp; cocktails</span><span>•</span><span>Good Times</span><span>•</span>
-      <span>Live Music</span><span>•</span><span>Matchs en direct</span><span>•</span><span>Cuisine maison</span><span>•</span><span>Bières &amp; cocktails</span><span>•</span><span>Good Times</span><span>•</span>
+  <!-- ===== GOOD TIMES INDEX (ticker) ===== -->
+  <div class="ticker" aria-hidden="true">
+    <span class="ticker__badge">Good&nbsp;Times&nbsp;Index</span>
+    <div class="ticker__viewport">
+      <div class="ticker__track">
+        <span class="tk"><b>PINTES</b> <i class="up">▲</i> 0,5L</span>
+        <span class="tk"><b>LIVE&nbsp;MUSIC</b> <i class="up">▲</i></span>
+        <span class="tk"><b>MATCHS</b> <i class="live">●</i> EN&nbsp;DIRECT</span>
+        <span class="tk"><b>WALL&nbsp;ST.&nbsp;BURGER</b> <i class="up">▲</i> 21€</span>
+        <span class="tk"><b>DELIRIUM</b> <i class="up">▲</i></span>
+        <span class="tk"><b>TERRASSE</b> <i class="up">☀</i></span>
+        <span class="tk"><b>COURS&nbsp;DU&nbsp;BONHEUR</b> <i class="up">▲▲▲</i></span>
+        <span class="tk"><b>PINTES</b> <i class="up">▲</i> 0,5L</span>
+        <span class="tk"><b>LIVE&nbsp;MUSIC</b> <i class="up">▲</i></span>
+        <span class="tk"><b>MATCHS</b> <i class="live">●</i> EN&nbsp;DIRECT</span>
+        <span class="tk"><b>WALL&nbsp;ST.&nbsp;BURGER</b> <i class="up">▲</i> 21€</span>
+        <span class="tk"><b>DELIRIUM</b> <i class="up">▲</i></span>
+        <span class="tk"><b>TERRASSE</b> <i class="up">☀</i></span>
+        <span class="tk"><b>COURS&nbsp;DU&nbsp;BONHEUR</b> <i class="up">▲▲▲</i></span>
+      </div>
     </div>
   </div>
 
