@@ -410,7 +410,9 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
   gap: 1rem;
 }
 .gallery__item { overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow); }
-.gallery__item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.gallery__item img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .5s ease; }
+.gallery__item img.img-pos-taps { object-position: 50% 34%; }
+.gallery__item img.img-pos-top { object-position: 50% 28%; }
 .gallery__item:hover img { transform: scale(1.06); }
 .gallery__item--tall { grid-row: span 2; }
 .gallery__item--wide { grid-column: span 2; }
