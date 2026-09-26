@@ -1,0 +1,295 @@
+/* ============================================================
+   WALL STREET — CINEMATIC MOTION SYSTEM
+   ------------------------------------------------------------
+   Philosophy: one evolving experience. Motion enters from the
+   brand's newspaper world (ink settling, print revealing),
+   carries the eye down the page, and rewards intent with
+   tactile feedback. Transform + opacity only. GPU-friendly.
+
+   All motion is gated behind `html.motion` — that class is only
+   added when the visitor has NOT requested reduced motion, so
+   the reduced-motion experience is the *default* static page
+   with zero hidden content and no FOUC.
+   ============================================================ */
+
+:root {
+  /* ---- Signature easings ---- */
+  --ease-out:      cubic-bezier(0.16, 1, 0.30, 1);    /* expo-out: cinematic settle */
+  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);    /* section moves */
+  --ease-pop:      cubic-bezier(0.34, 1.56, 0.64, 1); /* playful overshoot (brand) */
+  --ease-soft:     cubic-bezier(0.33, 1, 0.68, 1);    /* gentle UI */
+
+  /* ---- Duration scale ---- */
+  --d-micro: 140ms;   /* button press, tab swap */
+  --d-ui:    340ms;   /* hovers, small state */
+  --d-enter: 720ms;   /* element entrances */
+  --d-hero:  900ms;   /* hero reveals */
+  --d-curtain: 820ms; /* preloader lift */
+
+  /* ---- Reveal geometry ---- */
+  --reveal-y: 30px;
+}
+
+/* ============================================================
+   0 · PRELOADER  (brand curtain)
+   Trigger: page load. Sequence: logo prints in + progress fills,
+   then the whole curtain lifts up (translateY) revealing the hero.
+   ============================================================ */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  background: var(--blue);
+  transition: transform var(--d-curtain) var(--ease-in-out),
+              opacity var(--d-curtain) var(--ease-in-out);
+  will-change: transform;
+}
+.preloader__inner { display: grid; place-items: center; gap: 1.4rem; }
+.preloader__logo {
+  width: 128px; height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,.75);
+  opacity: 0;
+  transform: scale(.82);
+  animation: pl-logo 900ms var(--ease-out) forwards;
+}
+.preloader__word {
+  font-family: var(--font-display, 'Anton', sans-serif);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  color: #fff;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: pl-word 700ms var(--ease-out) 260ms forwards;
+}
+.preloader__bar {
+  width: 160px; height: 3px;
+  border-radius: 3px;
+  background: rgba(255,255,255,.28);
+  overflow: hidden;
+}
+.preloader__bar span {
+  display: block; height: 100%;
+  width: 100%;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: pl-bar 1050ms var(--ease-in-out) 120ms forwards;
+}
+@keyframes pl-logo { to { opacity: 1; transform: scale(1); } }
+@keyframes pl-word { to { opacity: 1; transform: none; } }
+@keyframes pl-bar  { to { transform: scaleX(1); } }
+
+.preloader.is-hidden { transform: translateY(-100%); }
+
+/* Lock scroll while the curtain is up (only ever under motion + JS) */
+html.motion body.is-locked { overflow: hidden; height: 100vh; }
+
+/* Non-motion / no-JS: never show the curtain */
+html:not(.motion) .preloader { display: none; }
+
+/* ============================================================
+   1 · SCROLL PROGRESS  (thin masthead rule that fills)
+   Trigger: scroll. Direct feedback on reading position.
+   ============================================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 60;
+  background: transparent;
+  pointer-events: none;
+}
+.scroll-progress span {
+  display: block; height: 100%;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+html:not(.motion) .scroll-progress { display: none; }
+
+/* ============================================================
+   2 · HEADER ENTRANCE
+   Trigger: curtain lift. The bar drops in from above.
+   ============================================================ */
+html.motion .site-header {
+  transform: translateY(-105%);
+  transition: transform var(--d-hero) var(--ease-out) 120ms;
+}
+html.motion .site-header.is-ready { transform: none; }
+
+/* ============================================================
+   3 · HERO SEQUENCE  (staged print reveal)
+   Trigger: curtain lift. Order: kicker → title lines (masked
+   rise) → sub → lede → CTA → tag. Poster settles from depth.
+   ============================================================ */
+html.motion .hero__kicker,
+html.motion .hero__sub,
+html.motion .hero__lede,
+html.motion .hero__cta,
+html.motion .hero__tag {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity var(--d-hero) var(--ease-out),
+              transform var(--d-hero) var(--ease-out);
+}
+html.motion .hero__line-wrap { display: block; overflow: hidden; }
+html.motion .hero__line {
+  display: block;
+  transform: translateY(115%);
+  transition: transform var(--d-hero) var(--ease-out);
+}
+html.motion .hero__art {
+  opacity: 0;
+  transform: translateY(46px) scale(.94);
+  transition: opacity 1100ms var(--ease-out),
+              transform 1100ms var(--ease-out);
+}
+
+/* staged delays, fired when .is-in lands on .hero */
+html.motion .hero.is-in .hero__kicker { opacity: 1; transform: none; transition-delay: 120ms; }
+html.motion .hero.is-in .hero__line              { transform: none; }
+html.motion .hero.is-in .hero__line-wrap:nth-child(1) .hero__line { transition-delay: 220ms; }
+html.motion .hero.is-in .hero__line-wrap:nth-child(2) .hero__line { transition-delay: 320ms; }
+html.motion .hero.is-in .hero__sub  { opacity: 1; transform: none; transition-delay: 460ms; }
+html.motion .hero.is-in .hero__lede { opacity: 1; transform: none; transition-delay: 560ms; }
+html.motion .hero.is-in .hero__cta  { opacity: 1; transform: none; transition-delay: 660ms; }
+html.motion .hero.is-in .hero__tag  { opacity: 1; transform: none; transition-delay: 760ms; }
+html.motion .hero.is-in .hero__art  { opacity: 1; transform: none; transition-delay: 420ms; }
+
+/* pointer 3D tilt lives on the poster; parallax on the wrapper */
+html.motion .hero__poster {
+  transition: transform 500ms var(--ease-out);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ============================================================
+   4 · SCROLL REVEALS  (choreographed entrances)
+   Trigger: element enters viewport (IntersectionObserver).
+   Base state applied by JS via .reveal; .in plays it.
+   Stagger via inline --delay.
+   ============================================================ */
+html.motion .reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-y)) scale(var(--reveal-s, 1));
+  transition: opacity var(--d-enter) var(--ease-out),
+              transform var(--d-enter) var(--ease-out);
+  transition-delay: var(--delay, 0ms);
+  will-change: opacity, transform;
+}
+html.motion .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+/* variants */
+html.motion .reveal--left  { transform: translateX(-40px); }
+html.motion .reveal--right { transform: translateX(40px); }
+html.motion .reveal--zoom  { --reveal-s: 1.06; transform: scale(1.06); }
+html.motion .reveal--left.in,
+html.motion .reveal--right.in,
+html.motion .reveal--zoom.in { transform: none; }
+
+/* headline mask-rise for section titles */
+html.motion .reveal-title { overflow: hidden; }
+html.motion .reveal-title > * {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform var(--d-enter) var(--ease-out);
+  transition-delay: var(--delay, 0ms);
+}
+html.motion .reveal-title.in > * { transform: none; }
+
+/* clear will-change once settled (added by JS) */
+html.motion .reveal.is-done,
+html.motion .hero.is-in .hero__art,
+html.motion .hero__poster.is-idle { will-change: auto; }
+
+/* ============================================================
+   5 · MARQUEE  (already scrolling; pause on hover = intent)
+   ============================================================ */
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+/* ============================================================
+   6 · BUTTON FEEDBACK  (sheen + press)
+   Hover: lift (base css) + light sweep. Active: compress.
+   ============================================================ */
+.btn { position: relative; overflow: hidden; }
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -120%;
+  width: 60%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent);
+  transform: skewX(-18deg);
+  transition: left 620ms var(--ease-in-out);
+  pointer-events: none;
+}
+.btn:hover::after { left: 140%; }
+.btn:active { transform: translateY(0) scale(.965); transition: transform var(--d-micro) var(--ease-soft); }
+.btn--ghost::after { background: linear-gradient(100deg, transparent, rgba(34,49,99,.18), transparent); }
+
+/* magnetic offset (set by JS on desktop) */
+html.motion .btn { transition: transform var(--d-ui) var(--ease-pop), background var(--d-ui) ease, color var(--d-ui) ease, box-shadow var(--d-ui) ease; }
+
+/* ============================================================
+   7 · HOVER / MICRO-INTERACTIONS
+   ============================================================ */
+/* feature + info cards: existing lift, now with icon pop */
+.feature { transition: transform var(--d-ui) var(--ease-pop), box-shadow var(--d-ui) ease; }
+.feature__ico { display: inline-block; transition: transform var(--d-ui) var(--ease-pop); }
+.feature:hover .feature__ico { transform: translateY(-4px) rotate(-6deg) scale(1.08); }
+
+.info-card { transition: transform var(--d-ui) var(--ease-out), box-shadow var(--d-ui) ease, border-color var(--d-ui) ease; }
+.info-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: rgba(58,75,135,.3); }
+
+/* nav scrollspy: current section link stays underlined */
+.nav a.is-current::after { width: 100%; }
+.nav a.is-current { color: #fff; }
+
+/* menu tab active pop */
+.tab { transition: background var(--d-ui) var(--ease-out), color var(--d-ui) ease, border-color var(--d-ui) ease, transform var(--d-micro) var(--ease-pop); }
+.tab:active { transform: scale(.95); }
+
+/* dish rows: subtle name shift on row hover (desktop) */
+@media (hover: hover) {
+  .dish { transition: transform var(--d-ui) var(--ease-out); }
+  .dish:hover { transform: translateX(4px); }
+  .dish:hover .dish__price { color: var(--red-deep); }
+}
+
+/* gallery already zooms; add a soft lift */
+.gallery__item { transition: transform var(--d-ui) var(--ease-out), box-shadow var(--d-ui) ease; }
+.gallery__item:hover { transform: translateY(-4px); box-shadow: 0 24px 60px rgba(34,49,99,.22); }
+
+/* ============================================================
+   8 · SECTION CONTINUITY — the blue "Live & matchs" panel
+   rises as one plane so the colour shift feels like a scene
+   change, not a jump.
+   ============================================================ */
+html.motion .events { --reveal-y: 0px; }
+html.motion .events__text > * { transition-delay: var(--delay, 0ms); }
+
+/* ============================================================
+   9 · ACCESSIBILITY & PERFORMANCE GUARDS
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .preloader { display: none !important; }
+  .marquee__track { animation: none !important; }
+}
+
+/* Coarse pointers (touch): no magnetic / tilt jitter, keep reveals */
+@media (hover: none) {
+  html.motion .btn { transition: background var(--d-ui) ease, color var(--d-ui) ease, box-shadow var(--d-ui) ease; }
+}

@@ -19,6 +19,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="motion.css" />
+
+  <!-- Motion bootstrap: opt IN to animation only when the visitor
+       has not requested reduced motion. Runs before paint (no FOUC). -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        if (!window.matchMedia || !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          d.classList.add('motion');
+        }
+      } catch (e) {}
+    })();
+  </script>
 
   <script type="application/ld+json">
   {
@@ -45,7 +60,19 @@
   }
   </script>
 </head>
-<body>
+<body class="is-locked">
+
+  <!-- ===== PRELOADER (brand curtain) ===== -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <img class="preloader__logo" src="images/logo.jpg" alt="" />
+      <p class="preloader__word">Wall Street</p>
+      <div class="preloader__bar"><span></span></div>
+    </div>
+  </div>
+
+  <!-- ===== SCROLL PROGRESS ===== -->
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
   <!-- ===== HEADER / NAV ===== -->
   <header class="site-header" id="top">
@@ -78,7 +105,10 @@
   <section class="hero">
     <div class="hero__inner">
       <p class="hero__kicker">Bar · Brasserie · Good Times</p>
-      <h1 class="hero__title">WALL<br />STREET</h1>
+      <h1 class="hero__title">
+        <span class="hero__line-wrap"><span class="hero__line">WALL</span></span>
+        <span class="hero__line-wrap"><span class="hero__line">STREET</span></span>
+      </h1>
       <p class="hero__sub">Pub Restaurant &nbsp;·&nbsp; Fréjus</p>
       <p class="hero__lede">
         Concerts live, matchs en direct sur écran géant et cuisine 100&nbsp;% maison.
@@ -298,7 +328,7 @@
         <a href="#infos" class="btn btn--primary">Programme &amp; réservations</a>
       </div>
       <div class="events__media">
-        <img src="images/delirium.jpg" alt="Enseigne néon Delirium Beers au Wall Street" />
+        <img src="images/delirium.jpg" alt="Enseigne néon Delirium Beers au Wall Street" data-parallax="0.05" />
       </div>
     </div>
   </section>
@@ -363,5 +393,6 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="motion.js"></script>
 </body>
 </html>
