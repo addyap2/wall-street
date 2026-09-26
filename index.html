@@ -110,9 +110,11 @@
         <span class="hero__line-wrap"><span class="hero__line">STREET</span></span>
       </h1>
       <p class="hero__sub">Pub Restaurant &nbsp;·&nbsp; Fréjus</p>
+      <p class="status status--hero" data-status hidden><span class="status__dot"></span><span class="status__text"></span></p>
       <p class="hero__lede">
-        Concerts live, matchs en direct sur écran géant et cuisine 100&nbsp;% maison.
-        Ici, on vient pour les bonnes bières, la bonne assiette et la bonne ambiance.
+        Concerts live, matchs en direct sur écran géant et cuisine généreuse
+        faite maison. Ici, on vient pour les bonnes bières, la bonne assiette
+        et la bonne ambiance.
       </p>
       <div class="hero__cta">
         <a href="#menu" class="btn btn--primary">Voir la carte</a>
@@ -362,6 +364,7 @@
       </div>
       <div class="info-card">
         <h3>Horaires</h3>
+        <p class="status status--card" data-status hidden><span class="status__dot"></span><span class="status__text"></span></p>
         <ul class="hours">
           <li><span>Lun – Jeu</span><span>8h00 – 00h00</span></li>
           <li><span>Ven – Sam</span><span>8h00 – 01h00</span></li>
@@ -391,6 +394,12 @@
     <p class="site-footer__meta">36 Rue de l'Intendance, 83600 Fréjus · 04 98 13 54 45</p>
     <p class="site-footer__meta">© <span id="year"></span> Wall Street — Pub Restaurant, Fréjus. L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</p>
   </footer>
+
+  <!-- ===== STICKY MOBILE CTA ===== -->
+  <div class="mobile-cta" aria-label="Actions rapides">
+    <a href="#menu" class="mobile-cta__btn mobile-cta__btn--ghost">La carte</a>
+    <a href="tel:+33498135445" class="mobile-cta__btn mobile-cta__btn--call">Appeler pour réserver</a>
+  </div>
 
   <script src="script.js"></script>
   <script src="motion.js"></script>
