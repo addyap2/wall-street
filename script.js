@@ -80,9 +80,12 @@ tabs.forEach((tab, i) => {
   });
 });
 
-// Footer year
-const yearEl = document.getElementById('year');
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+// Footer year (also re-applied after a language switch rebuilds the footer line)
+function fillYear() {
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+}
+fillYear();
 
 // ===== Open-now live status (from real opening hours) =====
 // Minutes from midnight. Fri/Sat close at 01:00 (=1500, next day).
@@ -97,12 +100,32 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     5: [480, 1500], 6: [480, 1500]  // Ven–Sam 8h–01h
   };
 
-  const days = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
-
-  function fmt(m) {
-    const h = Math.floor(m / 60) % 24, mm = m % 60;
-    return mm ? h + 'h' + (mm < 10 ? '0' + mm : mm) : h + 'h';
-  }
+  const i18n = {
+    fr: {
+      days: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
+      open: 'Ouvert maintenant',
+      opensAt: function (t) { return 'Fermé · ouvre à ' + t; },
+      opensWhen: function (when, t) { return 'Fermé · ouvre ' + when + ' à ' + t; },
+      tomorrow: 'demain',
+      fmt: function (m) {
+        const h = Math.floor(m / 60) % 24, mm = m % 60;
+        return mm ? h + 'h' + (mm < 10 ? '0' + mm : mm) : h + 'h';
+      }
+    },
+    en: {
+      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      open: 'Open now',
+      opensAt: function (t) { return 'Closed · opens at ' + t; },
+      opensWhen: function (when, t) { return 'Closed · opens ' + when + ' at ' + t; },
+      tomorrow: 'tomorrow',
+      fmt: function (m) {
+        let h = Math.floor(m / 60) % 24; const mm = m % 60;
+        const period = h < 12 ? 'am' : 'pm';
+        let h12 = h % 12; if (h12 === 0) h12 = 12;
+        return mm ? h12 + ':' + (mm < 10 ? '0' + mm : mm) + period : h12 + period;
+      }
+    }
+  };
 
   function nextOpen(fromDay) {
     for (let i = 1; i <= 7; i++) {
@@ -113,6 +136,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   }
 
   function compute() {
+    const L = i18n[document.documentElement.lang === 'en' ? 'en' : 'fr'];
     const now = new Date();
     const day = now.getDay();
     const mins = now.getHours() * 60 + now.getMinutes();
@@ -124,13 +148,13 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     let text;
     if (open) {
-      text = 'Ouvert maintenant';
+      text = L.open;
     } else if (today && mins < today[0]) {
-      text = 'Fermé · ouvre à ' + fmt(today[0]);
+      text = L.opensAt(L.fmt(today[0]));
     } else {
       const nxt = nextOpen(day);
-      const when = nxt.offset === 1 ? 'demain' : days[nxt.day];
-      text = 'Fermé · ouvre ' + when + ' à ' + fmt(nxt.opens);
+      const when = nxt.offset === 1 ? L.tomorrow : L.days[nxt.day];
+      text = L.opensWhen(when, L.fmt(nxt.opens));
     }
 
     statusEls.forEach(function (el) {
@@ -144,4 +168,67 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   compute();
   setInterval(compute, 60000); // refresh each minute
+  document.addEventListener('ws:langchange', compute); // re-render on language switch
+})();
+
+// ===== Language toggle (FR default · EN) =====
+(function () {
+  const STORE = 'ws-lang';
+  const frCache = new WeakMap();   // element -> original French innerHTML
+  const frAria = new WeakMap();    // element -> original French aria-label
+
+  const META = {
+    fr: {
+      title: 'Wall Street — Pub Restaurant à Fréjus',
+      desc: 'Wall Street, bar · brasserie · pub restaurant à Fréjus. Concerts live & DJ sets, tous les matchs sur écran géant, cuisine 100% maison, bières & cocktails. Good food, good drinks, good people.'
+    },
+    en: {
+      title: 'Wall Street — Pub Restaurant in Fréjus',
+      desc: 'Wall Street, bar · brasserie · pub restaurant in Fréjus. Live gigs & DJ sets, every match on the big screen, 100% homemade food, beers & cocktails. Good food, good drinks, good people.'
+    }
+  };
+
+  function getLang() {
+    try { return localStorage.getItem(STORE) === 'en' ? 'en' : 'fr'; } catch (e) { return 'fr'; }
+  }
+
+  function apply(lang) {
+    const en = lang === 'en';
+    document.documentElement.setAttribute('lang', lang);
+
+    document.querySelectorAll('[data-en]').forEach(function (el) {
+      if (!frCache.has(el)) frCache.set(el, el.innerHTML);
+      el.innerHTML = en ? el.getAttribute('data-en') : frCache.get(el);
+    });
+
+    document.querySelectorAll('[data-en-aria]').forEach(function (el) {
+      if (!frAria.has(el)) frAria.set(el, el.getAttribute('aria-label') || '');
+      el.setAttribute('aria-label', en ? el.getAttribute('data-en-aria') : frAria.get(el));
+    });
+
+    const meta = META[lang];
+    document.title = meta.title;
+    const md = document.querySelector('meta[name="description"]');
+    if (md) md.setAttribute('content', meta.desc);
+
+    // Toggle button state
+    document.querySelectorAll('[data-lang-toggle]').forEach(function (btn) {
+      btn.setAttribute('aria-label', en ? 'Passer en français' : 'Switch to English');
+      btn.querySelectorAll('[data-lang-opt]').forEach(function (opt) {
+        opt.classList.toggle('is-active', opt.getAttribute('data-lang-opt') === lang);
+      });
+    });
+
+    if (typeof fillYear === 'function') fillYear(); // footer line is rebuilt by the swap
+    try { localStorage.setItem(STORE, lang); } catch (e) {}
+    document.dispatchEvent(new CustomEvent('ws:langchange', { detail: { lang: lang } }));
+  }
+
+  document.querySelectorAll('[data-lang-toggle]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      apply(getLang() === 'en' ? 'fr' : 'en');
+    });
+  });
+
+  apply(getLang());
 })();

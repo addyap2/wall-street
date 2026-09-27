@@ -20,6 +20,7 @@
   <meta property="og:image:width" content="1080" />
   <meta property="og:image:height" content="1350" />
   <meta property="og:locale" content="fr_FR" />
+  <meta property="og:locale:alternate" content="en_GB" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -44,6 +45,11 @@
         if (!window.matchMedia || !matchMedia('(prefers-reduced-motion: reduce)').matches) {
           d.classList.add('motion');
         }
+      } catch (e) {}
+      /* Apply saved language before paint to avoid a flash of French. */
+      try {
+        var l = localStorage.getItem('ws-lang');
+        if (l === 'en') d.setAttribute('lang', 'en');
       } catch (e) {}
     })();
   </script>
@@ -74,7 +80,7 @@
 </head>
 <body class="is-locked">
 
-  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <a class="skip-link" href="#contenu" data-en="Skip to content">Aller au contenu</a>
 
   <!-- ===== PRELOADER (brand curtain) ===== -->
   <div class="preloader" id="preloader" aria-hidden="true">
@@ -94,27 +100,34 @@
       <picture><source srcset="images/logo.webp" type="image/webp" /><img src="images/logo.jpg" alt="Wall Street Pub Restaurant" class="brand__logo" width="52" height="52" decoding="async" fetchpriority="high" /></picture>
     </a>
     <nav class="nav" aria-label="Navigation principale">
-      <a href="#concept">Le concept</a>
-      <a href="#menu">La carte</a>
-      <a href="#events">Live &amp; matchs</a>
-      <a href="#ambiance">Ambiance</a>
-      <a href="#programme">Programme</a>
-      <a href="#infos">Infos</a>
+      <a href="#concept" data-en="The concept">Le concept</a>
+      <a href="#menu" data-en="Menu">La carte</a>
+      <a href="#events" data-en="Live &amp; sport">Live &amp; matchs</a>
+      <a href="#ambiance" data-en="Atmosphere">Ambiance</a>
+      <a href="#programme" data-en="What's on">Programme</a>
+      <a href="#infos" data-en="Info">Infos</a>
     </nav>
-    <a href="#infos" class="btn btn--nav">Réserver</a>
-    <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+    <div class="header-actions">
+      <button class="lang-toggle" type="button" data-lang-toggle aria-label="Switch to English">
+        <span class="lang-toggle__opt" data-lang-opt="fr">FR</span>
+        <span class="lang-toggle__sep" aria-hidden="true">/</span>
+        <span class="lang-toggle__opt" data-lang-opt="en">EN</span>
+      </button>
+      <a href="#infos" class="btn btn--nav" data-en="Book">Réserver</a>
+    </div>
+    <button class="nav-toggle" aria-label="Ouvrir le menu" data-en-aria="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </header>
 
   <!-- mobile menu -->
   <div class="mobile-menu" id="mobileMenu" hidden>
-    <a href="#concept">Le concept</a>
-    <a href="#menu">La carte</a>
-    <a href="#events">Live &amp; matchs</a>
-    <a href="#ambiance">Ambiance</a>
-    <a href="#programme">Programme</a>
-    <a href="#infos">Infos &amp; réservation</a>
+    <a href="#concept" data-en="The concept">Le concept</a>
+    <a href="#menu" data-en="Menu">La carte</a>
+    <a href="#events" data-en="Live &amp; sport">Live &amp; matchs</a>
+    <a href="#ambiance" data-en="Atmosphere">Ambiance</a>
+    <a href="#programme" data-en="What's on">Programme</a>
+    <a href="#infos" data-en="Info &amp; booking">Infos &amp; réservation</a>
   </div>
 
   <!-- ===== HERO ===== -->
@@ -127,14 +140,14 @@
       </h1>
       <p class="hero__sub">Pub Restaurant &nbsp;·&nbsp; Fréjus</p>
       <p class="status status--hero" data-status hidden><span class="status__dot"></span><span class="status__text"></span></p>
-      <p class="hero__lede">
+      <p class="hero__lede" data-en="Live gigs, matches on the big screen and generous homemade food. This is where you come for great beers, great plates and a great atmosphere.">
         Concerts live, matchs en direct sur écran géant et cuisine généreuse
         faite maison. Ici, on vient pour les bonnes bières, la bonne assiette
         et la bonne ambiance.
       </p>
       <div class="hero__cta">
-        <a href="#menu" class="btn btn--primary">Voir la carte</a>
-        <a href="#infos" class="btn btn--ghost">Nous trouver</a>
+        <a href="#menu" class="btn btn--primary" data-en="See the menu">Voir la carte</a>
+        <a href="#infos" class="btn btn--ghost" data-en="Find us">Nous trouver</a>
       </div>
       <p class="hero__tag">Good food &nbsp;•&nbsp; Good drinks &nbsp;•&nbsp; Good people</p>
     </div>
@@ -146,17 +159,17 @@
   <!-- ===== MARQUEE ===== -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
-      <span>Live Music</span><span>•</span><span>Matchs en direct</span><span>•</span><span>Cuisine maison</span><span>•</span><span>Bières &amp; cocktails</span><span>•</span><span>Good Times</span><span>•</span>
-      <span>Live Music</span><span>•</span><span>Matchs en direct</span><span>•</span><span>Cuisine maison</span><span>•</span><span>Bières &amp; cocktails</span><span>•</span><span>Good Times</span><span>•</span>
+      <span>Live Music</span><span>•</span><span data-en="Live sport">Matchs en direct</span><span>•</span><span data-en="Homemade food">Cuisine maison</span><span>•</span><span data-en="Beers &amp; cocktails">Bières &amp; cocktails</span><span>•</span><span>Good Times</span><span>•</span>
+      <span>Live Music</span><span>•</span><span data-en="Live sport">Matchs en direct</span><span>•</span><span data-en="Homemade food">Cuisine maison</span><span>•</span><span data-en="Beers &amp; cocktails">Bières &amp; cocktails</span><span>•</span><span>Good Times</span><span>•</span>
     </div>
   </div>
 
   <!-- ===== CONCEPT ===== -->
   <section class="concept" id="concept">
     <div class="section-head">
-      <span class="eyebrow">Le concept</span>
-      <h2>Le pub qui vit au rythme de Fréjus</h2>
-      <p class="section-head__lede">
+      <span class="eyebrow" data-en="The concept">Le concept</span>
+      <h2 data-en="The pub that beats to the rhythm of Fréjus">Le pub qui vit au rythme de Fréjus</h2>
+      <p class="section-head__lede" data-en="A proper English-style pub with a Mediterranean twist: barrel tables, Paulaner &amp; Delirium taps, screens for every big match and generous homemade food. Where you put the world to rights, drink in hand.">
         Un vrai pub à l'anglaise version méditerranéenne&nbsp;: tables en tonneaux, tireuses
         Paulaner &amp; Delirium, écrans pour tous les grands matchs et une cuisine généreuse
         faite maison. On y refait le monde, un verre à la main.
@@ -168,28 +181,28 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17V5l11-2v12"/><circle cx="6" cy="17" r="3"/><circle cx="17" cy="15" r="3"/></svg>
         </span>
         <h3>Live Music</h3>
-        <p>Concerts &amp; DJ sets toute la semaine pour faire durer la soirée.</p>
+        <p data-en="Gigs &amp; DJ sets all week long to keep the night going.">Concerts &amp; DJ sets toute la semaine pour faire durer la soirée.</p>
       </article>
       <article class="feature">
         <span class="feature__ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M10.5 8.5l4 2.5-4 2.5z" fill="currentColor" stroke="none"/></svg>
         </span>
-        <h3>Matchs en direct</h3>
-        <p>Tous les grands matchs retransmis sur écran géant, ambiance garantie.</p>
+        <h3 data-en="Live sport">Matchs en direct</h3>
+        <p data-en="Every big match on the big screen — atmosphere guaranteed.">Tous les grands matchs retransmis sur écran géant, ambiance garantie.</p>
       </article>
       <article class="feature">
         <span class="feature__ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16h14v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M6 16a5 5 0 0 1-1-9.9A4.5 4.5 0 0 1 12 4a4.5 4.5 0 0 1 7 2.1A5 5 0 0 1 18 16"/></svg>
         </span>
-        <h3>Cuisine maison 100%</h3>
-        <p>Produits frais &amp; locaux, préparés maison avec passion.</p>
+        <h3 data-en="100% homemade">Cuisine maison 100%</h3>
+        <p data-en="Fresh, local produce, made in-house with passion.">Produits frais &amp; locaux, préparés maison avec passion.</p>
       </article>
       <article class="feature">
         <span class="feature__ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9h8v9a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z"/><path d="M15 11h2.5a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H15"/><path d="M8.5 6c0-1 .8-1.4.8-2.2M11.5 6c0-1 .8-1.4.8-2.2"/></svg>
         </span>
-        <h3>Bières &amp; cocktails</h3>
-        <p>Paulaner, Delirium et une belle sélection de cocktails et spiritueux.</p>
+        <h3 data-en="Beers &amp; cocktails">Bières &amp; cocktails</h3>
+        <p data-en="Paulaner, Delirium and a fine selection of cocktails and spirits.">Paulaner, Delirium et une belle sélection de cocktails et spiritueux.</p>
       </article>
     </div>
   </section>
@@ -197,9 +210,9 @@
   <!-- ===== MENU ===== -->
   <section class="menu" id="menu">
     <div class="section-head">
-      <span class="eyebrow">La carte</span>
-      <h2>À la carte</h2>
-      <p class="section-head__lede">
+      <span class="eyebrow" data-en="Menu">La carte</span>
+      <h2 data-en="Our menu">À la carte</h2>
+      <p class="section-head__lede" data-en="Homemade, with fresh produce. Pick a category — the menu may change with the daily catch and the chef's inspiration.">
         Fait maison, avec des produits frais. Sélectionnez une catégorie&nbsp;— la carte peut
         évoluer selon l'arrivage et l'inspiration du chef.
       </p>
@@ -210,28 +223,28 @@
       <div class="week-menu__media">
         <img class="week-menu__poster" src="videos/cuisine-poster.jpg" alt="Plat maison servi au Wall Street" width="720" height="1280" loading="lazy" decoding="async" />
         <video class="week-menu__video js-ambient-video" src="videos/cuisine.mp4" autoplay muted loop playsinline preload="auto" width="720" height="1280" aria-label="Cuisine maison du Wall Street en vidéo"></video>
-        <span class="events__video-badge"><span class="events__video-dot"></span>Fait maison</span>
+        <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Homemade">Fait maison</span></span>
       </div>
       <div class="week-menu__list">
-        <span class="eyebrow">À déguster cette semaine</span>
-        <h3>Menu de la semaine</h3>
+        <span class="eyebrow" data-en="On this week">À déguster cette semaine</span>
+        <h3 data-en="This week's menu">Menu de la semaine</h3>
         <ul class="week-days">
-          <li><span class="wd-day">Lundi</span><span class="wd-dish">Pizza montagnarde</span></li>
-          <li><span class="wd-day">Mardi</span><span class="wd-dish">Chicken burger</span></li>
-          <li><span class="wd-day">Mercredi</span><span class="wd-dish">Sauté de veau</span></li>
-          <li><span class="wd-day">Jeudi</span><span class="wd-dish">Wok de bœuf</span></li>
-          <li><span class="wd-day">Vendredi</span><span class="wd-dish">Croustillant de cabillaud</span></li>
+          <li><span class="wd-day" data-en="Monday">Lundi</span><span class="wd-dish" data-en="Mountain pizza">Pizza montagnarde</span></li>
+          <li><span class="wd-day" data-en="Tuesday">Mardi</span><span class="wd-dish" data-en="Chicken burger">Chicken burger</span></li>
+          <li><span class="wd-day" data-en="Wednesday">Mercredi</span><span class="wd-dish" data-en="Veal sauté">Sauté de veau</span></li>
+          <li><span class="wd-day" data-en="Thursday">Jeudi</span><span class="wd-dish" data-en="Beef wok">Wok de bœuf</span></li>
+          <li><span class="wd-day" data-en="Friday">Vendredi</span><span class="wd-dish" data-en="Crispy cod">Croustillant de cabillaud</span></li>
         </ul>
-        <p class="week-menu__note">Le plat du jour change chaque semaine — suivez-nous pour la prochaine ardoise.</p>
+        <p class="week-menu__note" data-en="The daily special changes every week — follow us for the next board.">Le plat du jour change chaque semaine — suivez-nous pour la prochaine ardoise.</p>
       </div>
     </div>
 
     <div class="menu__tabs" role="tablist" aria-label="Catégories de la carte">
-      <button class="tab is-active" data-tab="partager" role="tab">À partager</button>
-      <button class="tab" data-tab="froid" role="tab">Salades &amp; froid</button>
+      <button class="tab is-active" data-tab="partager" role="tab" data-en="To share">À partager</button>
+      <button class="tab" data-tab="froid" role="tab" data-en="Salads &amp; cold">Salades &amp; froid</button>
       <button class="tab" data-tab="burgers" role="tab">Burgers &amp; pizzas</button>
-      <button class="tab" data-tab="plats" role="tab">Viandes &amp; poissons</button>
-      <button class="tab" data-tab="pates" role="tab">Pâtes</button>
+      <button class="tab" data-tab="plats" role="tab" data-en="Meat &amp; fish">Viandes &amp; poissons</button>
+      <button class="tab" data-tab="pates" role="tab" data-en="Pasta">Pâtes</button>
       <button class="tab" data-tab="desserts" role="tab">Desserts</button>
     </div>
 
@@ -239,17 +252,17 @@
     <div class="menu__panel is-active" data-panel="partager">
       <div class="menu__cols">
         <div class="menu-group">
-          <h3 class="menu-group__title">Planches</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Planche de charcuterie</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc">Chorizo ibérico, jambon de Parme, rillettes pur porc.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Planche de fromages</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc">Tomme de Savoie, comté, brie.</p></div>
+          <h3 class="menu-group__title" data-en="Boards">Planches</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Charcuterie board">Planche de charcuterie</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc" data-en="Iberian chorizo, Parma ham, pure pork rillettes.">Chorizo ibérico, jambon de Parme, rillettes pur porc.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Cheese board">Planche de fromages</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc" data-en="Tomme de Savoie, Comté, Brie.">Tomme de Savoie, comté, brie.</p></div>
         </div>
         <div class="menu-group">
-          <h3 class="menu-group__title">Les planches à composer</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Accras de morue</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Samoussas de bœuf</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Samoussas aux légumes</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Tempura de légumes</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Assiette de frites</span><span class="dish__dots"></span><span class="dish__price">4,00&nbsp;€</span></div></div>
+          <h3 class="menu-group__title" data-en="Build your own board">Les planches à composer</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Cod fritters">Accras de morue</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Beef samosas">Samoussas de bœuf</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Vegetable samosas">Samoussas aux légumes</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Vegetable tempura">Tempura de légumes</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Bowl of fries">Assiette de frites</span><span class="dish__dots"></span><span class="dish__price">4,00&nbsp;€</span></div></div>
         </div>
       </div>
     </div>
@@ -258,17 +271,17 @@
     <div class="menu__panel" data-panel="froid">
       <div class="menu__cols">
         <div class="menu-group">
-          <h3 class="menu-group__title">Salades</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Salade César</span><span class="dish__dots"></span><span class="dish__price">20,00&nbsp;€</span></div><p class="dish__desc">Salade romaine, poulet rôti, tomates cerises, copeaux de parmesan, croûtons, sauce César, Grana Padano.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Salade chèvre chaud &amp; jambon cru</span><span class="dish__dots"></span><span class="dish__price">20,00&nbsp;€</span></div><p class="dish__desc">Toasts de chèvre chaud, lardons, tomates cerises, mélange de verdure, jambon cru, oignons, pommes de terre, vinaigre balsamique.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Salade mixte</span><span class="dish__dots"></span><span class="dish__price">7,50&nbsp;€</span></div><p class="dish__desc">Mélange croquant, tomates cerises, oignons rouges.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Tomates burrata</span><span class="dish__dots"></span><span class="dish__price">18,00&nbsp;€</span></div></div>
+          <h3 class="menu-group__title" data-en="Salads">Salades</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Caesar salad">Salade César</span><span class="dish__dots"></span><span class="dish__price">20,00&nbsp;€</span></div><p class="dish__desc" data-en="Romaine lettuce, roast chicken, cherry tomatoes, parmesan shavings, croutons, Caesar dressing, Grana Padano.">Salade romaine, poulet rôti, tomates cerises, copeaux de parmesan, croûtons, sauce César, Grana Padano.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Warm goat cheese &amp; cured ham salad">Salade chèvre chaud &amp; jambon cru</span><span class="dish__dots"></span><span class="dish__price">20,00&nbsp;€</span></div><p class="dish__desc" data-en="Warm goat-cheese toasts, bacon, cherry tomatoes, mixed leaves, cured ham, onions, potatoes, balsamic vinegar.">Toasts de chèvre chaud, lardons, tomates cerises, mélange de verdure, jambon cru, oignons, pommes de terre, vinaigre balsamique.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Mixed salad">Salade mixte</span><span class="dish__dots"></span><span class="dish__price">7,50&nbsp;€</span></div><p class="dish__desc" data-en="Crisp leaves, cherry tomatoes, red onions.">Mélange croquant, tomates cerises, oignons rouges.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Burrata &amp; tomatoes">Tomates burrata</span><span class="dish__dots"></span><span class="dish__price">18,00&nbsp;€</span></div></div>
         </div>
         <div class="menu-group">
-          <h3 class="menu-group__title">Tartares &amp; carpaccio</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Tartare de bœuf</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc">Servi avec frites, salade fraîche, moutarde à l'ancienne, ketchup, huile d'olive, oignons, câpres, cornichons.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Tartare de saumon</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc">Servi avec frites, sauce soja, avocat, roquette, moutarde à l'ancienne.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Carpaccio de bœuf</span><span class="dish__dots"></span><span class="dish__price">19,00&nbsp;€</span></div><p class="dish__desc">Servi avec frites, Grana Padano, roquette, pesto.</p></div>
+          <h3 class="menu-group__title" data-en="Tartare &amp; carpaccio">Tartares &amp; carpaccio</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Beef tartare">Tartare de bœuf</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc" data-en="Served with fries, fresh salad, wholegrain mustard, ketchup, olive oil, onions, capers, gherkins.">Servi avec frites, salade fraîche, moutarde à l'ancienne, ketchup, huile d'olive, oignons, câpres, cornichons.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Salmon tartare">Tartare de saumon</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc" data-en="Served with fries, soy sauce, avocado, rocket, wholegrain mustard.">Servi avec frites, sauce soja, avocat, roquette, moutarde à l'ancienne.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Beef carpaccio">Carpaccio de bœuf</span><span class="dish__dots"></span><span class="dish__price">19,00&nbsp;€</span></div><p class="dish__desc" data-en="Served with fries, Grana Padano, rocket, pesto.">Servi avec frites, Grana Padano, roquette, pesto.</p></div>
         </div>
       </div>
     </div>
@@ -277,23 +290,23 @@
     <div class="menu__panel" data-panel="burgers">
       <div class="menu__cols">
         <div class="menu-group">
-          <h3 class="menu-group__title">Côté burgers</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Burger classique</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc">Servi avec frites ou salade. Steak de bœuf, crème épaisse à la moutarde, comté, salade romaine, tomate.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Burger du moment</span><span class="dish__dots"></span><span class="dish__price">23,00&nbsp;€</span></div><p class="dish__desc">Selon l'inspiration du chef.</p></div>
+          <h3 class="menu-group__title" data-en="Burgers">Côté burgers</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Classic burger">Burger classique</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc" data-en="Served with fries or salad. Beef steak, thick mustard cream, Comté, romaine lettuce, tomato.">Servi avec frites ou salade. Steak de bœuf, crème épaisse à la moutarde, comté, salade romaine, tomate.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Burger of the moment">Burger du moment</span><span class="dish__dots"></span><span class="dish__price">23,00&nbsp;€</span></div><p class="dish__desc" data-en="The chef's inspiration of the day.">Selon l'inspiration du chef.</p></div>
 
-          <h3 class="menu-group__title" style="margin-top:2rem">Pizzas · base sauce tomate</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Margherita</span><span class="dish__dots"></span><span class="dish__price">12,00&nbsp;€</span></div><p class="dish__desc">Tomate, mozzarella.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Napolitaine</span><span class="dish__dots"></span><span class="dish__price">14,00&nbsp;€</span></div><p class="dish__desc">Tomate, mozzarella, anchois, olives.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Reine</span><span class="dish__dots"></span><span class="dish__price">14,00&nbsp;€</span></div><p class="dish__desc">Tomate, mozzarella, jambon, champignons, olives.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Diavola</span><span class="dish__dots"></span><span class="dish__price">15,00&nbsp;€</span></div><p class="dish__desc">Tomate, mozzarella, chorizo, olives.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">4 Saisons</span><span class="dish__dots"></span><span class="dish__price">15,00&nbsp;€</span></div><p class="dish__desc">Tomate, mozzarella, jambon blanc, champignons, artichauts, olives.</p></div>
+          <h3 class="menu-group__title" style="margin-top:2rem" data-en="Pizzas · tomato base">Pizzas · base sauce tomate</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name">Margherita</span><span class="dish__dots"></span><span class="dish__price">12,00&nbsp;€</span></div><p class="dish__desc" data-en="Tomato, mozzarella.">Tomate, mozzarella.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Napoletana">Napolitaine</span><span class="dish__dots"></span><span class="dish__price">14,00&nbsp;€</span></div><p class="dish__desc" data-en="Tomato, mozzarella, anchovies, olives.">Tomate, mozzarella, anchois, olives.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Regina">Reine</span><span class="dish__dots"></span><span class="dish__price">14,00&nbsp;€</span></div><p class="dish__desc" data-en="Tomato, mozzarella, ham, mushrooms, olives.">Tomate, mozzarella, jambon, champignons, olives.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name">Diavola</span><span class="dish__dots"></span><span class="dish__price">15,00&nbsp;€</span></div><p class="dish__desc" data-en="Tomato, mozzarella, chorizo, olives.">Tomate, mozzarella, chorizo, olives.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Four Seasons">4 Saisons</span><span class="dish__dots"></span><span class="dish__price">15,00&nbsp;€</span></div><p class="dish__desc" data-en="Tomato, mozzarella, cooked ham, mushrooms, artichokes, olives.">Tomate, mozzarella, jambon blanc, champignons, artichauts, olives.</p></div>
         </div>
         <div class="menu-group">
-          <h3 class="menu-group__title">Pizzas · base crème</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Tartuffe</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc">Jambon, crème de truffe, burrata entière.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Capri</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc">Base crème, mozzarella, chèvre, miel, noix.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Saumon</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc">Saumon frais, tomates cerises, chèvre.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">4 Fromages</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc">Base crème, mozzarella, gorgonzola, Grana Padano, bleu.</p></div>
+          <h3 class="menu-group__title" data-en="Pizzas · cream base">Pizzas · base crème</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name">Tartuffe</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc" data-en="Ham, truffle cream, whole burrata.">Jambon, crème de truffe, burrata entière.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name">Capri</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc" data-en="Cream base, mozzarella, goat cheese, honey, walnuts.">Base crème, mozzarella, chèvre, miel, noix.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Salmon">Saumon</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc" data-en="Fresh salmon, cherry tomatoes, goat cheese.">Saumon frais, tomates cerises, chèvre.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Four Cheeses">4 Fromages</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc" data-en="Cream base, mozzarella, gorgonzola, Grana Padano, blue cheese.">Base crème, mozzarella, gorgonzola, Grana Padano, bleu.</p></div>
         </div>
       </div>
     </div>
@@ -302,17 +315,17 @@
     <div class="menu__panel" data-panel="plats">
       <div class="menu__cols">
         <div class="menu-group">
-          <h3 class="menu-group__title">Côté viandes</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Belle entrecôte (280/300&nbsp;g)</span><span class="dish__dots"></span><span class="dish__price">28,00&nbsp;€</span></div><p class="dish__desc">Servie avec salade ou frites. Sauce au choix.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Bavette</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc">Servie avec salade ou frites. Sauce au choix.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Pièce du boucher</span><span class="dish__dots"></span><span class="dish__price">26,00&nbsp;€</span></div><p class="dish__desc">Roquette, Grana Padano, frites.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Tataki de bœuf</span><span class="dish__dots"></span><span class="dish__price">24,00&nbsp;€</span></div><p class="dish__desc">Servi avec salade ou frites.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Ribs (travers de porc)</span><span class="dish__dots"></span><span class="dish__price">24,00&nbsp;€</span></div><p class="dish__desc">Accompagnés de frites et sauce barbecue maison.</p></div>
+          <h3 class="menu-group__title" data-en="Meat">Côté viandes</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Prime ribeye (280/300&nbsp;g)">Belle entrecôte (280/300&nbsp;g)</span><span class="dish__dots"></span><span class="dish__price">28,00&nbsp;€</span></div><p class="dish__desc" data-en="Served with salad or fries. Sauce of your choice.">Servie avec salade ou frites. Sauce au choix.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Flank steak">Bavette</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc" data-en="Served with salad or fries. Sauce of your choice.">Servie avec salade ou frites. Sauce au choix.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Butcher's cut">Pièce du boucher</span><span class="dish__dots"></span><span class="dish__price">26,00&nbsp;€</span></div><p class="dish__desc" data-en="Rocket, Grana Padano, fries.">Roquette, Grana Padano, frites.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Beef tataki">Tataki de bœuf</span><span class="dish__dots"></span><span class="dish__price">24,00&nbsp;€</span></div><p class="dish__desc" data-en="Served with salad or fries.">Servi avec salade ou frites.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Pork ribs">Ribs (travers de porc)</span><span class="dish__dots"></span><span class="dish__price">24,00&nbsp;€</span></div><p class="dish__desc" data-en="Served with fries and homemade barbecue sauce.">Accompagnés de frites et sauce barbecue maison.</p></div>
         </div>
         <div class="menu-group">
-          <h3 class="menu-group__title">Côté poissons</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Pavé de saumon</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc">Cuit à l'unilatéral, servi avec frites ou salade.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Loup ou dorade grillée</span><span class="dish__dots"></span><span class="dish__price">26,00&nbsp;€</span></div><p class="dish__desc">Selon arrivage, servi avec frites ou salade.</p></div>
+          <h3 class="menu-group__title" data-en="Fish">Côté poissons</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Salmon fillet">Pavé de saumon</span><span class="dish__dots"></span><span class="dish__price">21,00&nbsp;€</span></div><p class="dish__desc" data-en="Seared on one side, served with fries or salad.">Cuit à l'unilatéral, servi avec frites ou salade.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Grilled sea bass or bream">Loup ou dorade grillée</span><span class="dish__dots"></span><span class="dish__price">26,00&nbsp;€</span></div><p class="dish__desc" data-en="Depending on the catch, served with fries or salad.">Selon arrivage, servi avec frites ou salade.</p></div>
         </div>
       </div>
     </div>
@@ -321,10 +334,10 @@
     <div class="menu__panel" data-panel="pates">
       <div class="menu__cols">
         <div class="menu-group">
-          <h3 class="menu-group__title">Côté pâtes</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Tagliatelles à la crème de truffe</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc">Crème de truffe et Grana Padano.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Tagliatelles jambon fumé &amp; burrata</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Tagliatelles au saumon</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc">Crème et ciboulette.</p></div>
+          <h3 class="menu-group__title" data-en="Pasta">Côté pâtes</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Truffle-cream tagliatelle">Tagliatelles à la crème de truffe</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc" data-en="Truffle cream and Grana Padano.">Crème de truffe et Grana Padano.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Smoked ham &amp; burrata tagliatelle">Tagliatelles jambon fumé &amp; burrata</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Salmon tagliatelle">Tagliatelles au saumon</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc" data-en="Cream and chives.">Crème et ciboulette.</p></div>
         </div>
       </div>
     </div>
@@ -333,44 +346,44 @@
     <div class="menu__panel" data-panel="desserts">
       <div class="menu__cols">
         <div class="menu-group">
-          <h3 class="menu-group__title">Côté desserts</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Baba bouchon</span><span class="dish__dots"></span><span class="dish__price">10,00&nbsp;€</span></div><p class="dish__desc">Baba au rhum servi avec chantilly.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Crème brûlée à la vanille de Madagascar</span><span class="dish__dots"></span><span class="dish__price">8,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Panna cotta vanille &amp; coulis de fruits rouges</span><span class="dish__dots"></span><span class="dish__price">8,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Dessert du jour</span><span class="dish__dots"></span><span class="dish__price">8,50&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name">Tiramisu du jour</span><span class="dish__dots"></span><span class="dish__price">8,50&nbsp;€</span></div></div>
+          <h3 class="menu-group__title" data-en="Desserts">Côté desserts</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Rum baba">Baba bouchon</span><span class="dish__dots"></span><span class="dish__price">10,00&nbsp;€</span></div><p class="dish__desc" data-en="Rum baba served with whipped cream.">Baba au rhum servi avec chantilly.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Madagascar vanilla crème brûlée">Crème brûlée à la vanille de Madagascar</span><span class="dish__dots"></span><span class="dish__price">8,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Vanilla panna cotta &amp; red-berry coulis">Panna cotta vanille &amp; coulis de fruits rouges</span><span class="dish__dots"></span><span class="dish__price">8,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Dessert of the day">Dessert du jour</span><span class="dish__dots"></span><span class="dish__price">8,50&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Tiramisu of the day">Tiramisu du jour</span><span class="dish__dots"></span><span class="dish__price">8,50&nbsp;€</span></div></div>
           <div class="dish"><div class="dish__head"><span class="dish__name">Profiteroles</span><span class="dish__dots"></span><span class="dish__price">9,50&nbsp;€</span></div></div>
         </div>
       </div>
     </div>
 
-    <p class="menu__note">Prix en euros, taxes comprises. Certaines suggestions varient selon l'arrivage. Une question sur un allergène&nbsp;? Demandez à l'équipe.</p>
+    <p class="menu__note" data-en="Prices in euros, taxes included. Some dishes vary with the daily catch. Any allergy questions? Just ask the team.">Prix en euros, taxes comprises. Certaines suggestions varient selon l'arrivage. Une question sur un allergène&nbsp;? Demandez à l'équipe.</p>
   </section>
 
   <!-- ===== EVENTS ===== -->
   <section class="events" id="events">
     <div class="events__grid">
       <div class="events__text">
-        <span class="eyebrow eyebrow--light">Live &amp; matchs</span>
-        <h2>Les soirs où Fréjus se retrouve ici</h2>
-        <p>
+        <span class="eyebrow eyebrow--light" data-en="Live &amp; sport">Live &amp; matchs</span>
+        <h2 data-en="The nights Fréjus gathers here">Les soirs où Fréjus se retrouve ici</h2>
+        <p data-en="Live gigs, DJ sets and every big match on the big screen. Rugby, football, Champions League, tournaments: we turn up the sound, pour the pints, and the atmosphere does the rest.">
           Concerts live, DJ sets et tous les grands matchs sur écran géant.
           Rugby, foot, Ligue des Champions, tournois&nbsp;: on branche le son, on tire
           les pintes, et l'ambiance fait le reste.
         </p>
         <ul class="events__list">
-          <li><strong>Live music &amp; DJ sets</strong> — plusieurs soirs par semaine</li>
-          <li><strong>Retransmissions sportives</strong> — tous les grands matchs, écran géant</li>
-          <li><strong>Afterworks &amp; apéros</strong> — bières pression, cocktails &amp; planches à partager</li>
+          <li data-en="&lt;strong&gt;Live music &amp; DJ sets&lt;/strong&gt; — several nights a week"><strong>Live music &amp; DJ sets</strong> — plusieurs soirs par semaine</li>
+          <li data-en="&lt;strong&gt;Sport screenings&lt;/strong&gt; — every big match, big screen"><strong>Retransmissions sportives</strong> — tous les grands matchs, écran géant</li>
+          <li data-en="&lt;strong&gt;Afterworks &amp; aperitifs&lt;/strong&gt; — draught beers, cocktails &amp; sharing boards"><strong>Afterworks &amp; apéros</strong> — bières pression, cocktails &amp; planches à partager</li>
         </ul>
-        <a href="#infos" class="btn btn--primary">Programme &amp; réservations</a>
+        <a href="#infos" class="btn btn--primary" data-en="What's on &amp; bookings">Programme &amp; réservations</a>
       </div>
       <div class="events__media">
         <img class="events__poster" src="images/live-poster.jpg" alt="Soirée d'inauguration animée au Wall Street à Fréjus" width="576" height="1024" loading="lazy" decoding="async" />
         <video class="events__video" src="images/live.mp4"
                autoplay muted loop playsinline preload="auto"
                width="576" height="1024" aria-label="Soirée live au Wall Street en vidéo"></video>
-        <span class="events__video-badge"><span class="events__video-dot"></span>En direct</span>
+        <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Live">En direct</span></span>
       </div>
     </div>
   </section>
@@ -378,14 +391,17 @@
   <!-- ===== AMBIANCE / GALLERY ===== -->
   <section class="ambiance" id="ambiance">
     <div class="section-head">
-      <span class="eyebrow">Ambiance</span>
-      <h2>Un vrai pub, une vraie ambiance</h2>
-      <p class="section-head__lede">Tonneaux, bois, néons et tireuses&nbsp;: bienvenue dans votre salon fréjusien.</p>
+      <span class="eyebrow" data-en="Atmosphere">Ambiance</span>
+      <h2 data-en="A real pub, a real atmosphere">Un vrai pub, une vraie ambiance</h2>
+      <p class="section-head__lede" data-en="Barrels, wood, neon and beer taps: welcome to your living room in Fréjus.">Tonneaux, bois, néons et tireuses&nbsp;: bienvenue dans votre salon fréjusien.</p>
     </div>
     <div class="gallery">
       <figure class="gallery__item gallery__item--tall"><picture><source srcset="images/ambiance-2.webp" type="image/webp" /><img src="images/ambiance-2.jpg" alt="Salle du Wall Street avec ses tables tonneaux et son bar" width="800" height="1000" loading="lazy" decoding="async" /></picture></figure>
       <figure class="gallery__item"><picture><source srcset="images/ambiance-1.webp" type="image/webp" /><img src="images/ambiance-1.jpg" alt="Service de planches apéro au comptoir" class="img-pos-top" width="800" height="1000" loading="lazy" decoding="async" /></picture></figure>
       <figure class="gallery__item"><picture><source srcset="images/ambiance-3.webp" type="image/webp" /><img src="images/ambiance-3.jpg" alt="Clients attablés en terrasse intérieure du Wall Street" width="800" height="1000" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="gallery__item gallery__item--tall">
+        <video class="gallery__video" src="videos/wallstreet.mp4" poster="videos/wallstreet-poster.jpg" width="720" height="1280" autoplay muted loop playsinline preload="none" aria-label="Ambiance du Wall Street en vidéo" data-en-aria="The Wall Street atmosphere on video"></video>
+      </figure>
       <figure class="gallery__item gallery__item--tall"><picture><source srcset="images/pumps.webp" type="image/webp" /><img src="images/pumps.jpg" alt="Tireuses à bière au bar du Wall Street" width="800" height="1000" loading="lazy" decoding="async" /></picture></figure>
       <figure class="gallery__item"><picture><source srcset="images/facade.webp" type="image/webp" /><img src="images/facade.jpg" alt="Façade du Wall Street Pub un soir de concert live à Fréjus" width="800" height="1000" loading="lazy" decoding="async" /></picture></figure>
       <figure class="gallery__item"><picture><source srcset="images/ambiance-4.webp" type="image/webp" /><img src="images/ambiance-4.jpg" alt="Soirée animée à l'intérieur du Wall Street près du bar Delirium" width="800" height="1000" loading="lazy" decoding="async" /></picture></figure>
@@ -396,33 +412,33 @@
   <section class="program" id="programme">
     <div class="program__grid">
       <div class="program__intro">
-        <span class="eyebrow">Divertissement</span>
-        <h2>Il se passe toujours quelque chose</h2>
-        <p>
+        <span class="eyebrow" data-en="Entertainment">Divertissement</span>
+        <h2 data-en="There's always something on">Il se passe toujours quelque chose</h2>
+        <p data-en="Wall Street is THE night out in Fréjus: gigs, DJs, sport on the big screen and nights that run late. The latest dates are on our socials.">
           Le Wall Street, c'est LA sortie à Fréjus&nbsp;: concerts, DJ, sport sur écran
           géant et soirées qui s'étirent tard. Les dates du moment sont sur nos réseaux.
         </p>
         <div class="program__cta">
-          <a href="https://www.instagram.com/wallstreetfrejus/" target="_blank" rel="noopener" class="btn btn--primary">Le programme sur Instagram</a>
+          <a href="https://www.instagram.com/wallstreetfrejus/" target="_blank" rel="noopener" class="btn btn--primary" data-en="What's on — Instagram">Le programme sur Instagram</a>
           <a href="https://www.facebook.com/wallstreetfrejus" target="_blank" rel="noopener" class="btn btn--ghost">Facebook</a>
         </div>
       </div>
       <ul class="program__list">
         <li>
           <span class="program__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17V5l11-2v12"/><circle cx="6" cy="17" r="3"/><circle cx="17" cy="15" r="3"/></svg></span>
-          <div><h3>Concerts live</h3><p>Des artistes sur scène pour faire monter la température.</p></div>
+          <div><h3 data-en="Live gigs">Concerts live</h3><p data-en="Artists on stage to turn up the heat.">Des artistes sur scène pour faire monter la température.</p></div>
         </li>
         <li>
           <span class="program__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.2"/><path d="M12 3.5a8.5 8.5 0 0 1 7 3.7"/></svg></span>
-          <div><h3>DJ sets</h3><p>Les platines prennent le relais jusqu'au bout de la nuit.</p></div>
+          <div><h3>DJ sets</h3><p data-en="The decks take over until the small hours.">Les platines prennent le relais jusqu'au bout de la nuit.</p></div>
         </li>
         <li>
           <span class="program__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M10.5 8.5l4 2.5-4 2.5z" fill="currentColor" stroke="none"/></svg></span>
-          <div><h3>Sport sur écran géant</h3><p>Rugby, foot, Ligue des Champions — tous les grands matchs, en direct.</p></div>
+          <div><h3 data-en="Sport on the big screen">Sport sur écran géant</h3><p data-en="Rugby, football, Champions League — every big match, live.">Rugby, foot, Ligue des Champions — tous les grands matchs, en direct.</p></div>
         </li>
         <li>
           <span class="program__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14l-7 8z"/><path d="M12 12v6M8 20h8"/></svg></span>
-          <div><h3>Afterworks &amp; soirées</h3><p>Apéros, afterworks et soirées à thème, entre amis.</p></div>
+          <div><h3 data-en="Afterworks &amp; parties">Afterworks &amp; soirées</h3><p data-en="Aperitifs, afterworks and themed nights with friends.">Apéros, afterworks et soirées à thème, entre amis.</p></div>
         </li>
       </ul>
     </div>
@@ -431,12 +447,12 @@
   <!-- ===== INFOS ===== -->
   <section class="infos" id="infos">
     <div class="section-head">
-      <span class="eyebrow">Infos &amp; réservation</span>
-      <h2>Passez nous voir</h2>
+      <span class="eyebrow" data-en="Info &amp; booking">Infos &amp; réservation</span>
+      <h2 data-en="Come see us">Passez nous voir</h2>
     </div>
     <div class="infos__grid">
       <div class="info-card">
-        <h3>Adresse</h3>
+        <h3 data-en="Address">Adresse</h3>
         <p>36 Rue de l'Intendance<br />83600 Fréjus</p>
         <iframe
           class="info-card__map"
@@ -448,29 +464,29 @@
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen>
         </iframe>
-        <a href="https://www.google.com/maps/search/?api=1&query=Wall+Street+Pub+Restaurant+36+Rue+de+l%27Intendance+83600+Fréjus" target="_blank" rel="noopener" class="link-arrow">Itinéraire →</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Wall+Street+Pub+Restaurant+36+Rue+de+l%27Intendance+83600+Fréjus" target="_blank" rel="noopener" class="link-arrow" data-en="Directions →">Itinéraire →</a>
       </div>
       <div class="info-card">
-        <h3>Horaires</h3>
+        <h3 data-en="Opening hours">Horaires</h3>
         <p class="status status--card" data-status hidden><span class="status__dot"></span><span class="status__text"></span></p>
         <ul class="hours">
-          <li><span>Lun – Jeu</span><span>8h00 – 00h00</span></li>
-          <li><span>Ven – Sam</span><span>8h00 – 01h00</span></li>
-          <li><span>Dimanche</span><span>Fermé</span></li>
+          <li><span data-en="Mon – Thu">Lun – Jeu</span><span data-en="8am – 12am">8h00 – 00h00</span></li>
+          <li><span data-en="Fri – Sat">Ven – Sam</span><span data-en="8am – 1am">8h00 – 01h00</span></li>
+          <li><span data-en="Sunday">Dimanche</span><span data-en="Closed">Fermé</span></li>
         </ul>
-        <span class="info-note">Terrasse · options végétariennes</span>
+        <span class="info-note" data-en="Terrace · vegetarian options">Terrasse · options végétariennes</span>
       </div>
       <div class="info-card info-card--accent">
-        <h3>Réserver</h3>
-        <p>Une table, un groupe, un match&nbsp;? Appelez-nous.</p>
+        <h3 data-en="Book">Réserver</h3>
+        <p data-en="A table, a group, a match? Give us a call.">Une table, un groupe, un match&nbsp;? Appelez-nous.</p>
         <a href="tel:+33498135445" class="btn-call">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3h3l1.5 5-2 1.2a12 12 0 0 0 5.8 5.8L16 18l5 1.5v3a1.5 1.5 0 0 1-1.6 1.5A18 18 0 0 1 3 6.6 1.5 1.5 0 0 1 4.5 5"/></svg>
           04&nbsp;98&nbsp;13&nbsp;54&nbsp;45
         </a>
       </div>
       <div class="info-card">
-        <h3>Suivez-nous</h3>
-        <p>Programme des concerts &amp; matchs sur nos réseaux.</p>
+        <h3 data-en="Follow us">Suivez-nous</h3>
+        <p data-en="Gig &amp; match line-up on our socials.">Programme des concerts &amp; matchs sur nos réseaux.</p>
         <div class="social-links">
           <a href="https://www.instagram.com/wallstreetfrejus/" target="_blank" rel="noopener" class="link-arrow">Instagram →</a>
           <a href="https://www.facebook.com/wallstreetfrejus" target="_blank" rel="noopener" class="link-arrow">Facebook →</a>
@@ -486,13 +502,13 @@
     </div>
     <p class="site-footer__tag">Good food &nbsp;•&nbsp; Good drinks &nbsp;•&nbsp; Good people</p>
     <p class="site-footer__meta">36 Rue de l'Intendance, 83600 Fréjus · 04 98 13 54 45</p>
-    <p class="site-footer__meta">© <span id="year"></span> Wall Street — Pub Restaurant, Fréjus. L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</p>
+    <p class="site-footer__meta" data-en="© <span id=&quot;year&quot;></span> Wall Street — Pub Restaurant, Fréjus. Excessive drinking is harmful to health — please drink responsibly.">© <span id="year"></span> Wall Street — Pub Restaurant, Fréjus. L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</p>
   </footer>
 
   <!-- ===== STICKY MOBILE CTA ===== -->
   <div class="mobile-cta" aria-label="Actions rapides">
-    <a href="#menu" class="mobile-cta__btn mobile-cta__btn--ghost">La carte</a>
-    <a href="tel:+33498135445" class="mobile-cta__btn mobile-cta__btn--call" aria-label="Appeler pour réserver">Appeler</a>
+    <a href="#menu" class="mobile-cta__btn mobile-cta__btn--ghost" data-en="Menu">La carte</a>
+    <a href="tel:+33498135445" class="mobile-cta__btn mobile-cta__btn--call" aria-label="Appeler pour réserver" data-en-aria="Call to book" data-en="Call">Appeler</a>
   </div>
 
   <script src="script.js"></script>
