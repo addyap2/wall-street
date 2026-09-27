@@ -1,24 +1,24 @@
 // ===== Wall Street — interactions =====
 
-// Ambiance video (Live & matchs): poster image sits underneath; play in view
+// Ambient videos (Live & matchs, La carte): poster underneath; play in view
 (function () {
-  const vid = document.querySelector('.events__video');
-  if (!vid) return;
-  vid.muted = true; // ensure muted so autoplay is allowed
+  const vids = document.querySelectorAll('.js-ambient-video');
+  if (!vids.length) return;
   const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  vids.forEach(function (vid) { vid.muted = true; }); // muted so autoplay is allowed
   if (reduce) {
-    vid.removeAttribute('autoplay');
-    vid.setAttribute('controls', ''); // poster shows; visitor can start it
+    vids.forEach(function (vid) { vid.removeAttribute('autoplay'); vid.setAttribute('controls', ''); });
     return;
   }
   if (!('IntersectionObserver' in window)) return;
   const io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
+      const vid = e.target;
       if (e.isIntersecting) { const p = vid.play(); if (p && p.catch) p.catch(function () {}); }
       else { vid.pause(); }
     });
   }, { threshold: 0.25 });
-  io.observe(vid);
+  vids.forEach(function (vid) { io.observe(vid); });
 })();
 
 // Mobile nav toggle
