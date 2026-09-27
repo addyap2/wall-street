@@ -1,5 +1,26 @@
 // ===== Wall Street — interactions =====
 
+// Ambiance video (Live & matchs): poster image sits underneath; play in view
+(function () {
+  const vid = document.querySelector('.events__video');
+  if (!vid) return;
+  vid.muted = true; // ensure muted so autoplay is allowed
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) {
+    vid.removeAttribute('autoplay');
+    vid.setAttribute('controls', ''); // poster shows; visitor can start it
+    return;
+  }
+  if (!('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { const p = vid.play(); if (p && p.catch) p.catch(function () {}); }
+      else { vid.pause(); }
+    });
+  }, { threshold: 0.25 });
+  io.observe(vid);
+})();
+
 // Mobile nav toggle
 const toggle = document.querySelector('.nav-toggle');
 const mobileMenu = document.getElementById('mobileMenu');
