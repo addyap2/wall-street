@@ -358,25 +358,31 @@ h1, h2, h3 { line-height: 1.05; }
   align-items: stretch;
   background: var(--blue-ink);
   color: var(--cream);
-  border-bottom: 2px solid var(--red);
+  border-bottom: 4px solid var(--red);
+  box-shadow: 0 10px 26px rgba(34, 49, 99, .22);
   overflow: hidden;
   text-decoration: none;
+  position: relative;
+  z-index: 40;
 }
 .week-ticker[hidden] { display: none; }
 .week-ticker__label {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
+  gap: .55rem;
   background: var(--red);
   color: #fff;
   font-family: var(--font-cond);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .09em;
-  font-size: .76rem;
-  padding: .5rem .95rem;
+  letter-spacing: .1em;
+  font-size: 1.02rem;
+  padding: .95rem 1.4rem;
   white-space: nowrap;
+  box-shadow: 8px 0 20px rgba(210, 58, 80, .28);
 }
+.week-ticker__label-ico { width: 22px; height: 22px; flex: 0 0 auto; }
 .week-ticker__viewport {
   flex: 1 1 auto;
   min-width: 0;
@@ -390,37 +396,39 @@ h1, h2, h3 { line-height: 1.05; }
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
-  padding: .5rem 0;
+  padding: .85rem 0;
   will-change: transform;
 }
 .week-ticker__item {
   display: inline-flex;
   align-items: baseline;
-  gap: .5rem;
-  padding: 0 1.3rem;
+  gap: .6rem;
+  padding: 0 1.7rem;
   font-family: var(--font-cond);
 }
 .week-ticker__day {
-  font-weight: 700;
+  font-family: var(--font-display);
   text-transform: uppercase;
-  letter-spacing: .05em;
-  font-size: .8rem;
+  letter-spacing: .04em;
+  font-size: 1.12rem;
   color: #fff;
 }
 .week-ticker__dish {
-  font-weight: 500;
-  font-size: .9rem;
+  font-weight: 600;
+  font-size: 1.12rem;
   color: var(--cream);
 }
-.week-ticker__sep { color: rgba(244, 236, 221, .32); padding: 0 .1rem; }
+.week-ticker__sep { color: var(--red); font-size: 1.1rem; padding: 0 .15rem; }
 @media (hover: hover) {
   .week-ticker:hover .week-ticker__dish { color: #fff; }
 }
-@media (max-width: 560px) {
-  .week-ticker__label { font-size: .68rem; padding: .5rem .7rem; letter-spacing: .06em; }
-  .week-ticker__day { font-size: .76rem; }
-  .week-ticker__dish { font-size: .84rem; }
-  .week-ticker__item { padding: 0 1rem; }
+@media (max-width: 720px) {
+  .week-ticker__label { font-size: .82rem; padding: .75rem 1rem; letter-spacing: .07em; }
+  .week-ticker__label-ico { width: 18px; height: 18px; }
+  .week-ticker__day { font-size: .96rem; }
+  .week-ticker__dish { font-size: .96rem; }
+  .week-ticker__item { padding: 0 1.15rem; }
+  .week-ticker__track { padding: .7rem 0; }
 }
 /* Reduced motion: no auto-scroll — let the strip be swiped instead */
 @media (prefers-reduced-motion: reduce) {
