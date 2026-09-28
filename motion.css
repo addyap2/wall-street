@@ -230,6 +230,10 @@ html.motion .reveal.is-done,
 html.motion .hero.is-in .hero__art,
 html.motion .hero__poster.is-idle { will-change: auto; }
 
+/* FAQ answer eases open when a question is expanded */
+html.motion .faq__item[open] .faq__a { animation: faqIn .34s var(--ease-out); }
+@keyframes faqIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
 /* ============================================================
    5 · MARQUEE  (already scrolling; pause on hover = intent)
    ============================================================ */

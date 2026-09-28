@@ -837,6 +837,51 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
   .program__grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
+/* ---------- FAQ ---------- */
+.faq { max-width: var(--maxw); margin: 0 auto; }
+.faq__list { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: .8rem; }
+.faq__item {
+  background: var(--cream-2);
+  border: 1px solid rgba(58,75,135,.14);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color var(--d-ui, .3s) ease, box-shadow var(--d-ui, .3s) ease;
+}
+.faq__item[open] { border-color: rgba(58,75,135,.28); box-shadow: var(--shadow); }
+.faq__q {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 1.4rem;
+  font-family: var(--font-cond);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  font-size: 1.02rem;
+  color: var(--blue-ink);
+  transition: color var(--d-ui, .3s) ease;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q:hover { color: var(--red-deep); }
+.faq__icon {
+  flex: 0 0 auto;
+  color: var(--red-deep);
+  display: inline-flex;
+  transition: transform var(--d-ui, .3s) ease;
+}
+.faq__icon svg { width: 20px; height: 20px; }
+.faq__item[open] .faq__icon { transform: rotate(180deg); }
+.faq__a {
+  padding: 0 1.4rem 1.2rem;
+  color: var(--ink-soft);
+  font-size: .98rem;
+  line-height: 1.6;
+}
+.faq__a p { margin: 0; max-width: 62ch; }
+
 /* ============================================================
    FOOTER
    ============================================================ */

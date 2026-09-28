@@ -117,6 +117,9 @@
     // Gallery mosaic — staggered
     var gitems = $all('.gallery__item'); gitems.forEach(function (g) { tagReveal(g, 'reveal--zoom'); }); stagger(gitems, 100);
 
+    // FAQ items — staggered
+    var faqs = $all('.faq__item'); faqs.forEach(function (f) { tagReveal(f); }); stagger(faqs, 70);
+
     // Info cards — staggered
     var cards = $all('.info-card'); cards.forEach(function (c) { tagReveal(c); }); stagger(cards, 90);
 
