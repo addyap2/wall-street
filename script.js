@@ -232,3 +232,96 @@ fillYear();
 
   apply(getLang());
 })();
+
+// ===== Weekly menu ticker (crossing scroll under the header) =====
+// Source of truth: the .week-days list. Past weekdays drop off as the
+// week progresses; on weekends (nothing left) the strip hides itself.
+(function () {
+  const ticker = document.getElementById('weekTicker');
+  if (!ticker) return;
+  const track = ticker.querySelector('.week-ticker__track');
+  const source = Array.prototype.slice.call(document.querySelectorAll('.week-days li'));
+  if (!track || !source.length) { ticker.hidden = true; return; }
+
+  const reduce = !document.documentElement.classList.contains('motion');
+  let anim = null;
+
+  function upcoming() {
+    const today = new Date().getDay(); // 0 Sun … 6 Sat
+    const out = [];
+    source.forEach(function (li) {
+      const d = parseInt(li.getAttribute('data-day'), 10);
+      if (!d) return;
+      // Show today onward, Mon–Fri only. Weekends: nothing remains.
+      if (today >= 1 && today <= 5 && d >= today) {
+        const dayEl = li.querySelector('.wd-day');
+        const dishEl = li.querySelector('.wd-dish');
+        if (dayEl && dishEl) out.push({ day: dayEl.textContent.trim(), dish: dishEl.textContent.trim() });
+      }
+    });
+    return out;
+  }
+
+  function buildGroup(items) {
+    const g = document.createElement('span');
+    g.className = 'week-ticker__group';
+    g.style.display = 'inline-flex';
+    g.style.alignItems = 'center';
+    items.forEach(function (it) {
+      const item = document.createElement('span');
+      item.className = 'week-ticker__item';
+      const day = document.createElement('span');
+      day.className = 'week-ticker__day';
+      day.textContent = it.day;
+      const dish = document.createElement('span');
+      dish.className = 'week-ticker__dish';
+      dish.textContent = it.dish;
+      item.appendChild(day);
+      item.appendChild(dish);
+      g.appendChild(item);
+      const sep = document.createElement('span');
+      sep.className = 'week-ticker__sep';
+      sep.setAttribute('aria-hidden', 'true');
+      sep.textContent = '•';
+      g.appendChild(sep);
+    });
+    return g;
+  }
+
+  function render() {
+    if (anim) { anim.cancel(); anim = null; }
+    track.innerHTML = '';
+    const items = upcoming();
+    if (!items.length) { ticker.hidden = true; return; }
+    ticker.hidden = false;
+
+    const group = buildGroup(items);
+    track.appendChild(group);
+
+    if (reduce || typeof track.animate !== 'function') return; // static, swipeable
+
+    // Repeat the group enough to cover the viewport twice, then loop by one group width.
+    const groupW = group.getBoundingClientRect().width;
+    if (groupW < 1) return;
+    const need = Math.max(2, Math.ceil((ticker.getBoundingClientRect().width * 2) / groupW) + 1);
+    for (let k = 1; k < need; k++) track.appendChild(group.cloneNode(true));
+
+    const speed = 65; // px per second
+    anim = track.animate(
+      [{ transform: 'translateX(0)' }, { transform: 'translateX(' + (-groupW) + 'px)' }],
+      { duration: Math.max(9000, (groupW / speed) * 1000), iterations: Infinity, easing: 'linear' }
+    );
+  }
+
+  render();
+  ticker.addEventListener('mouseenter', function () { if (anim) anim.pause(); });
+  ticker.addEventListener('mouseleave', function () { if (anim) anim.play(); });
+  document.addEventListener('ws:langchange', render); // rebuild in the new language
+
+  // Re-fit on resize (debounced) so the loop always fills the width.
+  let rt = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(render, 200);
+  }, { passive: true });
+})();

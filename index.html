@@ -147,6 +147,12 @@
     <a href="#infos" data-en="Info &amp; booking">Infos &amp; réservation</a>
   </div>
 
+  <!-- ===== WEEKLY MENU TICKER (built from the .week-days list; past days drop off) ===== -->
+  <a class="week-ticker" id="weekTicker" href="#menu" aria-hidden="true" tabindex="-1" hidden>
+    <span class="week-ticker__label" data-en="This week">Cette semaine</span>
+    <span class="week-ticker__viewport"><span class="week-ticker__track"></span></span>
+  </a>
+
   <!-- ===== HERO ===== -->
   <section class="hero" id="contenu">
     <div class="hero__inner">
@@ -246,11 +252,11 @@
         <span class="eyebrow" data-en="On this week">À déguster cette semaine</span>
         <h3 data-en="This week's menu">Menu de la semaine</h3>
         <ul class="week-days">
-          <li><span class="wd-day" data-en="Monday">Lundi</span><span class="wd-dish" data-en="Mountain pizza">Pizza montagnarde</span></li>
-          <li><span class="wd-day" data-en="Tuesday">Mardi</span><span class="wd-dish" data-en="Chicken burger">Chicken burger</span></li>
-          <li><span class="wd-day" data-en="Wednesday">Mercredi</span><span class="wd-dish" data-en="Veal sauté">Sauté de veau</span></li>
-          <li><span class="wd-day" data-en="Thursday">Jeudi</span><span class="wd-dish" data-en="Beef wok">Wok de bœuf</span></li>
-          <li><span class="wd-day" data-en="Friday">Vendredi</span><span class="wd-dish" data-en="Crispy cod">Croustillant de cabillaud</span></li>
+          <li data-day="1"><span class="wd-day" data-en="Monday">Lundi</span><span class="wd-dish" data-en="Mountain pizza">Pizza montagnarde</span></li>
+          <li data-day="2"><span class="wd-day" data-en="Tuesday">Mardi</span><span class="wd-dish" data-en="Chicken burger">Chicken burger</span></li>
+          <li data-day="3"><span class="wd-day" data-en="Wednesday">Mercredi</span><span class="wd-dish" data-en="Veal sauté">Sauté de veau</span></li>
+          <li data-day="4"><span class="wd-day" data-en="Thursday">Jeudi</span><span class="wd-dish" data-en="Beef wok">Wok de bœuf</span></li>
+          <li data-day="5"><span class="wd-day" data-en="Friday">Vendredi</span><span class="wd-dish" data-en="Crispy cod">Croustillant de cabillaud</span></li>
         </ul>
         <p class="week-menu__note" data-en="The daily special changes every week — follow us for the next board.">Le plat du jour change chaque semaine — suivez-nous pour la prochaine ardoise.</p>
       </div>
