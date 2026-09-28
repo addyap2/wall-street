@@ -205,6 +205,26 @@ html.motion .reveal-title > * {
 }
 html.motion .reveal-title.in > * { transform: none; }
 
+/* per-WORD masked rise for headings ("motion text") — each word
+   prints up from its own mask with a stagger, like settling type.
+   Split into .w-mask/.w spans by motion.js. */
+html.motion .text-rise .w-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: .14em;      /* keep descenders (g, j, p, y) inside the mask */
+  margin-bottom: -.14em;
+}
+html.motion .text-rise .w {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform var(--d-enter) var(--ease-out);
+  transition-delay: var(--delay, 0ms);
+  will-change: transform;
+}
+html.motion .text-rise.in .w { transform: none; }
+html.motion .text-rise.is-done .w { will-change: auto; }
+
 /* clear will-change once settled (added by JS) */
 html.motion .reveal.is-done,
 html.motion .hero.is-in .hero__art,

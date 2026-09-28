@@ -70,6 +70,26 @@
     items.forEach(function (el, i) { el.style.setProperty('--delay', (base + i * step) + 'ms'); });
   }
 
+  /* Split a heading into per-word masks so each word rises on its own.
+     Rebuilds from the element's current text, so it also re-runs after
+     a FR/EN swap. Words carry a staggered --delay. */
+  var HEADING_SEL = '.section-head h2, .program__intro h2, .events__text h2';
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function splitWords(el) {
+    var text = (el.textContent || '').trim();
+    if (!text) return;
+    var words = text.split(/\s+/), html = '';
+    for (var i = 0; i < words.length; i++) {
+      html += '<span class="w-mask"><span class="w" style="--delay:' + (i * 70) + 'ms">' +
+              escapeHtml(words[i]) + '</span></span>';
+      if (i < words.length - 1) html += ' ';
+    }
+    el.innerHTML = html;
+    el.classList.add('text-rise');
+  }
+
   if (MOTION && 'IntersectionObserver' in window) {
     // Section headers rise as masked titles
     $all('.section-head').forEach(function (head) {
@@ -77,6 +97,10 @@
       var h2 = $('h2', head);
       if (h2) { head.classList.add('has-title'); }
     });
+
+    // Motion text: per-word rise on major headings
+    var headings = $all(HEADING_SEL);
+    headings.forEach(splitWords);
 
     // Concept feature cards — staggered
     var features = $all('.feature'); features.forEach(function (f) { tagReveal(f); }); stagger(features, 90);
@@ -111,6 +135,16 @@
     }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
 
     $all('.reveal').forEach(function (el) { io.observe(el); });
+    headings.forEach(function (el) { io.observe(el); });
+
+    // Re-run the word split after a language switch (text was replaced).
+    // The heading is already on screen, so reveal it immediately.
+    document.addEventListener('ws:langchange', function () {
+      $all(HEADING_SEL).forEach(function (h) {
+        splitWords(h);
+        h.classList.add('in', 'is-done');
+      });
+    });
   }
 
   /* ============================================================
