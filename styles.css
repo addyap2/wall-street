@@ -1030,6 +1030,78 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
   .agenda__grid { grid-template-columns: 1fr; }
 }
 
+/* ---------- À l'affiche / featured event ---------- */
+.affiche { max-width: var(--maxw); margin: 0 auto; }
+.affiche__grid {
+  display: grid;
+  grid-template-columns: 0.82fr 1fr;
+  gap: clamp(1.6rem, 4vw, 3.5rem);
+  align-items: center;
+}
+.affiche__poster {
+  margin: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 6px solid #fff;
+  transform: rotate(-1.5deg);
+  transition: transform var(--d-ui, .3s) ease;
+}
+.affiche__poster:hover { transform: rotate(0); }
+.affiche__poster img { display: block; width: 100%; height: auto; }
+.affiche__text .eyebrow { margin-bottom: .8rem; }
+.affiche__text h2 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(2rem, 4.6vw, 3.2rem);
+  color: var(--blue-ink);
+  line-height: 1.02;
+}
+.affiche__lede { color: var(--ink-soft); font-size: 1.05rem; margin: 1rem 0 1.5rem; max-width: 46ch; }
+.affiche__facts { list-style: none; display: flex; flex-direction: column; gap: .75rem; margin: 0 0 1.7rem; }
+.affiche__facts li {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  font-family: var(--font-cond);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: var(--blue-ink);
+  font-size: 1.02rem;
+}
+.affiche__ico {
+  flex: 0 0 auto;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: rgba(232, 84, 102, .1);
+  color: var(--red-deep);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.affiche__ico svg { width: 22px; height: 22px; }
+.affiche__cta { display: flex; flex-wrap: wrap; gap: .8rem; }
+@media (max-width: 900px) {
+  .affiche__grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+  .affiche__poster { max-width: 340px; margin: 0 auto; }
+  .affiche__lede { margin-left: auto; margin-right: auto; }
+  .affiche__facts { align-items: center; }
+  .affiche__facts li { justify-content: flex-start; text-align: left; }
+  .affiche__cta { justify-content: center; }
+}
+
+/* ---------- Mini pub tour (Ambiance) ---------- */
+.tour { display: flex; justify-content: center; margin-bottom: clamp(1.6rem, 4vw, 2.6rem); }
+.tour__media {
+  position: relative;
+  width: min(330px, 76vw);
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 6px solid #fff;
+}
+.tour__video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
 /* ============================================================
    FOOTER
    ============================================================ */

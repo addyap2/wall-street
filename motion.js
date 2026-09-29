@@ -114,6 +114,14 @@
     if (evText) { var kids = $all(':scope > *', evText); kids.forEach(tagReveal); stagger(kids, 80); }
     tagReveal($('.events__media'), 'reveal--right');
 
+    // Featured event — poster from the left, details rise on the right
+    tagReveal($('.affiche__poster'), 'reveal--left');
+    var affText = $('.affiche__text');
+    if (affText) { var ak = $all(':scope > *', affText); ak.forEach(tagReveal); stagger(ak, 80); }
+
+    // Mini pub tour
+    tagReveal($('.tour__media'), 'reveal--zoom');
+
     // Gallery mosaic — staggered
     var gitems = $all('.gallery__item'); gitems.forEach(function (g) { tagReveal(g, 'reveal--zoom'); }); stagger(gitems, 100);
 
