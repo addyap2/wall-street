@@ -252,8 +252,8 @@ fillYear();
     source.forEach(function (li) {
       const d = parseInt(li.getAttribute('data-day'), 10);
       if (!d) return;
-      // Show today onward, Mon–Fri only. Weekends: nothing remains.
-      if (today >= 1 && today <= 5 && d >= today) {
+      // Show the whole current week, Mon–Fri (including days already passed).
+      if (d >= 1 && d <= 5) {
         const dayEl = li.querySelector('.wd-day');
         const dishEl = li.querySelector('.wd-dish');
         if (dayEl && dishEl) out.push({ day: dayEl.textContent.trim(), dish: dishEl.textContent.trim() });
@@ -359,10 +359,9 @@ fillYear();
         menuEl.textContent = dish;
         if (menuItem) menuItem.hidden = !dish;
       }
-      // today / past emphasis
+      // highlight today; keep every day this week (incl. past) fully visible
       cell.classList.remove('is-today', 'is-past');
       if (d === todayOrder) cell.classList.add('is-today');
-      else if (d < todayOrder) cell.classList.add('is-past');
     });
   }
 
