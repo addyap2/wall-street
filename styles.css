@@ -965,6 +965,71 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
 }
 .faq__a p { margin: 0; max-width: 62ch; }
 
+/* ---------- Agenda / week calendar ---------- */
+.agenda { max-width: var(--maxw); margin: 0 auto; }
+.agenda__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: .7rem;
+}
+.agenda__day {
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+  background: var(--cream-2);
+  border: 1px solid rgba(58, 75, 135, .14);
+  border-radius: var(--radius);
+  padding: .95rem .85rem 1.05rem;
+  transition: transform var(--d-ui, .3s) ease, box-shadow var(--d-ui, .3s) ease, border-color var(--d-ui, .3s) ease, opacity var(--d-ui, .3s) ease;
+}
+.agenda__dow {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: .92rem;
+  color: var(--blue-ink);
+  padding-bottom: .45rem;
+  border-bottom: 2px solid rgba(58, 75, 135, .14);
+}
+.agenda__item { display: flex; flex-direction: column; gap: .12rem; }
+.agenda__item[hidden] { display: none; }
+.agenda__tag {
+  font-family: var(--font-cond);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  font-size: .66rem;
+  font-weight: 600;
+  color: var(--red-deep);
+}
+.agenda__menu { font-size: .9rem; line-height: 1.35; color: var(--blue-ink); font-weight: 500; }
+.agenda__show { font-size: .9rem; line-height: 1.35; color: var(--ink-soft); }
+/* today gets the spotlight */
+.agenda__day.is-today {
+  background: #fff;
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px rgba(232, 84, 102, .25), var(--shadow);
+}
+.agenda__day.is-today .agenda__dow { color: var(--red-deep); border-bottom-color: rgba(232, 84, 102, .3); }
+/* days already gone this week fade back */
+.agenda__day.is-past { opacity: .48; }
+/* closed day */
+.agenda__day--closed { background: transparent; border-style: dashed; }
+.agenda__day--closed .agenda__show { font-style: italic; }
+.agenda__note { text-align: center; color: var(--ink-soft); font-size: .9rem; margin-top: 1.4rem; }
+
+@media (max-width: 900px) {
+  .agenda__grid { grid-template-columns: repeat(3, 1fr); }
+  .agenda__day.is-past { opacity: .6; }
+}
+@media (max-width: 560px) {
+  .agenda__grid { grid-template-columns: repeat(2, 1fr); gap: .6rem; }
+}
+@media (max-width: 380px) {
+  .agenda__grid { grid-template-columns: 1fr; }
+}
+
 /* ============================================================
    FOOTER
    ============================================================ */

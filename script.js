@@ -325,3 +325,51 @@ fillYear();
     rt = setTimeout(render, 200);
   }, { passive: true });
 })();
+
+// ===== Weekly agenda / calendar =====
+// Menu cells pull from the .week-days list (single source). Today is
+// highlighted; earlier days this week fade back. Entertainment is authored
+// in the markup and only re-localised here.
+(function () {
+  const grid = document.getElementById('weekCalendar');
+  if (!grid) return;
+  const cells = Array.prototype.slice.call(grid.querySelectorAll('.agenda__day'));
+  const menuSrc = Array.prototype.slice.call(document.querySelectorAll('.week-days li'));
+
+  function dishForDay(d) {
+    for (let i = 0; i < menuSrc.length; i++) {
+      if (parseInt(menuSrc[i].getAttribute('data-day'), 10) === d) {
+        const el = menuSrc[i].querySelector('.wd-dish');
+        return el ? el.textContent.trim() : '';
+      }
+    }
+    return '';
+  }
+
+  function paint() {
+    const today = new Date().getDay();            // 0 Sun … 6 Sat
+    const todayOrder = today === 0 ? 7 : today;    // Mon=1 … Sun=7
+    cells.forEach(function (cell) {
+      const d = parseInt(cell.getAttribute('data-day'), 10); // 1 Mon … 7 Sun
+      // fill menu from the week list
+      const menuEl = cell.querySelector('.agenda__menu');
+      const menuItem = cell.querySelector('.agenda__item--menu');
+      if (menuEl) {
+        const dish = dishForDay(d);
+        menuEl.textContent = dish;
+        if (menuItem) menuItem.hidden = !dish;
+      }
+      // today / past emphasis
+      cell.classList.remove('is-today', 'is-past');
+      if (d === todayOrder) cell.classList.add('is-today');
+      else if (d < todayOrder) cell.classList.add('is-past');
+    });
+  }
+
+  paint();
+  document.addEventListener('ws:langchange', paint); // menu text may have switched language
+  // Tick over at local midnight so "today" stays correct on long-open tabs.
+  const now = new Date();
+  const msToMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
+  setTimeout(function () { paint(); setInterval(paint, 86400000); }, msToMidnight + 1000);
+})();

@@ -117,6 +117,9 @@
     // Gallery mosaic — staggered
     var gitems = $all('.gallery__item'); gitems.forEach(function (g) { tagReveal(g, 'reveal--zoom'); }); stagger(gitems, 100);
 
+    // Agenda / week calendar — staggered day cells
+    var agendaDays = $all('.agenda__day'); agendaDays.forEach(function (c) { tagReveal(c); }); stagger(agendaDays, 60);
+
     // FAQ items — staggered
     var faqs = $all('.faq__item'); faqs.forEach(function (f) { tagReveal(f); }); stagger(faqs, 70);
 
