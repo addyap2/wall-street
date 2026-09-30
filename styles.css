@@ -454,7 +454,7 @@ h1, h2, h3 { line-height: 1.05; }
 
 /* Plain coral band used as a separator between sections (no text) */
 .section-band {
-  height: clamp(1.6rem, 4vw, 2.4rem);
+  height: 6px;
   background: var(--red);
   border-top: 2px solid var(--blue-ink);
   border-bottom: 2px solid var(--blue-ink);
