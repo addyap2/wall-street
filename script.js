@@ -347,8 +347,12 @@ fillYear();
   }
 
   function paint() {
-    const today = new Date().getDay();            // 0 Sun … 6 Sat
+    const now = new Date();
+    const today = now.getDay();                    // 0 Sun … 6 Sat
     const todayOrder = today === 0 ? 7 : today;    // Mon=1 … Sun=7
+    // Monday of the current week (local time)
+    const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (todayOrder - 1));
+    const locale = document.documentElement.lang === 'en' ? 'en-GB' : 'fr-FR';
     cells.forEach(function (cell) {
       const d = parseInt(cell.getAttribute('data-day'), 10); // 1 Mon … 7 Sun
       // fill menu from the week list
@@ -358,6 +362,12 @@ fillYear();
         const dish = dishForDay(d);
         menuEl.textContent = dish;
         if (menuItem) menuItem.hidden = !dish;
+      }
+      // date for this weekday in the current week (auto-updates each week)
+      const dateEl = cell.querySelector('.agenda__date');
+      if (dateEl) {
+        const cellDate = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + (d - 1));
+        dateEl.textContent = cellDate.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
       }
       // highlight today; keep every day this week (incl. past) fully visible
       cell.classList.remove('is-today', 'is-past');

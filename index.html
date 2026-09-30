@@ -118,6 +118,7 @@
       <a href="#concept" data-en="The concept">Le concept</a>
       <a href="#menu" data-en="Menu">La carte</a>
       <a href="#agenda" data-en="Agenda">Agenda</a>
+      <a href="#affiche" data-en="Coming up">À l'affiche</a>
       <a href="#events" data-en="Live &amp; sport">Live &amp; matchs</a>
       <a href="#ambiance" data-en="Atmosphere">Ambiance</a>
       <a href="#programme" data-en="What's on">Programme</a>
@@ -142,6 +143,7 @@
     <a href="#concept" data-en="The concept">Le concept</a>
     <a href="#menu" data-en="Menu">La carte</a>
     <a href="#agenda" data-en="Agenda">Agenda</a>
+    <a href="#affiche" data-en="Coming up">À l'affiche</a>
     <a href="#events" data-en="Live &amp; sport">Live &amp; matchs</a>
     <a href="#ambiance" data-en="Atmosphere">Ambiance</a>
     <a href="#programme" data-en="What's on">Programme</a>
@@ -236,6 +238,8 @@
   </section>
 
   <!-- ===== MENU ===== -->
+  <div class="section-band" aria-hidden="true"></div>
+
   <section class="menu" id="menu">
     <div class="section-head">
       <span class="eyebrow" data-en="Menu">La carte</span>
@@ -391,6 +395,8 @@
   <!-- ===== AGENDA / WEEK CALENDAR =====
        Menu cells are filled from the .week-days list (single source).
        Update the "En soirée" values below each week to change the entertainment. -->
+  <div class="section-band" aria-hidden="true"></div>
+
   <section class="agenda" id="agenda">
     <div class="section-head">
       <span class="eyebrow" data-en="Your week">Votre semaine</span>
@@ -399,73 +405,73 @@
     </div>
     <ul class="agenda__grid" id="weekCalendar">
       <li class="agenda__day" data-day="1">
-        <span class="agenda__dow" data-en="Monday">Lundi</span>
+        <div class="agenda__head"><span class="agenda__dow" data-en="Monday">Lundi</span><span class="agenda__date"></span></div>
         <div class="agenda__item agenda__item--menu">
           <span class="agenda__tag" data-en="On the menu">Au menu</span>
           <span class="agenda__menu"></span>
         </div>
         <div class="agenda__item agenda__item--show">
           <span class="agenda__tag" data-en="Evening">En soirée</span>
-          <span class="agenda__show" data-en="—">—</span>
+          <span class="agenda__show" data-en="Afterwork &amp; aperitifs">Afterwork &amp; apéro</span>
         </div>
       </li>
       <li class="agenda__day" data-day="2">
-        <span class="agenda__dow" data-en="Tuesday">Mardi</span>
+        <div class="agenda__head"><span class="agenda__dow" data-en="Tuesday">Mardi</span><span class="agenda__date"></span></div>
         <div class="agenda__item agenda__item--menu">
           <span class="agenda__tag" data-en="On the menu">Au menu</span>
           <span class="agenda__menu"></span>
         </div>
         <div class="agenda__item agenda__item--show">
           <span class="agenda__tag" data-en="Evening">En soirée</span>
-          <span class="agenda__show" data-en="—">—</span>
+          <span class="agenda__show" data-en="Sport on the big screen">Sport sur écran géant</span>
         </div>
       </li>
       <li class="agenda__day" data-day="3">
-        <span class="agenda__dow" data-en="Wednesday">Mercredi</span>
+        <div class="agenda__head"><span class="agenda__dow" data-en="Wednesday">Mercredi</span><span class="agenda__date"></span></div>
         <div class="agenda__item agenda__item--menu">
           <span class="agenda__tag" data-en="On the menu">Au menu</span>
           <span class="agenda__menu"></span>
         </div>
         <div class="agenda__item agenda__item--show">
           <span class="agenda__tag" data-en="Evening">En soirée</span>
-          <span class="agenda__show" data-en="—">—</span>
+          <span class="agenda__show" data-en="Aperitifs &amp; music">Apéro &amp; musique</span>
         </div>
       </li>
       <li class="agenda__day" data-day="4">
-        <span class="agenda__dow" data-en="Thursday">Jeudi</span>
+        <div class="agenda__head"><span class="agenda__dow" data-en="Thursday">Jeudi</span><span class="agenda__date"></span></div>
         <div class="agenda__item agenda__item--menu">
           <span class="agenda__tag" data-en="On the menu">Au menu</span>
           <span class="agenda__menu"></span>
         </div>
         <div class="agenda__item agenda__item--show">
           <span class="agenda__tag" data-en="Evening">En soirée</span>
-          <span class="agenda__show" data-en="—">—</span>
+          <span class="agenda__show" data-en="Live gig">Concert live</span>
         </div>
       </li>
       <li class="agenda__day" data-day="5">
-        <span class="agenda__dow" data-en="Friday">Vendredi</span>
+        <div class="agenda__head"><span class="agenda__dow" data-en="Friday">Vendredi</span><span class="agenda__date"></span></div>
         <div class="agenda__item agenda__item--menu">
           <span class="agenda__tag" data-en="On the menu">Au menu</span>
           <span class="agenda__menu"></span>
         </div>
         <div class="agenda__item agenda__item--show">
           <span class="agenda__tag" data-en="Evening">En soirée</span>
-          <span class="agenda__show" data-en="—">—</span>
+          <span class="agenda__show" data-en="Live gig &amp; DJ set">Concert live &amp; DJ set</span>
         </div>
       </li>
       <li class="agenda__day" data-day="6">
-        <span class="agenda__dow" data-en="Saturday">Samedi</span>
+        <div class="agenda__head"><span class="agenda__dow" data-en="Saturday">Samedi</span><span class="agenda__date"></span></div>
         <div class="agenda__item agenda__item--menu">
           <span class="agenda__tag" data-en="On the menu">Au menu</span>
           <span class="agenda__menu"></span>
         </div>
         <div class="agenda__item agenda__item--show">
           <span class="agenda__tag" data-en="Evening">En soirée</span>
-          <span class="agenda__show" data-en="—">—</span>
+          <span class="agenda__show" data-en="DJ set &amp; party">DJ set &amp; soirée</span>
         </div>
       </li>
       <li class="agenda__day agenda__day--closed" data-day="7">
-        <span class="agenda__dow" data-en="Sunday">Dimanche</span>
+        <div class="agenda__head"><span class="agenda__dow" data-en="Sunday">Dimanche</span><span class="agenda__date"></span></div>
         <div class="agenda__item agenda__item--show">
           <span class="agenda__tag" data-en="Evening">En soirée</span>
           <span class="agenda__show" data-en="Closed">Fermé</span>
@@ -475,35 +481,9 @@
     <p class="agenda__note" data-en="Concerts and DJ sets several nights a week — the latest dates are on our socials.">Concerts et DJ sets plusieurs soirs par semaine — les dates du moment sont sur nos réseaux.</p>
   </section>
 
-  <!-- ===== EVENTS ===== -->
-  <section class="events" id="events">
-    <div class="events__grid">
-      <div class="events__text">
-        <span class="eyebrow eyebrow--light" data-en="Live &amp; sport">Live &amp; matchs</span>
-        <h2 data-en="The nights Fréjus gathers here">Les soirs où Fréjus se retrouve ici</h2>
-        <p data-en="Live gigs, DJ sets and every big match on the big screen. Rugby, football, Champions League, tournaments: we turn up the sound, pour the pints, and the atmosphere does the rest.">
-          Concerts live, DJ sets et tous les grands matchs sur écran géant.
-          Rugby, foot, Ligue des Champions, tournois&nbsp;: on branche le son, on tire
-          les pintes, et l'ambiance fait le reste.
-        </p>
-        <ul class="events__list">
-          <li data-en="&lt;strong&gt;Live music &amp; DJ sets&lt;/strong&gt; — several nights a week"><strong>Live music &amp; DJ sets</strong> — plusieurs soirs par semaine</li>
-          <li data-en="&lt;strong&gt;Sport screenings&lt;/strong&gt; — every big match, big screen"><strong>Retransmissions sportives</strong> — tous les grands matchs, écran géant</li>
-          <li data-en="&lt;strong&gt;Afterworks &amp; aperitifs&lt;/strong&gt; — draught beers, cocktails &amp; sharing boards"><strong>Afterworks &amp; apéros</strong> — bières pression, cocktails &amp; planches à partager</li>
-        </ul>
-        <a href="#infos" class="btn btn--primary" data-en="What's on &amp; bookings">Programme &amp; réservations</a>
-      </div>
-      <div class="events__media">
-        <img class="events__poster" src="images/live-poster.jpg" alt="Soirée d'inauguration animée au Wall Street à Fréjus" width="576" height="1024" loading="lazy" decoding="async" />
-        <video class="events__video" src="images/live.mp4"
-               autoplay muted loop playsinline preload="auto"
-               width="576" height="1024" aria-label="Soirée live au Wall Street en vidéo"></video>
-        <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Live">En direct</span></span>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== À L'AFFICHE / FEATURED EVENT ===== -->
+  <div class="section-band" aria-hidden="true"></div>
+
   <section class="affiche" id="affiche">
     <div class="affiche__grid">
       <figure class="affiche__poster">
@@ -538,7 +518,39 @@
     </div>
   </section>
 
+  <!-- ===== EVENTS ===== -->
+  <div class="section-band" aria-hidden="true"></div>
+
+  <section class="events" id="events">
+    <div class="events__grid">
+      <div class="events__text">
+        <span class="eyebrow eyebrow--light" data-en="Live &amp; sport">Live &amp; matchs</span>
+        <h2 data-en="The nights Fréjus gathers here">Les soirs où Fréjus se retrouve ici</h2>
+        <p data-en="Live gigs, DJ sets and every big match on the big screen. Rugby, football, Champions League, tournaments: we turn up the sound, pour the pints, and the atmosphere does the rest.">
+          Concerts live, DJ sets et tous les grands matchs sur écran géant.
+          Rugby, foot, Ligue des Champions, tournois&nbsp;: on branche le son, on tire
+          les pintes, et l'ambiance fait le reste.
+        </p>
+        <ul class="events__list">
+          <li data-en="&lt;strong&gt;Live music &amp; DJ sets&lt;/strong&gt; — several nights a week"><strong>Live music &amp; DJ sets</strong> — plusieurs soirs par semaine</li>
+          <li data-en="&lt;strong&gt;Sport screenings&lt;/strong&gt; — every big match, big screen"><strong>Retransmissions sportives</strong> — tous les grands matchs, écran géant</li>
+          <li data-en="&lt;strong&gt;Afterworks &amp; aperitifs&lt;/strong&gt; — draught beers, cocktails &amp; sharing boards"><strong>Afterworks &amp; apéros</strong> — bières pression, cocktails &amp; planches à partager</li>
+        </ul>
+        <a href="#infos" class="btn btn--primary" data-en="What's on &amp; bookings">Programme &amp; réservations</a>
+      </div>
+      <div class="events__media">
+        <img class="events__poster" src="images/live-poster.jpg" alt="Soirée d'inauguration animée au Wall Street à Fréjus" width="576" height="1024" loading="lazy" decoding="async" />
+        <video class="events__video" src="images/live.mp4"
+               autoplay muted loop playsinline preload="auto"
+               width="576" height="1024" aria-label="Soirée live au Wall Street en vidéo"></video>
+        <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Live">En direct</span></span>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== AMBIANCE / GALLERY ===== -->
+  <div class="section-band" aria-hidden="true"></div>
+
   <section class="ambiance" id="ambiance">
     <div class="section-head">
       <span class="eyebrow" data-en="Atmosphere">Ambiance</span>
@@ -547,6 +559,7 @@
     </div>
     <div class="tour">
       <figure class="tour__media">
+        <img class="tour__poster" src="videos/tour-poster.jpg" alt="Intérieur du Wall Street, niveau supérieur" width="720" height="1280" loading="lazy" decoding="async" />
         <video class="tour__video js-ambient-video" src="videos/tour.mp4" poster="videos/tour-poster.jpg" muted loop playsinline preload="none" autoplay width="720" height="1280" aria-label="Mini visite du Wall Street en vidéo" data-en-aria="Wall Street mini tour on video"></video>
         <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Pub tour">La visite</span></span>
       </figure>
@@ -565,6 +578,8 @@
   </section>
 
   <!-- ===== PROGRAMME / DIVERTISSEMENT ===== -->
+  <div class="section-band" aria-hidden="true"></div>
+
   <section class="program" id="programme">
     <div class="program__grid">
       <div class="program__intro">
@@ -602,6 +617,8 @@
 
 
   <!-- ===== FAQ ===== -->
+  <div class="section-band" aria-hidden="true"></div>
+
   <section class="faq" id="faq">
     <div class="section-head">
       <span class="eyebrow" data-en="Good to know">Bon à savoir</span>
@@ -655,6 +672,8 @@
   </section>
 
   <!-- ===== INFOS ===== -->
+  <div class="section-band" aria-hidden="true"></div>
+
   <section class="infos" id="infos">
     <div class="section-head">
       <span class="eyebrow" data-en="Info &amp; booking">Infos &amp; réservation</span>
