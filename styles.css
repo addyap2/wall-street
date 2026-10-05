@@ -1126,10 +1126,10 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
 }
 
 /* ---------- Mini pub tour (Ambiance) ---------- */
-.tour { display: flex; justify-content: center; gap: clamp(.8rem, 2.5vw, 1.6rem); margin-bottom: clamp(1.6rem, 4vw, 2.6rem); }
+.tour { display: flex; justify-content: center; margin-bottom: clamp(1.6rem, 4vw, 2.6rem); }
 .tour__media {
   position: relative;
-  width: min(330px, 44vw);
+  width: min(330px, 76vw);
   aspect-ratio: 9 / 16;
   border-radius: var(--radius);
   overflow: hidden;
@@ -1141,7 +1141,6 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
 .tour__poster { z-index: 0; }
 .tour__video { z-index: 1; background: transparent; }
 .tour__media .events__video-badge { z-index: 2; }
-.concept__video .tour__media { width: min(330px, 76vw); }
 
 /* ============================================================
    FOOTER
