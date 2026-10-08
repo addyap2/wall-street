@@ -119,11 +119,14 @@
     var affText = $('.affiche__text');
     if (affText) { var ak = $all(':scope > *', affText); ak.forEach(tagReveal); stagger(ak, 80); }
 
-    // Mini pub tour
-    tagReveal($('.tour__media'), 'reveal--zoom');
+    // Framed videos (pub tour + sport reel)
+    $all('.tour__media').forEach(function (m) { tagReveal(m, 'reveal--zoom'); });
 
     // Gallery mosaic — staggered
     var gitems = $all('.gallery__item'); gitems.forEach(function (g) { tagReveal(g, 'reveal--zoom'); }); stagger(gitems, 100);
+
+    // Food gallery — staggered masonry
+    var food = $all('.food-gallery__item'); food.forEach(function (f) { tagReveal(f, 'reveal--zoom'); }); stagger(food, 60);
 
     // Agenda / week calendar — staggered day cells
     var agendaDays = $all('.agenda__day'); agendaDays.forEach(function (c) { tagReveal(c); }); stagger(agendaDays, 60);

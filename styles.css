@@ -184,7 +184,7 @@ h1, h2, h3 { line-height: 1.05; }
 .nav-toggle.is-open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
 /* Switch to the hamburger before the (now longer) nav would crowd */
-@media (max-width: 1024px) {
+@media (max-width: 1140px) {
   .nav { display: none; }
   .btn--nav { display: none; }
   .nav-toggle { display: flex; }
@@ -1141,6 +1141,34 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
 .tour__poster { z-index: 0; }
 .tour__video { z-index: 1; background: transparent; }
 .tour__media .events__video-badge { z-index: 2; }
+
+/* ---------- Food gallery (masonry, no cropping) ---------- */
+.food { max-width: var(--maxw); margin: 0 auto; }
+.food-gallery { column-count: 4; column-gap: .9rem; }
+.food-gallery__item {
+  margin: 0 0 .9rem;
+  break-inside: avoid;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.food-gallery__item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform .5s ease;
+}
+@media (hover: hover) {
+  .food-gallery__item:hover img { transform: scale(1.05); }
+}
+@media (max-width: 1024px) { .food-gallery { column-count: 3; } }
+@media (max-width: 700px) {
+  .food-gallery { column-count: 2; column-gap: .6rem; }
+  .food-gallery__item { margin-bottom: .6rem; }
+}
+
+/* Sport reel inside the Programme section */
+.tour--sport { margin-top: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 0; }
 
 /* ============================================================
    FOOTER

@@ -121,6 +121,7 @@
     <nav class="nav" aria-label="Navigation principale">
       <a href="#concept" data-en="The concept">Le concept</a>
       <a href="#menu" data-en="Menu">La carte</a>
+      <a href="#cuisine" data-en="Food">Cuisine</a>
       <a href="#agenda" data-en="Agenda">Agenda</a>
       <a href="#affiche" data-en="Coming up">À l'affiche</a>
       <a href="#events" data-en="Live &amp; sport">Live &amp; matchs</a>
@@ -146,6 +147,7 @@
   <div class="mobile-menu" id="mobileMenu" hidden>
     <a href="#concept" data-en="The concept">Le concept</a>
     <a href="#menu" data-en="Menu">La carte</a>
+    <a href="#cuisine" data-en="Food">Cuisine</a>
     <a href="#agenda" data-en="Agenda">Agenda</a>
     <a href="#affiche" data-en="Coming up">À l'affiche</a>
     <a href="#events" data-en="Live &amp; sport">Live &amp; matchs</a>
@@ -396,6 +398,28 @@
     <p class="menu__note" data-en="Prices in euros, taxes included. Some dishes vary with the daily catch. Any allergy questions? Just ask the team.">Prix en euros, taxes comprises. Certaines suggestions varient selon l'arrivage. Une question sur un allergène&nbsp;? Demandez à l'équipe.</p>
   </section>
 
+  <!-- ===== FOOD GALLERY / DANS L'ASSIETTE ===== -->
+  <section class="food" id="cuisine">
+    <div class="section-head">
+      <span class="eyebrow" data-en="Dig in">À table</span>
+      <h2 data-en="On the plate">Dans l'assiette</h2>
+      <p class="section-head__lede" data-en="Sharing boards, tartares, prime cuts and homemade fries — a taste of what's waiting for you.">Planches à partager, tartares, belles pièces et frites maison — un aperçu de ce qui vous attend.</p>
+    </div>
+    <div class="food-gallery">
+      <figure class="food-gallery__item"><picture><source srcset="images/food-1.webp" type="image/webp" /><img src="images/food-1.jpg" alt="Assortiment de tapas à partager : samosas, accras et légumes croustillants" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="food-gallery__item"><picture><source srcset="images/food-2.webp" type="image/webp" /><img src="images/food-2.jpg" alt="Entrecôte grillée, frites maison et salade accompagnées d'une bière" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="food-gallery__item"><picture><source srcset="images/food-7.webp" type="image/webp" /><img src="images/food-7.jpg" alt="Travers de porc sauce barbecue, frites maison et salade" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="food-gallery__item"><picture><source srcset="images/food-8.webp" type="image/webp" /><img src="images/food-8.jpg" alt="Tartare de saumon, frites maison et salade fraîche" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="food-gallery__item"><picture><source srcset="images/food-11.webp" type="image/webp" /><img src="images/food-11.jpg" alt="Carpaccio de bœuf et verre de rosé en terrasse le soir" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="food-gallery__item"><picture><source srcset="images/food-3.webp" type="image/webp" /><img src="images/food-3.jpg" alt="Pièces de bœuf, frites maison et salade servies en salle" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="food-gallery__item"><picture><source srcset="images/food-6.webp" type="image/webp" /><img src="images/food-6.jpg" alt="Salade généreuse et vue sur la salle du Wall Street" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="food-gallery__item"><picture><source srcset="images/food-10.webp" type="image/webp" /><img src="images/food-10.jpg" alt="Pavé de saumon, frites maison et salade" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="food-gallery__item"><picture><source srcset="images/food-9.webp" type="image/webp" /><img src="images/food-9.jpg" alt="Salade croustillante dans l'ambiance du Wall Street" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="food-gallery__item"><picture><source srcset="images/food-5.webp" type="image/webp" /><img src="images/food-5.jpg" alt="Deux bières Delirium servies au Wall Street" loading="lazy" decoding="async" /></picture></figure>
+      <figure class="food-gallery__item"><picture><source srcset="images/food-4.webp" type="image/webp" /><img src="images/food-4.jpg" alt="Tireuses à bière Paulaner au bar du Wall Street" loading="lazy" decoding="async" /></picture></figure>
+    </div>
+  </section>
+
   <!-- ===== AGENDA / WEEK CALENDAR =====
        Menu cells are filled from the .week-days list (single source).
        Update the "En soirée" values below each week to change the entertainment. -->
@@ -627,6 +651,13 @@
           <div><h3 data-en="Afterworks &amp; parties">Afterworks &amp; soirées</h3><p data-en="Aperitifs, afterworks and themed nights with friends.">Apéros, afterworks et soirées à thème, entre amis.</p></div>
         </li>
       </ul>
+    </div>
+    <div class="tour tour--sport">
+      <figure class="tour__media">
+        <img class="tour__poster" src="videos/sport-poster.jpg" alt="Clients du Wall Street réunis pour regarder un match de foot sur écran géant" width="576" height="1024" loading="lazy" decoding="async" />
+        <video class="tour__video js-ambient-video" src="videos/sport.mp4" poster="videos/sport-poster.jpg" muted loop playsinline preload="none" autoplay width="576" height="1024" aria-label="Clients regardant le foot sur écran géant au Wall Street" data-en-aria="Guests watching football on the big screen at Wall Street"></video>
+        <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Live sport">Sport en direct</span></span>
+      </figure>
     </div>
   </section>
 
