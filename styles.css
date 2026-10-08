@@ -1189,6 +1189,14 @@ section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 2.5rem); }
   font-size: .95rem;
 }
 .site-footer__meta { font-size: .8rem; color: rgba(255,255,255,.6); max-width: 640px; margin: 0 auto; }
+.site-footer__credit {
+  margin: 1rem auto 0;
+  font-size: .78rem;
+  color: rgba(255,255,255,.45);
+  letter-spacing: .01em;
+}
+.site-footer__credit a { color: rgba(255,255,255,.7); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.2); transition: color .2s ease, border-color .2s ease; }
+.site-footer__credit a:hover { color: #fff; border-bottom-color: rgba(255,255,255,.6); }
 
 /* ============================================================
    RESPONSIVE
