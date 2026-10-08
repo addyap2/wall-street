@@ -382,3 +382,96 @@ fillYear();
   const msToMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
   setTimeout(function () { paint(); setInterval(paint, 86400000); }, msToMidnight + 1000);
 })();
+
+// ===== Food gallery lightbox =====
+(function () {
+  const gallery = document.getElementById('foodGallery');
+  if (!gallery) return;
+  const items = Array.prototype.slice.call(gallery.querySelectorAll('.food-gallery__item'));
+  if (!items.length) return;
+
+  function enlargeLabel() {
+    return document.documentElement.lang === 'en' ? ' — enlarge photo' : ' — agrandir la photo';
+  }
+  function capText(item) {
+    const c = item.querySelector('.food-gallery__cap');
+    return c ? c.textContent.trim() : '';
+  }
+  function imgSrc(item) {
+    const im = item.querySelector('img');
+    return im ? (im.currentSrc || im.src) : '';
+  }
+
+  // Build the lightbox once
+  const box = document.createElement('div');
+  box.className = 'lightbox';
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-modal', 'true');
+  box.setAttribute('aria-hidden', 'true');
+  box.innerHTML =
+    '<button class="lightbox__btn lightbox__close" type="button" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+    '<button class="lightbox__btn lightbox__prev" type="button" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>' +
+    '<img class="lightbox__img" alt="" />' +
+    '<button class="lightbox__btn lightbox__next" type="button" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>' +
+    '<p class="lightbox__cap"></p>';
+  document.body.appendChild(box);
+
+  const bImg = box.querySelector('.lightbox__img');
+  const bCap = box.querySelector('.lightbox__cap');
+  const btnClose = box.querySelector('.lightbox__close');
+  const btnPrev = box.querySelector('.lightbox__prev');
+  const btnNext = box.querySelector('.lightbox__next');
+
+  let current = -1;
+  let lastFocused = null;
+
+  function show(i) {
+    current = (i + items.length) % items.length;
+    const item = items[current];
+    bImg.src = imgSrc(item);
+    bImg.alt = item.querySelector('img') ? item.querySelector('img').alt : '';
+    bCap.textContent = capText(item);
+  }
+  function open(i) {
+    lastFocused = document.activeElement;
+    show(i);
+    box.classList.add('is-open');
+    box.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    btnClose.focus();
+  }
+  function close() {
+    box.classList.remove('is-open');
+    box.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  // Wire each gallery item as a button
+  items.forEach(function (item, i) {
+    item.setAttribute('role', 'button');
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('aria-label', capText(item) + enlargeLabel());
+    item.addEventListener('click', function () { open(i); });
+    item.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
+    });
+  });
+
+  btnClose.addEventListener('click', close);
+  btnPrev.addEventListener('click', function () { show(current - 1); });
+  btnNext.addEventListener('click', function () { show(current + 1); });
+  box.addEventListener('click', function (e) { if (e.target === box) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (!box.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') show(current - 1);
+    else if (e.key === 'ArrowRight') show(current + 1);
+  });
+
+  // Keep labels / open caption in sync with the language
+  document.addEventListener('ws:langchange', function () {
+    items.forEach(function (item) { item.setAttribute('aria-label', capText(item) + enlargeLabel()); });
+    if (box.classList.contains('is-open') && current >= 0) bCap.textContent = capText(items[current]);
+  });
+})();
