@@ -1153,6 +1153,14 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
   background: var(--cream-2);
   cursor: pointer;
 }
+.food-gallery__item video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  z-index: 1; background: transparent;
+}
+.food-gallery__item video + .food-gallery__cap,
+.food-gallery__item .food-gallery__cap { z-index: 2; }
 .food-gallery__item img {
   width: 100%;
   height: 100%;
