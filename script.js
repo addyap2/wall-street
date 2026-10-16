@@ -233,6 +233,44 @@ fillYear();
   apply(getLang());
 })();
 
+// ===== Dated weekly menus =====
+// Each <ul class="week-days" data-week="YYYY-MM-DD"> holds one week (its
+// Monday). Mon–Fri show the current week; from Saturday the next week's
+// list takes over. Falls back to the latest week already started.
+function wsMonday(d, addWeeks) {
+  const order = d.getDay() === 0 ? 7 : d.getDay(); // Mon=1 … Sun=7
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate() - (order - 1) + 7 * (addWeeks || 0));
+}
+function wsIso(d) {
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+function wsWeekList(monday) {
+  const lists = Array.prototype.slice.call(document.querySelectorAll('ul.week-days'));
+  if (!lists.length) return null;
+  const key = wsIso(monday);
+  let best = null;
+  lists.forEach(function (ul) {
+    const w = ul.getAttribute('data-week');
+    if (!w) { if (!best) best = ul; return; }
+    if (w <= key && (!best || !best.getAttribute('data-week') || w > best.getAttribute('data-week'))) best = ul;
+  });
+  return best || lists[0];
+}
+function wsMenuWeek() {
+  const now = new Date();
+  const weekend = now.getDay() === 6 || now.getDay() === 0;
+  return wsWeekList(wsMonday(now, weekend ? 1 : 0));
+}
+(function () {
+  const active = wsMenuWeek();
+  if (!active) return;
+  document.querySelectorAll('ul.week-days').forEach(function (ul) { ul.hidden = ul !== active; });
+  const isNext = (active.getAttribute('data-week') || '') > wsIso(wsMonday(new Date(), 0));
+  document.querySelectorAll('[data-week-label]').forEach(function (el) {
+    el.hidden = el.getAttribute('data-week-label') !== (isNext ? 'next' : 'this');
+  });
+})();
+
 // ===== Weekly menu ticker (crossing scroll under the header) =====
 // Source of truth: the .week-days list. Past weekdays drop off as the
 // week progresses; on weekends (nothing left) the strip hides itself.
@@ -240,7 +278,8 @@ fillYear();
   const ticker = document.getElementById('weekTicker');
   if (!ticker) return;
   const track = ticker.querySelector('.week-ticker__track');
-  const source = Array.prototype.slice.call(document.querySelectorAll('.week-days li'));
+  const week = wsMenuWeek();
+  const source = week ? Array.prototype.slice.call(week.querySelectorAll('li')) : [];
   if (!track || !source.length) { ticker.hidden = true; return; }
 
   const reduce = !document.documentElement.classList.contains('motion');
@@ -256,7 +295,9 @@ fillYear();
       if (d >= 1 && d <= 5) {
         const dayEl = li.querySelector('.wd-day');
         const dishEl = li.querySelector('.wd-dish');
-        if (dayEl && dishEl) out.push({ day: dayEl.textContent.trim(), dish: dishEl.textContent.trim() });
+        const dateEl = li.querySelector('.wd-date');
+        const day = dayEl ? dayEl.textContent.trim() + (dateEl ? ' ' + dateEl.textContent.trim() : '') : '';
+        if (dayEl && dishEl) out.push({ day: day, dish: dishEl.textContent.trim() });
       }
     });
     return out;
@@ -334,7 +375,7 @@ fillYear();
   const grid = document.getElementById('weekCalendar');
   if (!grid) return;
   const cells = Array.prototype.slice.call(grid.querySelectorAll('.agenda__day'));
-  const menuSrc = Array.prototype.slice.call(document.querySelectorAll('.week-days li'));
+  let menuSrc = [];
 
   function dishForDay(d) {
     for (let i = 0; i < menuSrc.length; i++) {
@@ -352,6 +393,10 @@ fillYear();
     const todayOrder = today === 0 ? 7 : today;    // Mon=1 … Sun=7
     // Monday of the current week (local time)
     const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (todayOrder - 1));
+    // dishes come from the list dated for this calendar week
+    const week = wsWeekList(monday);
+    menuSrc = week && (!week.getAttribute('data-week') || week.getAttribute('data-week') === wsIso(monday))
+      ? Array.prototype.slice.call(week.querySelectorAll('li')) : [];
     const locale = document.documentElement.lang === 'en' ? 'en-GB' : 'fr-FR';
     cells.forEach(function (cell) {
       const d = parseInt(cell.getAttribute('data-day'), 10); // 1 Mon … 7 Sun

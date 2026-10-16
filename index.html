@@ -264,15 +264,30 @@
         <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Homemade">Fait maison</span></span>
       </div>
       <div class="week-menu__list">
-        <span class="eyebrow" data-en="On this week">À déguster cette semaine</span>
+        <span class="eyebrow">
+          <span data-week-label="this" data-en="On this week">À déguster cette semaine</span>
+          <span data-week-label="next" data-en="Coming up next week" hidden>La semaine prochaine</span>
+        </span>
         <h3 data-en="This week's menu">Menu de la semaine</h3>
-        <ul class="week-days">
-          <li data-day="1"><span class="wd-day" data-en="Monday">Lundi</span><span class="wd-dish" data-en="Pizza burger — tomato, ground beef, cheddar, onions, mozzarella">Pizza burger — tomate, viande hachée, cheddar, oignons, mozza</span></li>
-          <li data-day="2"><span class="wd-day" data-en="Tuesday">Mardi</span><span class="wd-dish" data-en="Satay beef wok">Wok de bœuf au saté</span></li>
-          <li data-day="3"><span class="wd-day" data-en="Wednesday">Mercredi</span><span class="wd-dish" data-en="Chicken tagliatelle, pesto &amp; sun-dried tomato">Tagliatelles poulet, pesto &amp; tomate séchée</span></li>
-          <li data-day="4"><span class="wd-day" data-en="Thursday">Jeudi</span><span class="wd-dish" data-en="Potatoes burger">Potatoes burger</span></li>
-          <li data-day="5"><span class="wd-day" data-en="Friday">Vendredi</span><span class="wd-dish" data-en="Cod brandade">Brandade de cabillaud</span></li>
-        </ul>
+        <!-- Une liste par semaine, data-week = date du lundi (AAAA-MM-JJ).
+             Le site affiche automatiquement la bonne semaine (dès le samedi,
+             celle d'après). Les semaines passées peuvent être supprimées. -->
+        <div class="week-lists">
+          <ul class="week-days" data-week="2026-10-12">
+            <li data-day="1"><span class="wd-day" data-en="Monday">Lundi</span><span class="wd-date">12/10</span><span class="wd-dish" data-en="Pizza burger — tomato, ground beef, cheddar, onions, mozzarella">Pizza burger — tomate, viande hachée, cheddar, oignons, mozza</span></li>
+            <li data-day="2"><span class="wd-day" data-en="Tuesday">Mardi</span><span class="wd-date">13/10</span><span class="wd-dish" data-en="Satay beef wok">Wok de bœuf au saté</span></li>
+            <li data-day="3"><span class="wd-day" data-en="Wednesday">Mercredi</span><span class="wd-date">14/10</span><span class="wd-dish" data-en="Chicken tagliatelle, pesto &amp; sun-dried tomato">Tagliatelles poulet, pesto &amp; tomate séchée</span></li>
+            <li data-day="4"><span class="wd-day" data-en="Thursday">Jeudi</span><span class="wd-date">15/10</span><span class="wd-dish" data-en="Potatoes burger">Potatoes burger</span></li>
+            <li data-day="5"><span class="wd-day" data-en="Friday">Vendredi</span><span class="wd-date">16/10</span><span class="wd-dish" data-en="Cod brandade">Brandade de cabillaud</span></li>
+          </ul>
+          <ul class="week-days" data-week="2026-10-19" hidden>
+            <li data-day="1"><span class="wd-day" data-en="Monday">Lundi</span><span class="wd-date">19/10</span><span class="wd-dish" data-en="Cannibale pizza — tomato, ground beef, merguez, peppers, mozzarella">Pizza La Cannibale — tomate, viande hachée, merguez, poivrons, mozzarella</span></li>
+            <li data-day="2"><span class="wd-day" data-en="Tuesday">Mardi</span><span class="wd-date">20/10</span><span class="wd-dish" data-en="Confit beef parmentier with porcini mushrooms">Parmentier de bœuf confit aux cèpes</span></li>
+            <li data-day="3"><span class="wd-day" data-en="Wednesday">Mercredi</span><span class="wd-date">21/10</span><span class="wd-dish" data-en="Chorizo risotto">Risotto chorizo</span></li>
+            <li data-day="4"><span class="wd-day" data-en="Thursday">Jeudi</span><span class="wd-date">22/10</span><span class="wd-dish" data-en="Beef steak with brie sauce, fries &amp; salad">Pavé de bœuf, sauce au brie — frites, salade</span></li>
+            <li data-day="5"><span class="wd-day" data-en="Friday">Vendredi</span><span class="wd-date">23/10</span><span class="wd-dish" data-en="Satay prawn wok">Wok de crevettes au saté</span></li>
+          </ul>
+        </div>
         <p class="week-menu__note" data-en="The daily special changes every week — follow us for the next board.">Le plat du jour change chaque semaine — suivez-nous pour la prochaine ardoise.</p>
       </div>
     </div>

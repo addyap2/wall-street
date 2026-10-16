@@ -623,6 +623,16 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
   font-size: .88rem;
   white-space: nowrap;
 }
+.wd-date {
+  font-family: var(--font-cond);
+  font-size: .78rem;
+  letter-spacing: .04em;
+  color: var(--ink-soft);
+  opacity: .75;
+  margin-left: -.55rem;
+  margin-right: auto;
+  white-space: nowrap;
+}
 .wd-dish { font-weight: 700; color: var(--blue-ink); text-align: right; }
 .week-menu__note { margin-top: .9rem; font-size: .78rem; color: var(--ink-soft); font-style: italic; }
 @media (max-width: 720px) {
