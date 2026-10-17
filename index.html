@@ -256,7 +256,10 @@
       </p>
     </div>
 
-    <!-- ===== Menu de la semaine (à mettre à jour chaque semaine) ===== -->
+    <!-- ===== Menu de la semaine (à mettre à jour chaque semaine) =====
+         Each <li> carries data-date="YYYY-MM-DD" (the exact day the dish is served)
+         and shows that date in .wd-day. The ticker and agenda read data-date to
+         place the menu on the right week and hide it once the week has passed. -->
     <div class="week-menu">
       <div class="week-menu__media">
         <img class="week-menu__poster" src="videos/cuisine-poster.jpg" alt="Plat maison servi au Wall Street" width="720" height="1280" loading="lazy" decoding="async" />
@@ -267,11 +270,11 @@
         <span class="eyebrow" data-en="On this week">À déguster cette semaine</span>
         <h3 data-en="This week's menu">Menu de la semaine</h3>
         <ul class="week-days">
-          <li data-day="1"><span class="wd-day" data-en="Monday">Lundi</span><span class="wd-dish" data-en="Pizza burger — tomato, ground beef, cheddar, onions, mozzarella">Pizza burger — tomate, viande hachée, cheddar, oignons, mozza</span></li>
-          <li data-day="2"><span class="wd-day" data-en="Tuesday">Mardi</span><span class="wd-dish" data-en="Satay beef wok">Wok de bœuf au saté</span></li>
-          <li data-day="3"><span class="wd-day" data-en="Wednesday">Mercredi</span><span class="wd-dish" data-en="Chicken tagliatelle, pesto &amp; sun-dried tomato">Tagliatelles poulet, pesto &amp; tomate séchée</span></li>
-          <li data-day="4"><span class="wd-day" data-en="Thursday">Jeudi</span><span class="wd-dish" data-en="Potatoes burger">Potatoes burger</span></li>
-          <li data-day="5"><span class="wd-day" data-en="Friday">Vendredi</span><span class="wd-dish" data-en="Cod brandade">Brandade de cabillaud</span></li>
+          <li data-day="1" data-date="2026-10-19"><span class="wd-day" data-en="Monday 19/10">Lundi 19/10</span><span class="wd-dish" data-en="Cannibale pizza — tomato, ground beef, merguez, peppers, mozzarella">Pizza La Cannibale — tomate, viande hachée, merguez, poivrons, mozzarella</span></li>
+          <li data-day="2" data-date="2026-10-20"><span class="wd-day" data-en="Tuesday 20/10">Mardi 20/10</span><span class="wd-dish" data-en="Confit beef parmentier with porcini">Parmentier de bœuf confit aux cèpes</span></li>
+          <li data-day="3" data-date="2026-10-21"><span class="wd-day" data-en="Wednesday 21/10">Mercredi 21/10</span><span class="wd-dish" data-en="Chorizo risotto">Risotto chorizo</span></li>
+          <li data-day="4" data-date="2026-10-22"><span class="wd-day" data-en="Thursday 22/10">Jeudi 22/10</span><span class="wd-dish" data-en="Beef steak, brie sauce — fries, salad">Pavé de bœuf, sauce au brie — frites, salade</span></li>
+          <li data-day="5" data-date="2026-10-23"><span class="wd-day" data-en="Friday 23/10">Vendredi 23/10</span><span class="wd-dish" data-en="Satay prawn wok">Wok de crevettes au saté</span></li>
         </ul>
         <p class="week-menu__note" data-en="The daily special changes every week — follow us for the next board.">Le plat du jour change chaque semaine — suivez-nous pour la prochaine ardoise.</p>
       </div>

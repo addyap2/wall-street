@@ -233,9 +233,26 @@ fillYear();
   apply(getLang());
 })();
 
+// ===== Dated weekly menu helpers =====
+// Each .week-days li carries data-date="YYYY-MM-DD". The menu is "live"
+// until the day after its last dated dish; undated lists are always live.
+function wsMenuDate(li) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(li.getAttribute('data-date') || '');
+  return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
+}
+function wsStartOfToday() {
+  const n = new Date();
+  return new Date(n.getFullYear(), n.getMonth(), n.getDate());
+}
+function wsMenuLive(items) {
+  const dates = items.map(wsMenuDate).filter(Boolean);
+  if (!dates.length) return true;
+  return Math.max.apply(null, dates) >= wsStartOfToday().getTime();
+}
+
 // ===== Weekly menu ticker (crossing scroll under the header) =====
-// Source of truth: the .week-days list. Past weekdays drop off as the
-// week progresses; on weekends (nothing left) the strip hides itself.
+// Source of truth: the .week-days list. Shows the whole dated week (so on
+// weekends it already announces next week's menu) and hides once it's past.
 (function () {
   const ticker = document.getElementById('weekTicker');
   if (!ticker) return;
@@ -247,8 +264,8 @@ fillYear();
   let anim = null;
 
   function upcoming() {
-    const today = new Date().getDay(); // 0 Sun … 6 Sat
     const out = [];
+    if (!wsMenuLive(source)) return out;
     source.forEach(function (li) {
       const d = parseInt(li.getAttribute('data-day'), 10);
       if (!d) return;
@@ -347,31 +364,34 @@ fillYear();
   }
 
   function paint() {
-    const now = new Date();
-    const today = now.getDay();                    // 0 Sun … 6 Sat
-    const todayOrder = today === 0 ? 7 : today;    // Mon=1 … Sun=7
-    // Monday of the current week (local time)
-    const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (todayOrder - 1));
+    const today = wsStartOfToday();
+    const todayOrder = today.getDay() === 0 ? 7 : today.getDay(); // Mon=1 … Sun=7
+    // Monday of the current week (local time)…
+    let monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - (todayOrder - 1));
+    // …or of the menu's week, while that menu is live (e.g. next week's, posted at the weekend).
+    const live = wsMenuLive(menuSrc);
+    const first = menuSrc.map(wsMenuDate).filter(Boolean).sort(function (a, b) { return a - b; })[0];
+    if (live && first) {
+      const fo = first.getDay() === 0 ? 7 : first.getDay();
+      monday = new Date(first.getFullYear(), first.getMonth(), first.getDate() - (fo - 1));
+    }
     const locale = document.documentElement.lang === 'en' ? 'en-GB' : 'fr-FR';
     cells.forEach(function (cell) {
       const d = parseInt(cell.getAttribute('data-day'), 10); // 1 Mon … 7 Sun
-      // fill menu from the week list
+      const cellDate = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + (d - 1));
+      // fill menu from the week list (blank once that menu's week is over)
       const menuEl = cell.querySelector('.agenda__menu');
       const menuItem = cell.querySelector('.agenda__item--menu');
       if (menuEl) {
-        const dish = dishForDay(d);
+        const dish = live ? dishForDay(d) : '';
         menuEl.textContent = dish;
         if (menuItem) menuItem.hidden = !dish;
       }
-      // date for this weekday in the current week (auto-updates each week)
       const dateEl = cell.querySelector('.agenda__date');
-      if (dateEl) {
-        const cellDate = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + (d - 1));
-        dateEl.textContent = cellDate.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
-      }
+      if (dateEl) dateEl.textContent = cellDate.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
       // highlight today; keep every day this week (incl. past) fully visible
       cell.classList.remove('is-today', 'is-past');
-      if (d === todayOrder) cell.classList.add('is-today');
+      if (cellDate.getTime() === today.getTime()) cell.classList.add('is-today');
     });
   }
 
