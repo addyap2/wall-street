@@ -442,6 +442,8 @@
       <h2 data-en="This week at Wall Street">L'agenda de la semaine</h2>
       <p class="section-head__lede" data-en="The daily special and what's on each evening, at a glance.">Le menu du jour et ce qui se passe chaque soir, en un coup d'œil.</p>
     </div>
+    <!-- Evening shows: add data-date="YYYY-MM-DD" to a one-off .agenda__show so it
+         only appears on that date (otherwise "—"); undated text repeats every week. -->
     <ul class="agenda__grid" id="weekCalendar">
       <li class="agenda__day" data-day="1">
         <div class="agenda__head"><span class="agenda__dow" data-en="Monday">Lundi</span><span class="agenda__date"></span></div>
@@ -495,7 +497,7 @@
         </div>
         <div class="agenda__item agenda__item--show">
           <span class="agenda__tag" data-en="Evening">En soirée</span>
-          <span class="agenda__show" data-en="Charity evening, open to all">Soirée caritative, ouverte à tous</span>
+          <span class="agenda__show" data-date="2026-10-09" data-en="Charity evening, open to all">Soirée caritative, ouverte à tous</span>
         </div>
       </li>
       <li class="agenda__day" data-day="6">
@@ -520,8 +522,10 @@
     <p class="agenda__note" data-en="Concerts and DJ sets several nights a week — the latest dates are on our socials.">Concerts et DJ sets plusieurs soirs par semaine — les dates du moment sont sur nos réseaux.</p>
   </section>
 
-  <!-- ===== À L'AFFICHE / FEATURED EVENT ===== -->
-  <section class="affiche" id="affiche">
+  <!-- ===== À L'AFFICHE / FEATURED EVENT =====
+       data-until="YYYY-MM-DD" = last day of the event. After that day the
+       section and its "À l'affiche" nav links hide themselves (script.js). -->
+  <section class="affiche" id="affiche" data-until="2026-10-09">
     <div class="affiche__grid">
       <figure class="affiche__poster">
         <picture>

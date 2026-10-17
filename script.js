@@ -389,6 +389,9 @@ function wsMenuLive(items) {
       }
       const dateEl = cell.querySelector('.agenda__date');
       if (dateEl) dateEl.textContent = cellDate.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
+      // one-off evening shows (data-date) only appear on their own date
+      const showEl = cell.querySelector('.agenda__show[data-date]');
+      if (showEl && wsMenuDate(showEl) - cellDate !== 0) showEl.textContent = '—';
       // highlight today; keep every day this week (incl. past) fully visible
       cell.classList.remove('is-today', 'is-past');
       if (cellDate.getTime() === today.getTime()) cell.classList.add('is-today');
@@ -494,4 +497,30 @@ function wsMenuLive(items) {
     items.forEach(function (item) { item.setAttribute('aria-label', capText(item) + enlargeLabel()); });
     if (box.classList.contains('is-open') && current >= 0) bCap.textContent = capText(items[current]);
   });
+})();
+
+// ===== Auto-expiring events =====
+// Anything with data-until="YYYY-MM-DD" hides itself the day after that date,
+// along with in-page links pointing at it (e.g. the "À l'affiche" nav item).
+(function () {
+  const items = Array.prototype.slice.call(document.querySelectorAll('[data-until]'));
+  if (!items.length) return;
+
+  function sweep() {
+    const today = wsStartOfToday();
+    items.forEach(function (el) {
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(el.getAttribute('data-until') || '');
+      if (!m) return;
+      const over = new Date(+m[1], +m[2] - 1, +m[3]) < today;
+      el.hidden = over;
+      if (el.id) {
+        document.querySelectorAll('a[href="#' + el.id + '"]').forEach(function (a) { a.hidden = over; });
+      }
+    });
+  }
+
+  sweep();
+  const now = new Date();
+  const msToMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
+  setTimeout(function () { sweep(); setInterval(sweep, 86400000); }, msToMidnight + 1000);
 })();
