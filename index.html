@@ -59,13 +59,18 @@
   </script>
 
   <script type="application/ld+json">
-  {
+    {
     "@context": "https://schema.org",
     "@type": "BarOrPub",
     "name": "Wall Street — Pub Restaurant",
     "description": "Bar · brasserie · pub restaurant à Fréjus. Concerts live, matchs en direct, cuisine 100% maison.",
-    "servesCuisine": ["Burgers", "Pizza", "Française", "Grillades"],
-    "image": "images/hero-poster.jpg",
+    "servesCuisine": [
+      "Burgers",
+      "Pizza",
+      "Française",
+      "Grillades"
+    ],
+    "image": "https://www.wallstreetfrejus.fr/images/hero-poster.jpg",
     "telephone": "+33498135445",
     "address": {
       "@type": "PostalAddress",
@@ -74,11 +79,476 @@
       "addressLocality": "Fréjus",
       "addressCountry": "FR"
     },
-    "sameAs": ["https://www.instagram.com/wallstreetfrejus/", "https://www.facebook.com/wallstreetfrejus"],
+    "sameAs": [
+      "https://www.instagram.com/wallstreetfrejus/",
+      "https://www.facebook.com/wallstreetfrejus"
+    ],
     "openingHoursSpecification": [
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "08:00", "closes": "00:00" },
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "08:00", "closes": "01:00" }
-    ]
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday"
+        ],
+        "opens": "08:00",
+        "closes": "00:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "08:00",
+        "closes": "01:00"
+      }
+    ],
+    "url": "https://www.wallstreetfrejus.fr/",
+    "priceRange": "€€",
+    "hasMenu": {
+      "@type": "Menu",
+      "name": "La carte",
+      "inLanguage": "fr",
+      "hasMenuSection": [
+        {
+          "@type": "MenuSection",
+          "name": "Planches",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Planche de charcuterie",
+              "offers": {
+                "@type": "Offer",
+                "price": "22.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Planche de fromages",
+              "offers": {
+                "@type": "Offer",
+                "price": "22.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Les planches à composer",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Accras de morue",
+              "offers": {
+                "@type": "Offer",
+                "price": "5.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Samoussas de bœuf",
+              "offers": {
+                "@type": "Offer",
+                "price": "5.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Samoussas aux légumes",
+              "offers": {
+                "@type": "Offer",
+                "price": "5.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Tempura de légumes",
+              "offers": {
+                "@type": "Offer",
+                "price": "5.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Assiette de frites",
+              "offers": {
+                "@type": "Offer",
+                "price": "4.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Salades",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Salade César",
+              "offers": {
+                "@type": "Offer",
+                "price": "20.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Salade chèvre chaud & jambon cru",
+              "offers": {
+                "@type": "Offer",
+                "price": "20.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Salade mixte",
+              "offers": {
+                "@type": "Offer",
+                "price": "7.50",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Tomates burrata",
+              "offers": {
+                "@type": "Offer",
+                "price": "18.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Tartares & carpaccio",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Tartare de bœuf",
+              "offers": {
+                "@type": "Offer",
+                "price": "21.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Tartare de saumon",
+              "offers": {
+                "@type": "Offer",
+                "price": "22.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Carpaccio de bœuf",
+              "offers": {
+                "@type": "Offer",
+                "price": "19.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Côté burgers",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Burger classique",
+              "offers": {
+                "@type": "Offer",
+                "price": "21.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Burger du moment",
+              "offers": {
+                "@type": "Offer",
+                "price": "23.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Pizzas · base sauce tomate",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Margherita",
+              "offers": {
+                "@type": "Offer",
+                "price": "12.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Napolitaine",
+              "offers": {
+                "@type": "Offer",
+                "price": "14.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Reine",
+              "offers": {
+                "@type": "Offer",
+                "price": "14.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Diavola",
+              "offers": {
+                "@type": "Offer",
+                "price": "15.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "4 Saisons",
+              "offers": {
+                "@type": "Offer",
+                "price": "15.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Pizzas · base crème",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Tartuffe",
+              "offers": {
+                "@type": "Offer",
+                "price": "21.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Capri",
+              "offers": {
+                "@type": "Offer",
+                "price": "21.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Saumon",
+              "offers": {
+                "@type": "Offer",
+                "price": "22.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "4 Fromages",
+              "offers": {
+                "@type": "Offer",
+                "price": "21.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Côté viandes",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Belle entrecôte (280/300 g)",
+              "offers": {
+                "@type": "Offer",
+                "price": "28.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Bavette",
+              "offers": {
+                "@type": "Offer",
+                "price": "22.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Pièce du boucher",
+              "offers": {
+                "@type": "Offer",
+                "price": "26.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Tataki de bœuf",
+              "offers": {
+                "@type": "Offer",
+                "price": "24.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Ribs (travers de porc)",
+              "offers": {
+                "@type": "Offer",
+                "price": "24.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Côté poissons",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Pavé de saumon",
+              "offers": {
+                "@type": "Offer",
+                "price": "21.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Loup ou dorade grillée",
+              "offers": {
+                "@type": "Offer",
+                "price": "26.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Côté pâtes",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Tagliatelles à la crème de truffe",
+              "offers": {
+                "@type": "Offer",
+                "price": "22.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Tagliatelles jambon fumé & burrata",
+              "offers": {
+                "@type": "Offer",
+                "price": "22.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Tagliatelles au saumon",
+              "offers": {
+                "@type": "Offer",
+                "price": "22.00",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Côté desserts",
+          "hasMenuItem": [
+            {
+              "@type": "MenuItem",
+              "name": "Baba bouchon",
+              "offers": {
+                "@type": "Offer",
+                "price": "10.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Crème brûlée à la vanille de Madagascar",
+              "offers": {
+                "@type": "Offer",
+                "price": "8.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Panna cotta vanille & coulis de fruits rouges",
+              "offers": {
+                "@type": "Offer",
+                "price": "8.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Dessert du jour",
+              "offers": {
+                "@type": "Offer",
+                "price": "8.50",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Tiramisu du jour",
+              "offers": {
+                "@type": "Offer",
+                "price": "8.50",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Profiteroles",
+              "offers": {
+                "@type": "Offer",
+                "price": "9.50",
+                "priceCurrency": "EUR"
+              }
+            }
+          ]
+        }
+      ]
+    }
   }
   </script>
 
@@ -263,7 +733,7 @@
     <div class="week-menu">
       <div class="week-menu__media">
         <img class="week-menu__poster" src="videos/cuisine-poster.jpg" alt="Plat maison servi au Wall Street" width="720" height="1280" loading="lazy" decoding="async" />
-        <video class="week-menu__video js-ambient-video" src="videos/cuisine.mp4" autoplay muted loop playsinline preload="auto" width="720" height="1280" aria-label="Cuisine maison du Wall Street en vidéo"></video>
+        <video class="week-menu__video js-ambient-video" src="videos/cuisine.mp4" autoplay muted loop playsinline preload="none" width="720" height="1280" aria-label="Cuisine maison du Wall Street en vidéo"></video>
         <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Homemade">Fait maison</span></span>
       </div>
       <div class="week-menu__list">
@@ -792,6 +1262,35 @@
 
   <script src="script.js"></script>
   <script src="motion.js"></script>
+  <!-- Event structured data: auto-emits when a featured event is live.
+       Add data-date="YYYY-MM-DDTHH:MM" (and data-until="YYYY-MM-DD") to #affiche for the next event. -->
+  <script>
+  (function () {
+    var ev = document.querySelector('.affiche[data-date]');
+    if (!ev) return;
+    var start = ev.getAttribute('data-date'), until = ev.getAttribute('data-until');
+    var end = until ? new Date(until + 'T23:59:59') : new Date(start);
+    if (end < new Date()) return; // expired — don't mark up
+    var q = function (s) { var e = ev.querySelector(s); return e ? e.textContent.trim() : ''; };
+    var img = ev.querySelector('img');
+    var data = {
+      "@context": "https://schema.org", "@type": "Event",
+      "name": q('h2'),
+      "startDate": start,
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "description": q('.affiche__lede'),
+      "image": img ? [new URL(img.getAttribute('src'), location.href).href] : undefined,
+      "location": { "@type": "Place", "name": "Wall Street — Pub Restaurant", "address": { "@type": "PostalAddress", "streetAddress": "36 Rue de l'Intendance", "postalCode": "83600", "addressLocality": "Fréjus", "addressCountry": "FR" } },
+      "organizer": { "@type": "Organization", "name": "Wall Street — Pub Restaurant", "url": "https://www.wallstreetfrejus.fr/" }
+    };
+    if (until) data.endDate = until;
+    var sc = document.createElement('script');
+    sc.type = 'application/ld+json';
+    sc.textContent = JSON.stringify(data);
+    document.head.appendChild(sc);
+  })();
+  </script>
 
   <!-- Vercel Web Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
