@@ -741,7 +741,9 @@
       <div class="week-menu__list">
         <span class="eyebrow" data-en="On this week">À déguster cette semaine</span>
         <h3 data-en="This week's menu">Menu de la semaine</h3>
-        <ul class="week-days">
+        <!-- Pre-load the next week by adding a second <ul class="week-days" data-week="YYYY-MM-DD"> (its Monday)
+             right below this one; the site shows the current week Mon–Fri and switches to the next from Saturday. -->
+        <ul class="week-days" data-week="2026-10-26">
           <li data-day="1" data-date="2026-10-26"><span class="wd-day" data-en="Monday 26/10">Lundi 26/10</span><span class="wd-dish" data-en="La Gratinée tarte flambée — cream, onions, smoked bacon, mozzarella">Tarte flambée La Gratinée — crème, oignons, lardons fumés, mozzarella</span></li>
           <li data-day="2" data-date="2026-10-27"><span class="wd-day" data-en="Tuesday 27/10">Mardi 27/10</span><span class="wd-dish" data-en="Confit duck parmentier">Parmentier de canard confit</span></li>
           <li data-day="3" data-date="2026-10-28"><span class="wd-day" data-en="Wednesday 28/10">Mercredi 28/10</span><span class="wd-dish" data-en="Veal osso buco alla milanese">Osso-buco de veau à la milanaise</span></li>

@@ -250,6 +250,38 @@ function wsMenuLive(items) {
   return Math.max.apply(null, dates) >= wsStartOfToday().getTime();
 }
 
+// ===== Multiple dated weeks: pick the active one, hide the rest =====
+// Pre-load weeks by adding <ul class="week-days" data-week="YYYY-MM-DD">
+// (its Monday). Current week Mon–Fri; from Saturday the next week takes
+// over. With a single list it's always shown (behaviour unchanged).
+function wsMonday(d, add) {
+  const o = d.getDay() === 0 ? 7 : d.getDay();
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate() - (o - 1) + 7 * (add || 0));
+}
+function wsWeekIso(d) {
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+function wsActiveWeek() {
+  const lists = Array.prototype.slice.call(document.querySelectorAll('ul.week-days'));
+  const dated = lists.filter(function (u) { return u.getAttribute('data-week'); });
+  if (dated.length < 2) return lists[0] || null;
+  const now = new Date();
+  const target = wsWeekIso(wsMonday(now, (now.getDay() === 6 || now.getDay() === 0) ? 1 : 0));
+  let best = null, earliest = null;
+  dated.forEach(function (u) {
+    const w = u.getAttribute('data-week');
+    if (!earliest || w < earliest.getAttribute('data-week')) earliest = u;
+    if (w <= target && (!best || w > best.getAttribute('data-week'))) best = u;
+  });
+  return best || earliest;
+}
+(function () {
+  const lists = Array.prototype.slice.call(document.querySelectorAll('ul.week-days'));
+  if (lists.length < 2) return;
+  const active = wsActiveWeek();
+  lists.forEach(function (u) { u.hidden = u !== active; });
+})();
+
 // ===== Weekly menu ticker (crossing scroll under the header) =====
 // Source of truth: the .week-days list. Shows the whole dated week (so on
 // weekends it already announces next week's menu) and hides once it's past.
@@ -257,7 +289,8 @@ function wsMenuLive(items) {
   const ticker = document.getElementById('weekTicker');
   if (!ticker) return;
   const track = ticker.querySelector('.week-ticker__track');
-  const source = Array.prototype.slice.call(document.querySelectorAll('.week-days li'));
+  const aw = wsActiveWeek();
+  const source = aw ? Array.prototype.slice.call(aw.querySelectorAll('li')) : [];
   if (!track || !source.length) { ticker.hidden = true; return; }
 
   const reduce = !document.documentElement.classList.contains('motion');
@@ -351,7 +384,8 @@ function wsMenuLive(items) {
   const grid = document.getElementById('weekCalendar');
   if (!grid) return;
   const cells = Array.prototype.slice.call(grid.querySelectorAll('.agenda__day'));
-  const menuSrc = Array.prototype.slice.call(document.querySelectorAll('.week-days li'));
+  const aw = wsActiveWeek();
+  const menuSrc = aw ? Array.prototype.slice.call(aw.querySelectorAll('li')) : [];
 
   function dishForDay(d) {
     for (let i = 0; i < menuSrc.length; i++) {
