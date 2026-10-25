@@ -707,7 +707,10 @@
         v.setAttribute('src', halloween ? 'videos/halloween-decor.mp4' : 'videos/ambiance.mp4');
         v.setAttribute('preload', 'auto');
         v.setAttribute('autoplay', '');
+        var playbackRate = halloween ? 0.5 : 1;
+        v.defaultPlaybackRate = playbackRate;
         v.load();
+        v.playbackRate = playbackRate;
         var p = v.play();
         if (p && p.catch) p.catch(function(){});
       }
