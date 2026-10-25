@@ -673,9 +673,31 @@
       <p class="hero__tag">Good food &nbsp;•&nbsp; Good drinks &nbsp;•&nbsp; Good people</p>
     </div>
     <div class="hero__art" aria-hidden="true">
-      <video class="hero__poster" src="videos/ambiance.mp4" poster="videos/ambiance-poster.jpg" width="720" height="1280" autoplay muted loop playsinline preload="auto"></video>
+      <video id="heroVideo" class="hero__poster" src="videos/ambiance.mp4" poster="videos/ambiance-poster.jpg" width="720" height="1280" autoplay muted loop playsinline preload="auto"></video>
     </div>
   </section>
+  <!-- Halloween takeover: apply the spooky hero skin and swap in the
+       Halloween promo video, but only until 2026-11-01 00:00. Runs here
+       (right after the hero) so the default ambiance video fetch is
+       aborted immediately instead of wasted. After the cutoff nothing
+       happens and the hero keeps its normal video + styling. -->
+  <script>
+  (function(){
+    try {
+      if (new Date() >= new Date('2026-11-01T00:00:00')) return;
+      var h = document.querySelector('.hero');
+      if (h) h.classList.add('is-halloween');
+      var v = document.getElementById('heroVideo');
+      if (v) {
+        v.setAttribute('poster', 'videos/halloween-hero-poster.jpg');
+        v.setAttribute('src', 'videos/halloween-hero.mp4');
+        v.load();
+        var p = v.play();
+        if (p && p.catch) p.catch(function(){});
+      }
+    } catch (e) {}
+  })();
+  </script>
 
   <!-- ===== MARQUEE ===== -->
   <div class="marquee" aria-hidden="true">
@@ -1014,11 +1036,10 @@
        section and its "À l'affiche" nav links hide themselves (script.js). -->
   <section class="affiche" id="affiche" data-until="2026-11-01">
     <div class="affiche__grid">
-      <figure class="affiche__poster">
-        <picture>
-          <source srcset="images/halloween-1.webp" type="image/webp" />
-          <img src="images/halloween-1.jpg" alt="Décoration d'Halloween au Wall Street Fréjus : clown fantôme suspendu au-dessus du bar" width="1125" height="2000" loading="lazy" decoding="async" />
-        </picture>
+      <figure class="affiche__poster affiche__poster--video">
+        <img class="events__poster" src="videos/halloween-decor-poster.jpg" alt="Décoration d'Halloween au Wall Street Fréjus : squelette fantôme enchaîné suspendu dans le bar" width="576" height="1024" loading="lazy" decoding="async" />
+        <video class="events__video js-ambient-video" src="videos/halloween-decor.mp4" muted loop playsinline preload="none" width="576" height="1024" aria-label="Décorations d'Halloween au Wall Street en vidéo"></video>
+        <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Decor">Déco</span></span>
       </figure>
       <div class="affiche__text">
         <span class="eyebrow" data-en="Coming up">À l'affiche</span>
@@ -1306,18 +1327,6 @@
     sc.type = 'application/ld+json';
     sc.textContent = JSON.stringify(data);
     document.head.appendChild(sc);
-  })();
-  </script>
-
-  <!-- Halloween hero skin — auto-removed at 2026-11-01 00:00 -->
-  <script>
-  (function(){
-    try {
-      if (new Date() < new Date('2026-11-01T00:00:00')) {
-        var h = document.querySelector('.hero');
-        if (h) h.classList.add('is-halloween');
-      }
-    } catch (e) {}
   })();
   </script>
 
