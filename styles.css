@@ -1440,3 +1440,32 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
 .site-footer__nav { font-family: var(--font-cond); letter-spacing: .03em; margin: .3rem 0 1rem; color: rgba(255,255,255,.6); font-size: .9rem; }
 .site-footer__nav a { color: rgba(255,255,255,.85); text-decoration: none; }
 .site-footer__nav a:hover { color: #fff; text-decoration: underline; }
+
+/* --- Halloween hero skin (auto-removed after 2026-11-01 00:00 by script.js) --- */
+.hero__halloween { display: none; }
+.hero-hw__badge { display: none; }
+.hero.is-halloween .hero__halloween {
+  display: block; position: absolute; inset: 0;
+  pointer-events: none; z-index: 4; overflow: hidden;
+}
+.hero.is-halloween .hero-hw__badge {
+  display: inline-flex; align-items: center; gap: .45rem; align-self: flex-start;
+  margin-bottom: 1rem; padding: .5rem .95rem; border-radius: 999px;
+  background: #16111f; color: #ff7a1a; text-decoration: none;
+  font-family: var(--font-cond, 'Oswald', sans-serif); font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; font-size: .82rem;
+  box-shadow: 0 8px 22px rgba(0,0,0,.28); transition: transform .2s ease, background .2s ease;
+}
+.hero.is-halloween .hero-hw__badge:hover { background: #241a36; transform: translateY(-2px); }
+.hero.is-halloween .hero__title { color: #ff7a1a; text-shadow: 0 0 26px rgba(255,122,26,.4); }
+.hero.is-halloween .hero__kicker { color: #9b6bd6; }
+.hero-hw__web { position: absolute; top: -8px; width: clamp(80px, 13vw, 140px); height: auto; color: rgba(22,17,31,.32); }
+.hero-hw__web--l { left: -8px; }
+.hero-hw__web--r { right: -8px; transform: scaleX(-1); }
+.hero-hw__spider {
+  position: absolute; top: 0; right: 16%; width: 30px; height: auto; color: #16111f;
+  transform-origin: top center; animation: hw-sway 4.5s ease-in-out infinite;
+}
+@keyframes hw-sway { 0%,100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+@media (prefers-reduced-motion: reduce) { .hero-hw__spider { animation: none; } }
+@media (max-width: 640px) { .hero-hw__spider { right: 8%; width: 26px; } }
