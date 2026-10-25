@@ -646,11 +646,6 @@
       <svg class="hero-hw__web hero-hw__web--r" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M0 0 H120 M0 0 L95 48 M0 0 L70 70 M0 0 L48 95 M0 0 V120"/><path d="M24 0 Q14 14 0 24 M50 0 Q28 28 0 50 M80 0 Q44 44 0 80 M110 0 Q58 58 0 110"/></g></svg>
       <svg class="hero-hw__web hero-hw__web--bl" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M0 120 H120 M0 120 L95 72 M0 120 L70 50 M0 120 L48 25 M0 120 V0"/><path d="M24 120 Q14 106 0 96 M50 120 Q28 92 0 70 M80 120 Q44 76 0 40 M110 120 Q58 62 0 10"/></g></svg>
       <svg class="hero-hw__spider" viewBox="0 0 40 60"><line x1="20" y1="0" x2="20" y2="24" stroke="currentColor" stroke-width="1.4"/><circle cx="20" cy="35" r="8" fill="currentColor"/><g stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"><path d="M14 31 L3 24 M13 35 L1 35 M14 39 L3 47"/><path d="M26 31 L37 24 M27 35 L39 35 M26 39 L37 47"/></g></svg>
-      <span class="hero-hw__bat hero-hw__bat--1">🦇</span>
-      <span class="hero-hw__bat hero-hw__bat--2">🦇</span>
-      <span class="hero-hw__bat hero-hw__bat--3">🦇</span>
-      <span class="hero-hw__ghost">👻</span>
-      <span class="hero-hw__fog"></span>
     </div>
     <div class="hero__inner">
       <a class="hero-hw__badge" href="/blog/soiree-halloween-a-frejus" data-en="🎃 Halloween special · Oct 30 &amp; 31 →">🎃 Spécial Halloween · 30 &amp; 31 oct →</a>
@@ -661,36 +656,57 @@
       </h1>
       <p class="hero__sub">Pub Restaurant &nbsp;·&nbsp; Fréjus</p>
       <p class="status status--hero" data-status hidden><span class="status__dot"></span><span class="status__text"></span></p>
-      <p class="hero__lede" data-en="Live gigs, matches on the big screen and generous homemade food. This is where you come for great beers, great plates and a great atmosphere.">
-        Concerts live, matchs en direct sur écran géant et cuisine généreuse
-        faite maison. Ici, on vient pour les bonnes bières, la bonne assiette
-        et la bonne ambiance.
+      <p class="hero__lede" data-en="Live gigs, big-screen matches and generous homemade food — the Fréjus spot to eat, drink and enjoy the night.">
+        Concerts live, grands matchs et cuisine maison — le spot fréjusien
+        pour bien manger, trinquer et profiter de la soirée.
       </p>
       <div class="hero__cta">
-        <a href="#menu" class="btn btn--primary" data-en="See the menu">Voir la carte</a>
-        <a href="#infos" class="btn btn--ghost" data-en="Find us">Nous trouver</a>
+        <a href="#menu" class="btn btn--primary" id="heroPrimary" data-en="See the menu">Voir la carte</a>
+        <a href="#infos" class="btn btn--ghost" id="heroSecondary" data-en="Find us">Nous trouver</a>
       </div>
       <p class="hero__tag">Good food &nbsp;•&nbsp; Good drinks &nbsp;•&nbsp; Good people</p>
     </div>
     <div class="hero__art" aria-hidden="true">
-      <video id="heroVideo" class="hero__poster" src="videos/ambiance.mp4" poster="videos/ambiance-poster.jpg" width="720" height="1280" autoplay muted loop playsinline preload="auto"></video>
+      <video id="heroVideo" class="hero__poster" poster="videos/ambiance-poster.jpg" width="720" height="1280" muted loop playsinline preload="none"></video>
     </div>
   </section>
-  <!-- Halloween takeover: apply the spooky hero skin and swap in the
-       Halloween promo video, but only until 2026-11-01 00:00. Runs here
-       (right after the hero) so the default ambiance video fetch is
-       aborted immediately instead of wasted. After the cutoff nothing
-       happens and the hero keeps its normal video + styling. -->
+  <!-- Halloween takeover: runs through closing time after the final night.
+       The video source is assigned here so reduced-motion visitors receive
+       a still poster and no unnecessary media is downloaded. -->
   <script>
   (function(){
     try {
-      if (new Date() >= new Date('2026-11-01T00:00:00')) return;
+      var halloweenEnds = new Date('2026-11-01T02:00:00+01:00');
+      var halloween = new Date() < halloweenEnds;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var expiryDelay = halloweenEnds - new Date();
+      if (halloween && expiryDelay > 0) {
+        setTimeout(function () { window.location.reload(); }, expiryDelay + 1000);
+      }
       var h = document.querySelector('.hero');
-      if (h) h.classList.add('is-halloween');
+      if (h && halloween) h.classList.add('is-halloween');
+      var primary = document.getElementById('heroPrimary');
+      var secondary = document.getElementById('heroSecondary');
+      if (halloween && primary && secondary) {
+        primary.setAttribute('href', 'tel:+33498135445');
+        primary.setAttribute('data-en', 'Book Halloween');
+        primary.textContent = 'Réserver Halloween';
+        secondary.setAttribute('href', '#menu');
+        secondary.setAttribute('data-en', 'See the menu');
+        secondary.textContent = 'Voir la carte';
+      }
       var v = document.getElementById('heroVideo');
       if (v) {
-        v.setAttribute('poster', 'videos/halloween-hero-poster.jpg');
-        v.setAttribute('src', 'videos/halloween-hero.mp4');
+        v.setAttribute('poster', halloween ? 'videos/halloween-decor-poster.jpg' : 'videos/ambiance-poster.jpg');
+        if (reduce) {
+          v.removeAttribute('autoplay');
+          v.setAttribute('preload', 'none');
+          v.pause();
+          return;
+        }
+        v.setAttribute('src', halloween ? 'videos/halloween-decor.mp4' : 'videos/ambiance.mp4');
+        v.setAttribute('preload', 'auto');
+        v.setAttribute('autoplay', '');
         v.load();
         var p = v.play();
         if (p && p.catch) p.catch(function(){});
@@ -1033,13 +1049,14 @@
 
   <!-- ===== À L'AFFICHE / FEATURED EVENT =====
        data-until="YYYY-MM-DD" = last day of the event. After that day the
-       section and its "À l'affiche" nav links hide themselves (script.js). -->
-  <section class="affiche" id="affiche" data-until="2026-11-01">
+       section and its "À l'affiche" nav links hide themselves (script.js).
+       data-expires can set a precise after-midnight closing time. -->
+  <section class="affiche" id="affiche" data-until="2026-10-31" data-expires="2026-11-01T02:00:00+01:00">
     <div class="affiche__grid">
       <figure class="affiche__poster affiche__poster--video">
-        <img class="events__poster" src="videos/halloween-decor-poster.jpg" alt="Décoration d'Halloween au Wall Street Fréjus : squelette fantôme enchaîné suspendu dans le bar" width="576" height="1024" loading="lazy" decoding="async" />
-        <video class="events__video js-ambient-video" src="videos/halloween-decor.mp4" muted loop playsinline preload="none" width="576" height="1024" aria-label="Décorations d'Halloween au Wall Street en vidéo"></video>
-        <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Decor">Déco</span></span>
+        <img class="events__poster" src="videos/halloween-hero-poster.jpg" alt="Annonce de la soirée Halloween au Wall Street à Fréjus" width="576" height="1024" loading="lazy" decoding="async" />
+        <video class="events__video js-ambient-video" src="videos/halloween-hero.mp4" muted loop playsinline preload="none" width="576" height="1024" aria-label="Annonce vidéo de la soirée Halloween au Wall Street à Fréjus"></video>
+        <span class="events__video-badge"><span class="events__video-dot"></span><span data-en="Event">Soirée</span></span>
       </figure>
       <div class="affiche__text">
         <span class="eyebrow" data-en="Coming up">À l'affiche</span>

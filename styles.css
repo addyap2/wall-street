@@ -9,6 +9,8 @@
   --blue-ink:    #223163;
   --red:         #E85466;   /* coral / masthead red */
   --red-deep:    #D23a50;
+  --red-action:  #D23A50;   /* AA contrast with white for action labels */
+  --red-action-hover: #B92E43;
   --cream:       #F4ECDD;   /* paper */
   --cream-2:     #FBF6EC;
   --ink:         #1c2230;
@@ -101,12 +103,12 @@ h1, h2, h3 { line-height: 1.05; }
   transition: transform .15s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn--primary { background: var(--red); color: var(--white); box-shadow: 0 10px 24px rgba(232,84,102,.35); }
-.btn--primary:hover { background: var(--red-deep); }
+.btn--primary { background: var(--red-action); color: var(--white); box-shadow: 0 10px 24px rgba(210,58,80,.32); }
+.btn--primary:hover { background: var(--red-action-hover); }
 .btn--ghost { background: transparent; color: var(--blue-ink); border-color: var(--blue-ink); }
 .btn--ghost:hover { background: var(--blue-ink); color: var(--cream); }
-.btn--nav { background: var(--red); color: #fff; padding: .55rem 1.2rem; font-size: .85rem; }
-.btn--nav:hover { background: var(--red-deep); }
+.btn--nav { background: var(--red-action); color: #fff; padding: .55rem 1.2rem; font-size: .85rem; }
+.btn--nav:hover { background: var(--red-action-hover); }
 
 /* ---------- Header actions + language toggle ---------- */
 .header-actions { display: flex; align-items: center; gap: .7rem; }
@@ -354,7 +356,7 @@ h1, h2, h3 { line-height: 1.05; }
     text-transform: uppercase;
     font-size: .9rem;
   }
-  .mobile-cta__btn--call { flex: 1.2; background: var(--red); color: #fff; box-shadow: 0 6px 16px rgba(232,84,102,.35); }
+  .mobile-cta__btn--call { flex: 1.2; background: var(--red-action); color: #fff; box-shadow: 0 6px 16px rgba(210,58,80,.32); }
   .mobile-cta__btn--ghost { background: transparent; color: var(--blue-ink); border: 2px solid var(--blue-ink); }
   body { padding-bottom: 72px; }
 }
@@ -378,7 +380,7 @@ h1, h2, h3 { line-height: 1.05; }
   display: inline-flex;
   align-items: center;
   gap: .55rem;
-  background: var(--red);
+  background: var(--red-action);
   color: #fff;
   font-family: var(--font-cond);
   font-weight: 700;
@@ -1452,12 +1454,25 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
 .hero__halloween { display: none; }
 .hero-hw__badge { display: none; }
 
-/* --- The night sky: dark aubergine with a moon + an orange underglow --- */
+/* --- The night sky: full-bleed backdrop with constrained content --- */
 .hero.is-halloween {
+  isolation: isolate;
+  padding-top: clamp(1.5rem, 2.5vw, 2rem);
+  padding-bottom: clamp(1.5rem, 2.5vw, 2rem);
+  color: #f3eefc;
+}
+.hero.is-halloween::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
   background:
     radial-gradient(70% 55% at 50% 118%, rgba(255,110,20,.30), transparent 70%),
     linear-gradient(180deg, #120c20 0%, #1b1333 52%, #241a40 100%);
-  color: #f3eefc;
 }
 /* Repaint the text that would vanish on the dark sky */
 .hero.is-halloween .hero__kicker { color: #c9a9f2; }
@@ -1469,38 +1484,26 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
 .hero.is-halloween .btn--ghost { color: #f6f2ff; border-color: rgba(246,242,255,.55); }
 .hero.is-halloween .btn--ghost:hover { background: rgba(246,242,255,.12); border-color: #f6f2ff; }
 
-/* Flickering, glowing pumpkin title */
+/* The seasonal title keeps one restrained static glow. */
 .hero.is-halloween .hero__title {
   color: #ff7a1a;
-  animation: hw-flicker 5s linear infinite;
-}
-@keyframes hw-flicker {
-  0%, 100% { text-shadow: 0 0 24px rgba(255,122,26,.6), 0 0 48px rgba(255,70,0,.35); }
-  47%      { text-shadow: 0 0 24px rgba(255,122,26,.6), 0 0 48px rgba(255,70,0,.35); }
-  49%      { text-shadow: 0 0 6px rgba(255,122,26,.25); }
-  51%      { text-shadow: 0 0 26px rgba(255,122,26,.65); }
-  68%      { text-shadow: 0 0 10px rgba(255,122,26,.3); }
-  70%      { text-shadow: 0 0 28px rgba(255,122,26,.7), 0 0 52px rgba(255,70,0,.4); }
+  font-size: clamp(3.2rem, 8.5vw, 5.8rem);
+  text-shadow: 0 0 24px rgba(255,122,26,.48), 0 0 44px rgba(255,70,0,.24);
 }
 
-/* Pumpkin badge, now with a pulsing ember glow */
+/* Campaign badge: large enough to be a comfortable touch target. */
 .hero.is-halloween .hero-hw__badge {
   display: inline-flex; align-items: center; gap: .45rem; align-self: flex-start;
-  margin-bottom: 1rem; padding: .5rem .95rem; border-radius: 999px;
+  min-height: 44px; margin-bottom: .75rem; padding: .6rem 1rem; border-radius: 999px;
   background: #16111f; color: #ff7a1a; text-decoration: none;
   font-family: var(--font-cond, 'Oswald', sans-serif); font-weight: 700;
   letter-spacing: .05em; text-transform: uppercase; font-size: .82rem;
   border: 1px solid rgba(255,122,26,.4);
-  animation: hw-badge-pulse 2.6s ease-in-out infinite;
   transition: transform .2s ease, background .2s ease;
 }
 .hero.is-halloween .hero-hw__badge:hover { background: #251937; transform: translateY(-2px); }
-@keyframes hw-badge-pulse {
-  0%, 100% { box-shadow: 0 8px 22px rgba(0,0,0,.35), 0 0 0 rgba(255,122,26,0); }
-  50%      { box-shadow: 0 8px 22px rgba(0,0,0,.35), 0 0 22px rgba(255,122,26,.6); }
-}
 
-/* Decor overlay sits above the content so bats can fly across */
+/* Static seasonal decoration sits above the background without blocking links. */
 .hero.is-halloween .hero__halloween {
   display: block; position: absolute; inset: 0;
   pointer-events: none; z-index: 5; overflow: hidden;
@@ -1523,79 +1526,23 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
 /* Dangling spider */
 .hero-hw__spider {
   position: absolute; top: 0; right: 20%; width: 30px; height: auto; color: #e7e2f5;
-  transform-origin: top center; animation: hw-sway 4.5s ease-in-out infinite;
   filter: drop-shadow(0 0 5px rgba(180,150,255,.4));
 }
-@keyframes hw-sway { 0%,100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
 
-/* Flying bats (emoji silhouettes with a faint halo so they read on the dark) */
-.hero-hw__bat {
-  position: absolute; font-size: 26px; line-height: 1;
-  filter: drop-shadow(0 0 7px rgba(170,135,255,.55));
-  will-change: transform;
-}
-.hero-hw__bat--1 { top: 26%; left: -8%; font-size: 30px; animation: hw-fly1 15s linear infinite; }
-.hero-hw__bat--2 { top: 14%; left: -8%; font-size: 22px; animation: hw-fly2 19s linear infinite 2s; }
-.hero-hw__bat--3 { top: 40%; left: -8%; font-size: 26px; animation: hw-fly3 23s linear infinite 5s; }
-@keyframes hw-fly1 {
-  0%   { transform: translate(0, 0) scaleX(1); opacity: 0; }
-  8%   { opacity: 1; }
-  25%  { transform: translate(30vw, -6vh) scaleX(.7); }
-  50%  { transform: translate(58vw, 4vh) scaleX(1); }
-  75%  { transform: translate(86vw, -5vh) scaleX(.7); }
-  92%  { opacity: 1; }
-  100% { transform: translate(120vw, 2vh) scaleX(1); opacity: 0; }
-}
-@keyframes hw-fly2 {
-  0%   { transform: translate(0,0) scaleX(.8); opacity: 0; }
-  10%  { opacity: 1; }
-  50%  { transform: translate(55vw, 10vh) scaleX(1); }
-  90%  { opacity: 1; }
-  100% { transform: translate(120vw, -4vh) scaleX(.8); opacity: 0; }
-}
-@keyframes hw-fly3 {
-  0%   { transform: translate(0,0) scaleX(1); opacity: 0; }
-  12%  { opacity: 1; }
-  50%  { transform: translate(52vw, -8vh) scaleX(.7); }
-  88%  { opacity: 1; }
-  100% { transform: translate(120vw, 6vh) scaleX(1); opacity: 0; }
-}
-
-/* A friendly ghost bobbing near the video */
-.hero-hw__ghost {
-  position: absolute; top: 30%; right: 6%; font-size: 40px; line-height: 1;
-  filter: drop-shadow(0 6px 14px rgba(0,0,0,.4));
-  animation: hw-bob 4s ease-in-out infinite;
-}
-@keyframes hw-bob {
-  0%, 100% { transform: translateY(0) rotate(-4deg); opacity: .92; }
-  50%      { transform: translateY(-16px) rotate(4deg); opacity: 1; }
-}
-
-/* Low-lying fog drifting across the bottom */
-.hero-hw__fog {
-  position: absolute; left: -10%; right: -10%; bottom: 0; height: 130px;
-  background: radial-gradient(60% 100% at 50% 100%, rgba(200,190,225,.28), transparent 72%);
-  filter: blur(10px); animation: hw-fog 14s ease-in-out infinite;
-}
-@keyframes hw-fog {
-  0%, 100% { transform: translateX(-4%); opacity: .7; }
-  50%      { transform: translateX(4%); opacity: 1; }
-}
+.hero.is-halloween .hero__sub { margin-bottom: 1rem; }
+.hero.is-halloween .status--hero { margin: -.2rem 0 1rem; }
+.hero.is-halloween .hero__lede { margin-bottom: 1.25rem; }
+.hero.is-halloween .hero__cta { margin-bottom: 1rem; }
+.hero.is-halloween .hero__art { max-width: 260px; }
 
 @media (max-width: 640px) {
   .hero-hw__spider { right: 12%; width: 26px; }
   /* No clean patch of sky at phone width (badge + spider own the top,
      the video fills the lower hero), so the moon sits this one out. */
   .hero-hw__moon { display: none; }
-  .hero-hw__ghost { font-size: 34px; top: 20%; right: 8%; }
   .hero-hw__web--bl { opacity: .5; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero.is-halloween .hero__title,
-  .hero.is-halloween .hero-hw__badge,
-  .hero-hw__spider, .hero-hw__bat, .hero-hw__ghost, .hero-hw__fog { animation: none; }
-  .hero-hw__bat { opacity: 1; }
-  .hero-hw__bat--1 { left: 20%; } .hero-hw__bat--2 { left: 48%; } .hero-hw__bat--3 { left: 72%; }
+  .hero__poster { transform: none !important; }
 }

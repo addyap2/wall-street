@@ -534,8 +534,9 @@ function wsActiveWeek() {
 })();
 
 // ===== Auto-expiring events =====
-// Anything with data-until="YYYY-MM-DD" hides itself the day after that date,
-// along with in-page links pointing at it (e.g. the "À l'affiche" nav item).
+// Anything with data-until="YYYY-MM-DD" hides itself the day after that date.
+// An optional data-expires ISO timestamp provides an exact closing-time cutoff.
+// In-page links pointing at expired sections hide with them.
 (function () {
   const items = Array.prototype.slice.call(document.querySelectorAll('[data-until]'));
   if (!items.length) return;
@@ -543,9 +544,11 @@ function wsActiveWeek() {
   function sweep() {
     const today = wsStartOfToday();
     items.forEach(function (el) {
+      const exact = el.getAttribute('data-expires');
       const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(el.getAttribute('data-until') || '');
       if (!m) return;
-      const over = new Date(+m[1], +m[2] - 1, +m[3]) < today;
+      const exactDate = exact ? new Date(exact) : null;
+      const over = exactDate && !isNaN(exactDate.getTime()) ? exactDate <= new Date() : new Date(+m[1], +m[2] - 1, +m[3]) < today;
       el.hidden = over;
       if (el.id) {
         document.querySelectorAll('a[href="#' + el.id + '"]').forEach(function (a) { a.hidden = over; });
@@ -554,6 +557,12 @@ function wsActiveWeek() {
   }
 
   sweep();
+  items.forEach(function (el) {
+    const exact = el.getAttribute('data-expires');
+    const exactDate = exact ? new Date(exact) : null;
+    const delay = exactDate && !isNaN(exactDate.getTime()) ? exactDate - new Date() : 0;
+    if (delay > 0 && delay < 2147483647) setTimeout(sweep, delay + 1000);
+  });
   const now = new Date();
   const msToMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
   setTimeout(function () { sweep(); setInterval(sweep, 86400000); }, msToMidnight + 1000);
