@@ -445,25 +445,42 @@ h1, h2, h3 { line-height: 1.05; }
 }
 
 /* ---------- Tonight event bar (à la Une) ---------- */
+/* Background blends the Italian tricolore (left) into the French one (right). */
 .event-bar {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  padding: .55rem 1rem;
+  background: linear-gradient(90deg,
+    #009246 0%, #009246 16.6%,
+    #fff 16.6%, #fff 33.3%,
+    #CE2B37 33.3%, #CE2B37 50%,
+    #0055A4 50%, #0055A4 66.6%,
+    #fff 66.6%, #fff 83.3%,
+    #EF4135 83.3%, #EF4135 100%);
+  border-bottom: 3px solid var(--blue-ink);
+  position: relative;
+  z-index: 45;
+}
+.event-bar[hidden] { display: none; }
+.event-bar__inner {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: .4rem .8rem;
   text-align: center;
-  text-decoration: none;
-  padding: .72rem 1.2rem;
-  background: linear-gradient(90deg, var(--red-deep), var(--red));
   color: #fff;
   font-family: var(--font-cond);
   font-weight: 600;
   letter-spacing: .02em;
-  border-bottom: 3px solid var(--blue-ink);
-  position: relative;
-  z-index: 45;
+  background: rgba(20, 26, 40, .80);
+  padding: .5rem 1.15rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(20, 26, 40, .3);
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
 }
-.event-bar[hidden] { display: none; }
 .event-bar__tag {
   display: inline-flex;
   align-items: center;
@@ -504,7 +521,8 @@ h1, h2, h3 { line-height: 1.05; }
   .event-bar__pulse { animation: none; box-shadow: 0 0 0 3px rgba(255,255,255,.25); }
 }
 @media (max-width: 720px) {
-  .event-bar { padding: .6rem .9rem; gap: .35rem .55rem; }
+  .event-bar { padding: .45rem .6rem; }
+  .event-bar__inner { gap: .3rem .55rem; padding: .45rem .85rem; }
   .event-bar__tag { font-size: .82rem; padding: .2rem .6rem; }
   .event-bar__text { font-size: .9rem; }
   .event-bar__sep { display: none; }
