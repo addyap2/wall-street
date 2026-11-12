@@ -444,6 +444,73 @@ h1, h2, h3 { line-height: 1.05; }
   .week-ticker__viewport { overflow-x: auto; }
 }
 
+/* ---------- Tonight event bar (à la Une) ---------- */
+.event-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .4rem .8rem;
+  text-align: center;
+  text-decoration: none;
+  padding: .72rem 1.2rem;
+  background: linear-gradient(90deg, var(--red-deep), var(--red));
+  color: #fff;
+  font-family: var(--font-cond);
+  font-weight: 600;
+  letter-spacing: .02em;
+  border-bottom: 3px solid var(--blue-ink);
+  position: relative;
+  z-index: 45;
+}
+.event-bar[hidden] { display: none; }
+.event-bar__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .9rem;
+  background: rgba(255,255,255,.18);
+  padding: .22rem .7rem;
+  border-radius: 999px;
+}
+.event-bar__pulse {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: #fff; flex: 0 0 auto;
+  animation: eventPulse 1.8s infinite;
+}
+@keyframes eventPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255,255,255,.6); }
+  70%  { box-shadow: 0 0 0 9px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+.event-bar__text { font-size: 1rem; }
+.event-bar__text strong { font-family: var(--font-display); letter-spacing: .03em; font-weight: 700; }
+.event-bar__sep { opacity: .55; }
+.event-bar__cta {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: .92rem;
+  border-bottom: 2px solid rgba(255,255,255,.75);
+  padding-bottom: 1px;
+}
+@media (hover: hover) {
+  .event-bar:hover .event-bar__cta { border-bottom-color: #fff; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .event-bar__pulse { animation: none; box-shadow: 0 0 0 3px rgba(255,255,255,.25); }
+}
+@media (max-width: 720px) {
+  .event-bar { padding: .6rem .9rem; gap: .35rem .55rem; }
+  .event-bar__tag { font-size: .82rem; padding: .2rem .6rem; }
+  .event-bar__text { font-size: .9rem; }
+  .event-bar__sep { display: none; }
+  .event-bar__cta { font-size: .85rem; }
+}
+
 /* ---------- Marquee ---------- */
 .marquee {
   background: var(--red);
