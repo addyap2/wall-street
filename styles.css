@@ -765,6 +765,7 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
 .dish { margin-bottom: 1.3rem; }
 .dish__head { display: flex; align-items: baseline; gap: .5rem; }
 .dish__name { font-weight: 700; color: var(--blue-ink); font-size: 1.02rem; }
+.dish__name small { font-weight: 400; font-size: .8em; opacity: .7; white-space: nowrap; }
 .dish__dots { flex: 1; border-bottom: 2px dotted rgba(58,75,135,.35); transform: translateY(-4px); min-width: 12px; }
 .dish__price { font-family: var(--font-cond); font-weight: 600; color: var(--blue-deep); white-space: nowrap; }
 .dish__desc { color: var(--ink-soft); font-size: .92rem; margin-top: .2rem; max-width: 46ch; }

@@ -126,6 +126,17 @@
             {
               "@type": "MenuItem",
               "name": "Planche de charcuterie",
+              "description": "Chorizo ibérique, jambon serrano, terrine",
+              "offers": {
+                "@type": "Offer",
+                "price": "24.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Planche de fromages",
+              "description": "Comté, brie de Meaux, saint-marcellin",
               "offers": {
                 "@type": "Offer",
                 "price": "22.00",
@@ -134,10 +145,10 @@
             },
             {
               "@type": "MenuItem",
-              "name": "Planche de fromages",
+              "name": "Planche mixte",
               "offers": {
                 "@type": "Offer",
-                "price": "22.00",
+                "price": "26.00",
                 "priceCurrency": "EUR"
               }
             }
@@ -145,11 +156,29 @@
         },
         {
           "@type": "MenuSection",
-          "name": "Les planches à composer",
+          "name": "Tapas",
           "hasMenuItem": [
             {
               "@type": "MenuItem",
-              "name": "Accras de morue",
+              "name": "Accras de morue (12 pièces)",
+              "offers": {
+                "@type": "Offer",
+                "price": "7.50",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Samoussas de bœuf (4 pièces)",
+              "offers": {
+                "@type": "Offer",
+                "price": "6.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Samoussas de légumes (4 pièces)",
               "offers": {
                 "@type": "Offer",
                 "price": "5.00",
@@ -158,28 +187,37 @@
             },
             {
               "@type": "MenuItem",
-              "name": "Samoussas de bœuf",
+              "name": "Nems de crevettes (4 pièces)",
               "offers": {
                 "@type": "Offer",
-                "price": "5.00",
+                "price": "6.00",
                 "priceCurrency": "EUR"
               }
             },
             {
               "@type": "MenuItem",
-              "name": "Samoussas aux légumes",
+              "name": "Beignets de crevettes (6 pièces)",
               "offers": {
                 "@type": "Offer",
-                "price": "5.00",
+                "price": "8.00",
                 "priceCurrency": "EUR"
               }
             },
             {
               "@type": "MenuItem",
-              "name": "Tempura de légumes",
+              "name": "Pépites d'encornet (6 pièces)",
               "offers": {
                 "@type": "Offer",
-                "price": "5.00",
+                "price": "8.00",
+                "priceCurrency": "EUR"
+              }
+            },
+            {
+              "@type": "MenuItem",
+              "name": "Tempura de légumes (~300 g)",
+              "offers": {
+                "@type": "Offer",
+                "price": "7.50",
                 "priceCurrency": "EUR"
               }
             },
@@ -188,7 +226,7 @@
               "name": "Assiette de frites",
               "offers": {
                 "@type": "Offer",
-                "price": "4.00",
+                "price": "5.00",
                 "priceCurrency": "EUR"
               }
             }
@@ -820,6 +858,13 @@
           <li data-day="4" data-date="2026-11-12"><span class="wd-day" data-en="Thursday 12/11">Jeudi 12/11</span><span class="wd-dish" data-en="Tartiflette with Reblochon cheese">Tartiflette au reblochon</span></li>
           <li data-day="5" data-date="2026-11-13"><span class="wd-day" data-en="Friday 13/11">Vendredi 13/11</span><span class="wd-dish" data-en="Prawn risotto">Risotto aux gambas</span></li>
         </ul>
+        <ul class="week-days" data-week="2026-11-16">
+          <li data-day="1" data-date="2026-11-16"><span class="wd-day" data-en="Monday 16/11">Lundi 16/11</span><span class="wd-dish" data-en="La Montagnarde pizza — cream, onions, potatoes, Reblochon, Serrano ham">Pizza La Montagnarde — crème, oignons, pommes de terre, reblochon, jambon serrano</span></li>
+          <li data-day="2" data-date="2026-11-17"><span class="wd-day" data-en="Tuesday 17/11">Mardi 17/11</span><span class="wd-dish" data-en="Beef bourguignon, fresh pasta">Bœuf bourguignon, pâtes fraîches</span></li>
+          <li data-day="3" data-date="2026-11-18"><span class="wd-day" data-en="Wednesday 18/11">Mercredi 18/11</span><span class="wd-dish" data-en="Pork chop with charcutière sauce, fries">Côte de porc sauce charcutière, frites</span></li>
+          <li data-day="4" data-date="2026-11-19"><span class="wd-day" data-en="Thursday 19/11">Jeudi 19/11</span><span class="wd-dish" data-en="Old-style veal blanquette, pilaf rice">Blanquette de veau à l’ancienne, riz pilaf</span></li>
+          <li data-day="5" data-date="2026-11-20"><span class="wd-day" data-en="Friday 20/11">Vendredi 20/11</span><span class="wd-dish" data-en="Cod brandade">Brandade de cabillaud</span></li>
+        </ul>
         <p class="week-menu__note" data-en="The daily special changes every week — follow us for the next board.">Le plat du jour change chaque semaine — suivez-nous pour la prochaine ardoise.</p>
       </div>
     </div>
@@ -838,16 +883,20 @@
       <div class="menu__cols">
         <div class="menu-group">
           <h3 class="menu-group__title" data-en="Boards">Planches</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Charcuterie board">Planche de charcuterie</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc" data-en="Iberian chorizo, Parma ham, pure pork rillettes.">Chorizo ibérico, jambon de Parme, rillettes pur porc.</p></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Cheese board">Planche de fromages</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc" data-en="Tomme de Savoie, Comté, Brie.">Tomme de Savoie, comté, brie.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Charcuterie board">Planche de charcuterie</span><span class="dish__dots"></span><span class="dish__price">24,00&nbsp;€</span></div><p class="dish__desc" data-en="Iberian chorizo, Serrano ham, terrine.">Chorizo ibérique, jambon serrano, terrine.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Cheese board">Planche de fromages</span><span class="dish__dots"></span><span class="dish__price">22,00&nbsp;€</span></div><p class="dish__desc" data-en="Comté, Brie de Meaux, Saint-Marcellin.">Comté, brie de Meaux, saint-marcellin.</p></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Mixed board">Planche mixte</span><span class="dish__dots"></span><span class="dish__price">26,00&nbsp;€</span></div><p class="dish__desc" data-en="Charcuterie &amp; cheese.">Charcuterie &amp; fromages.</p></div>
         </div>
         <div class="menu-group">
-          <h3 class="menu-group__title" data-en="Build your own board">Les planches à composer</h3>
-          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Cod fritters">Accras de morue</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Beef samosas">Samoussas de bœuf</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Vegetable samosas">Samoussas aux légumes</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Vegetable tempura">Tempura de légumes</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
-          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Bowl of fries">Assiette de frites</span><span class="dish__dots"></span><span class="dish__price">4,00&nbsp;€</span></div></div>
+          <h3 class="menu-group__title">Tapas</h3>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Cod fritters &lt;small&gt;· 12 pieces&lt;/small&gt;">Accras de morue <small>· 12 pièces</small></span><span class="dish__dots"></span><span class="dish__price">7,50&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Beef samosas &lt;small&gt;· 4 pieces&lt;/small&gt;">Samoussas de bœuf <small>· 4 pièces</small></span><span class="dish__dots"></span><span class="dish__price">6,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Vegetable samosas &lt;small&gt;· 4 pieces&lt;/small&gt;">Samoussas de légumes <small>· 4 pièces</small></span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Prawn spring rolls &lt;small&gt;· 4 pieces&lt;/small&gt;">Nems de crevettes <small>· 4 pièces</small></span><span class="dish__dots"></span><span class="dish__price">6,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Prawn fritters &lt;small&gt;· 6 pieces&lt;/small&gt;">Beignets de crevettes <small>· 6 pièces</small></span><span class="dish__dots"></span><span class="dish__price">8,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Squid bites &lt;small&gt;· 6 pieces&lt;/small&gt;">Pépites d’encornet <small>· 6 pièces</small></span><span class="dish__dots"></span><span class="dish__price">8,00&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Vegetable tempura &lt;small&gt;· ~300&amp;nbsp;g&lt;/small&gt;">Tempura de légumes <small>· ~300&nbsp;g</small></span><span class="dish__dots"></span><span class="dish__price">7,50&nbsp;€</span></div></div>
+          <div class="dish"><div class="dish__head"><span class="dish__name" data-en="Bowl of fries">Assiette de frites</span><span class="dish__dots"></span><span class="dish__price">5,00&nbsp;€</span></div></div>
         </div>
       </div>
     </div>
@@ -975,6 +1024,8 @@
       <figure class="food-gallery__item food-gallery__item--tall"><img src="videos/wok-poster.jpg" alt="Wok de bœuf au saté et nouilles, préparé maison au Wall Street" loading="lazy" decoding="async" /><video class="js-ambient-video" src="videos/wok.mp4" poster="videos/wok-poster.jpg" muted loop playsinline preload="none" autoplay width="464" height="832" aria-label="Wok de bœuf au saté préparé maison en vidéo"></video><figcaption class="food-gallery__cap" data-en="Satay beef wok">Wok de bœuf au saté</figcaption></figure>
       <figure class="food-gallery__item"><picture><source srcset="images/food-13.webp" type="image/webp" /><img src="images/food-13.jpg" alt="Choucroute garnie : saucisses, lard fumé et pommes de terre au Wall Street" loading="lazy" decoding="async" /></picture><figcaption class="food-gallery__cap" data-en="Garnished choucroute">Choucroute garnie</figcaption></figure>
       <figure class="food-gallery__item"><picture><source srcset="images/food-14.webp" type="image/webp" /><img src="images/food-14.jpg" alt="Cocktail maison orangé servi au bar du Wall Street" loading="lazy" decoding="async" /></picture><figcaption class="food-gallery__cap" data-en="House cocktail">Cocktail maison</figcaption></figure>
+      <figure class="food-gallery__item food-gallery__item--wide"><picture><source srcset="images/food-15.webp" type="image/webp" /><img src="images/food-15.jpg" alt="Planche mixte charcuterie et fromages : jambon serrano, chorizo, salami, comté, brie, cornichons et gressins" loading="lazy" decoding="async" /></picture><figcaption class="food-gallery__cap" data-en="Mixed board">Planche mixte</figcaption></figure>
+      <figure class="food-gallery__item food-gallery__item--tall"><picture><source srcset="images/food-16.webp" type="image/webp" /><img src="images/food-16.jpg" alt="Tartiflette gratinée au reblochon et salade fraîche, plat du jour au Wall Street" loading="lazy" decoding="async" /></picture><figcaption class="food-gallery__cap" data-en="Reblochon tartiflette">Tartiflette au reblochon</figcaption></figure>
       <figure class="food-gallery__item food-gallery__item--tall"><img src="videos/dessert-poster.jpg" alt="Tiramisu maison au Wall Street" loading="lazy" decoding="async" /><video class="js-ambient-video" src="videos/dessert.mp4" poster="videos/dessert-poster.jpg" muted loop playsinline preload="none" autoplay width="720" height="1280" aria-label="Tiramisu maison en vidéo"></video><figcaption class="food-gallery__cap" data-en="Homemade tiramisu">Tiramisu maison</figcaption></figure>
     </div>
   </section>
