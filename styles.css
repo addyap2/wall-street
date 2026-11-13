@@ -902,6 +902,45 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
   grid-template-columns: repeat(4, 1fr);
   gap: 1.2rem;
 }
+.infos__facade {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  margin: 1.6rem 0 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--blue-ink);
+  color: #fff;
+}
+.infos__facade picture { display: block; }
+.infos__facade img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: center top;
+}
+.infos__facade-cap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .7rem;
+  padding: clamp(1.6rem, 4vw, 3rem);
+}
+.infos__facade-cap .eyebrow { color: var(--red); }
+.infos__facade-cap strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: .95;
+}
+.infos__facade-addr { opacity: .85; line-height: 1.5; }
+.infos__facade-cap .link-arrow { color: #fff; align-self: flex-start; }
+@media (max-width: 760px) {
+  .infos__facade { grid-template-columns: 1fr; }
+}
 .info-card {
   background: var(--cream-2);
   border: 1px solid rgba(58,75,135,.14);
