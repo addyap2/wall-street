@@ -1,0 +1,35 @@
+<html data-composition-variables='[{"id":"w1","type":"string","label":"Mot 1","default":"GOOD"},{"id":"w2","type":"string","label":"Mot 2","default":"PEOPLE"}]'>
+<template>
+  <style>
+    @font-face { font-family: 'Anton'; src: url('assets/fonts/Anton-Regular.ttf') format('truetype'); font-weight: 400; font-display: block; }
+    @font-face { font-family: 'Kaushan Script'; src: url('assets/fonts/KaushanScript-Regular.ttf') format('truetype'); font-weight: 400; font-display: block; }
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #tp-stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #F4ECDD; }
+    #tp-svg { position: absolute; width: 0; height: 0; }
+    #tp-small { position: absolute; left: 120px; top: 560px; font-family: 'Anton', sans-serif; font-weight: 400; font-size: 140px; line-height: 1; letter-spacing: 0.01em; color: #223163; }
+    #tp-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; clip-path: url(#tp-clip); transform-origin: 300px 900px; }
+    #tp-vid { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+    .tp-t { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 250px; letter-spacing: 0px; }
+  </style>
+  <div id="root" data-composition-id="tpeople" data-width="1080" data-height="1920" data-layout-allow-overflow>
+    <div id="tp-stage">
+      <svg id="tp-svg" aria-hidden="true"><defs><clipPath id="tp-clip" clipPathUnits="userSpaceOnUse">
+        <text id="tp-big" class="tp-t" x="110" y="980" data-var-text="w2">PEOPLE</text>
+      </clipPath></defs></svg>
+      <div id="tp-small" data-var-text="w1">GOOD</div>
+      <div id="tp-wrap">
+        <video id="tp-vid" class="clip" src="assets/sport.mp4" muted playsinline data-start="0" data-duration="2" data-media-start="11.5"></video>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#tp-wrap", { scale: 1.06 }, { scale: 1, duration: 0.25, ease: "expo.out" }, 0.5);
+      tl.fromTo("#tp-small", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 0);
+      tl.fromTo("#tp-stage", { x: 0, filter: "blur(0px)" }, { x: -1080, filter: "blur(24px)", duration: 0.3, ease: "power3.in" }, 1.6);
+      window.__timelines["tpeople"] = tl;
+    })();
+  </script>
+</template>
+</html>

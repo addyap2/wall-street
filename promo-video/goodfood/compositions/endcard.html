@@ -1,0 +1,29 @@
+<html data-composition-variables='[{"id":"address","type":"string","label":"Adresse","default":"36 rue de l’Intendance"},{"id":"city","type":"string","label":"Ville","default":"Fréjus"},{"id":"cta","type":"string","label":"Bouton","default":"Réservez votre table"}]'>
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #ec-flood { position: absolute; inset: 0; background: #7897D0; }
+    #ec-logo { position: absolute; left: 160px; top: 250px; width: 580px; height: 725px; object-fit: cover; }
+    #ec-address { position: absolute; left: 120px; top: 960px; width: 660px; text-align: center; line-height: 1.15; font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 48px; letter-spacing: 0.02em; color: #223163; }
+    #ec-address span { display: inline-block; }
+    #ec-cta-wrap { position: absolute; left: 120px; top: 1110px; width: 660px; display: flex; justify-content: center; }
+    #ec-cta { background: #D23A50; color: #ffffff; border-radius: 14px; padding: 22px 48px; font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 48px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.1; }
+  </style>
+  <div id="root" data-composition-id="endcard" data-width="1080" data-height="1920">
+    <div id="ec-flood"></div>
+    <img id="ec-logo" src="assets/logo.jpg" alt="Wall Street Pub Restaurant" />
+    <div id="ec-address"><span id="ec-a1" data-var-text="address">36 rue de l’Intendance</span><br><span id="ec-a2" data-var-text="city">Fréjus</span></div>
+    <div id="ec-cta-wrap"><div id="ec-cta" data-var-text="cta">Réservez votre table</div></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#ec-flood", { clipPath: "circle(0% at 450px 560px)" }, { clipPath: "circle(130% at 450px 560px)", duration: 0.45, ease: "power2.inOut" }, 0);
+      tl.fromTo("#ec-logo", { clipPath: "circle(0% at 50% 42%)", scale: 1.12 }, { clipPath: "circle(75% at 50% 42%)", scale: 1, duration: 0.6, ease: "expo.out" }, 0.35);
+      tl.fromTo(["#ec-a1", "#ec-a2"], { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, stagger: 0.12, ease: "power2.out" }, 0.9);
+      tl.fromTo("#ec-cta", { scaleX: 0.15, opacity: 0, filter: "blur(10px)" }, { scaleX: 1, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out" }, 1.3);
+      window.__timelines["endcard"] = tl;
+    })();
+  </script>
+</template>
+</html>

@@ -1,0 +1,40 @@
+<html data-composition-variables='[{"id":"w1","type":"string","label":"Mot 1","default":"GOOD"},{"id":"w2","type":"string","label":"Mot 2","default":"DRINKS"}]'>
+<template>
+  <style>
+    @font-face { font-family: 'Anton'; src: url('assets/fonts/Anton-Regular.ttf') format('truetype'); font-weight: 400; font-display: block; }
+    @font-face { font-family: 'Kaushan Script'; src: url('assets/fonts/KaushanScript-Regular.ttf') format('truetype'); font-weight: 400; font-display: block; }
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #td-stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #7897D0; }
+    #td-svg { position: absolute; width: 0; height: 0; }
+    #td-small { position: absolute; left: 120px; top: 560px; font-family: 'Anton', sans-serif; font-weight: 400; font-size: 140px; line-height: 1; letter-spacing: 0.01em; color: #223163; }
+    #td-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; clip-path: url(#td-clip); }
+    .td-vid { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+    .td-t { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 250px; letter-spacing: 0px; }
+    #td-fill { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  </style>
+  <div id="root" data-composition-id="tdrinks" data-width="1080" data-height="1920" data-layout-allow-overflow>
+    <div id="td-stage">
+      <svg id="td-svg" aria-hidden="true"><defs><clipPath id="td-clip" clipPathUnits="userSpaceOnUse">
+        <text id="td-big" class="td-t" x="110" y="980" data-var-text="w2">DRINKS</text>
+      </clipPath></defs></svg>
+      <div id="td-small" data-var-text="w1">GOOD</div>
+      <div id="td-wrap">
+        <video id="td-tap" class="clip td-vid" src="assets/wallstreet.mp4" muted playsinline data-start="0" data-duration="2" data-media-start="6.4"></video>
+      </div>
+    </div>
+    <div id="td-fill">
+      <video id="td-pour" class="clip td-vid" src="assets/wallstreet.mp4" muted playsinline data-start="1" data-duration="1" data-media-start="3.6"></video>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#td-stage", { x: 1080, filter: "blur(16px)" }, { x: 0, filter: "blur(0px)", duration: 0.22, ease: "power3.out" }, 0);
+      tl.fromTo("#td-small", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 0.2);
+      tl.fromTo("#td-wrap", { scale: 1.06, transformOrigin: "300px 900px" }, { scale: 1, duration: 0.25, ease: "expo.out" }, 0.5);
+      tl.fromTo("#td-fill", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.9, ease: "power2.inOut" }, 1.0);
+      window.__timelines["tdrinks"] = tl;
+    })();
+  </script>
+</template>
+</html>

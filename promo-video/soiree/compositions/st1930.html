@@ -1,0 +1,43 @@
+<html data-composition-variables='[{"id":"hour","type":"string","label":"Heure","default":"19H30"},{"id":"label","type":"string","label":"Moment","default":"En cuisine"}]'>
+<template>
+  <style>
+    @font-face { font-family: 'Anton'; src: url('assets/fonts/Anton-Regular.ttf') format('truetype'); font-weight: 400; font-display: block; }
+    @font-face { font-family: 'Kaushan Script'; src: url('assets/fonts/KaushanScript-Regular.ttf') format('truetype'); font-weight: 400; font-display: block; }
+    #root { position: absolute; inset: 0; }
+    #st1930-panel { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #7897D0; }
+    #st1930-strip { position: absolute; left: 0; top: 920px; width: 1080px; height: 320px; display: flex; flex-direction: column; align-items: flex-start; }
+    #st1930-tab { height: 210px; margin-top: 18px; padding: 0 44px 0 120px; background: #E85466; display: flex; align-items: center; }
+    #st1930-hour { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 170px; line-height: 1; letter-spacing: 0.01em; color: #F4ECDD; }
+    #st1930-label { margin-left: 120px; margin-top: 4px; white-space: nowrap; font-family: 'Kaushan Script', cursive; font-weight: 400; font-size: 70px; line-height: 1.1; letter-spacing: 0; color: #223163; }
+    #st1930-label span { display: inline-block; }
+  </style>
+  <div id="root" data-composition-id="st1930" data-width="1080" data-height="1920">
+    <div id="st1930-panel"></div>
+    <div id="st1930-strip">
+      <div id="st1930-tab"><span id="st1930-hour" data-var-text="hour">19H30</span></div>
+      <div id="st1930-label" data-var-text="label">En cuisine</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const P = "#st1930";
+      const label = document.querySelector(P + "-label");
+      label.innerHTML = label.textContent.trim().split(/\s+/).map(w => "<span>" + w + "</span>").join(" ");
+      const words = label.querySelectorAll("span");
+      const band = "inset(920px 0px 680px 0px)";
+      const tl = gsap.timeline({ paused: true });
+      if (true) {
+        tl.fromTo(P + "-panel", { x: -1080, clipPath: "inset(0px 0px 0px 0px)" }, { x: 0, duration: 0.35, ease: "power3.in" }, 0);
+        tl.to(P + "-panel", { clipPath: band, duration: 0.55, ease: "expo.out" }, 0.35);
+        tl.fromTo(P + "-tab", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.3, ease: "expo.out" }, 0.62);
+        tl.fromTo(words, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.08, ease: "power2.out" }, 0.78);
+      } else {
+        tl.set(P + "-panel", { x: 0, clipPath: band }, 0);
+        tl.fromTo(P + "-tab", { clipPath: "inset(0% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.01 }, 0);
+        tl.fromTo(words, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.08, ease: "power2.out" }, 0.2);
+      }
+      window.__timelines["st1930"] = tl;
+    })();
+  </script>
+</template>
+</html>

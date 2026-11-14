@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #223163; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      .vid { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      /* crops the burned-in Instagram caption off the bottom of the live footage */
+      .crop-top { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 50% 0%; transform: scale(1.3); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="25.5" data-width="1080" data-height="1920">
+      <!-- GOOD FOOD -->
+      <div id="tfood" data-composition-id="tfood" data-composition-src="compositions/tfood.html" data-start="0" data-duration="2" data-track-index="2" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:20"></div>
+      <video id="m-wok" class="clip vid" src="assets/cuisine.mp4" muted playsinline data-start="2" data-duration="1" data-media-start="4" data-track-index="1" style="z-index:1"></video>
+      <video id="m-plate" class="clip vid" src="assets/kitchen.mp4" muted playsinline data-start="3" data-duration="1" data-media-start="2.8" data-track-index="1" style="z-index:2"></video>
+      <video id="m-dip" class="clip vid" src="assets/cuisine.mp4" muted playsinline data-start="4" data-duration="1" data-media-start="9.3" data-track-index="1" style="z-index:3"></video>
+      <video id="m-tiramisu" class="clip vid" src="assets/dessert.mp4" muted playsinline data-start="5" data-duration="1.25" data-media-start="2.2" data-track-index="1" style="z-index:4"></video>
+
+      <!-- GOOD DRINKS -->
+      <div id="tdrinks" data-composition-id="tdrinks" data-composition-src="compositions/tdrinks.html" data-start="6" data-duration="2" data-track-index="2" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:21"></div>
+      <video id="m-pour" class="clip vid" src="assets/wallstreet.mp4" muted playsinline data-start="8" data-duration="1" data-media-start="4.6" data-track-index="1" style="z-index:5"></video>
+      <video id="m-tap" class="clip vid" src="assets/wallstreet.mp4" muted playsinline data-start="9" data-duration="1" data-media-start="6.6" data-track-index="1" style="z-index:6"></video>
+      <video id="m-glass" class="clip vid" src="assets/tour.mp4" muted playsinline data-start="10" data-duration="1" data-media-start="2" data-track-index="1" style="z-index:7"></video>
+      <video id="m-serve" class="clip vid" src="assets/wallstreet.mp4" muted playsinline data-start="11" data-duration="1" data-media-start="11.3" data-track-index="1" style="z-index:8"></video>
+
+      <!-- GOOD PEOPLE -->
+      <div id="tpeople" data-composition-id="tpeople" data-composition-src="compositions/tpeople.html" data-start="12" data-duration="2" data-track-index="2" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:22"></div>
+      <video id="m-laugh" class="clip vid" src="assets/sport.mp4" muted playsinline data-start="13.6" data-duration="1.4" data-media-start="12.5" data-track-index="1" style="z-index:9"></video>
+      <div class="crop-top" style="z-index:10">
+        <video id="m-inside" class="clip vid" src="assets/live.mp4" muted playsinline data-start="15" data-duration="1" data-media-start="3.2" data-track-index="1"></video>
+      </div>
+      <video id="m-screen" class="clip vid" src="assets/sport.mp4" muted playsinline data-start="16" data-duration="1" data-media-start="0.5" data-track-index="1" style="z-index:11"></video>
+      <div class="crop-top" style="z-index:12">
+        <video id="m-band" class="clip vid" src="assets/live.mp4" muted playsinline data-start="17" data-duration="1" data-media-start="15.2" data-track-index="1"></video>
+        <video id="m-band2" class="clip vid" src="assets/live.mp4" muted playsinline data-start="18" data-duration="1" data-media-start="21" data-track-index="1"></video>
+      </div>
+
+      <!-- GOOD TIMES, then the end card -->
+      <div id="ttimes" data-composition-id="ttimes" data-composition-src="compositions/ttimes.html" data-start="19" data-duration="3.5" data-track-index="2" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:23"></div>
+      <div id="endcard" data-composition-id="endcard" data-composition-src="compositions/endcard.html" data-start="22" data-duration="3.5" data-track-index="3" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:30"></div>
+      <!-- sound: 120 BPM bed (cuts sit on its beats) + effects on the zoom, the whips, the beer fill and the logo -->
+      <audio id="a-music" class="clip" src="assets/bgm/funky-pop-120.mp3" data-start="0" data-duration="25.5" data-media-start="0" data-volume="0.8" data-fade-out="1.5" data-track-index="10"></audio>
+      <audio id="a-zoom" class="clip" src="assets/sfx/whoosh-air.mp3" data-start="1.183" data-duration="1.2" data-volume="0.8" data-fade-out="0.3" data-track-index="11"></audio>
+      <audio id="a-whipin" class="clip" src="assets/sfx/whoosh-swish.mp3" data-start="5.983" data-duration="0.45" data-volume="0.9" data-track-index="11"></audio>
+      <audio id="a-pour" class="clip" src="assets/sfx/beer-pour.mp3" data-start="7" data-duration="1.1" data-media-start="1.4" data-volume="0.9" data-fade-in="0.1" data-fade-out="0.3" data-track-index="12"></audio>
+      <audio id="a-whipout" class="clip" src="assets/sfx/swoosh-short.mp3" data-start="13.733" data-duration="0.8" data-volume="1" data-track-index="11"></audio>
+      <audio id="a-logo" class="clip" src="assets/sfx/boom-impact.mp3" data-start="22.333" data-duration="2.6" data-volume="0.55" data-fade-out="1.6" data-track-index="13"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>
