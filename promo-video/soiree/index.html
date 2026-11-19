@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #1c2230; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      .vid { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      /* crops the burned-in Instagram caption off the bottom of the live footage */
+      .crop-top { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 50% 0%; transform: scale(1.3); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="31" data-width="1080" data-height="1920">
+      <!-- 18H00 · Afterwork -->
+      <video id="v-pour" class="clip vid" src="assets/wallstreet.mp4" muted playsinline data-start="0" data-duration="3" data-media-start="3" data-track-index="1" style="z-index:1"></video>
+      <video id="v-tap" class="clip vid" src="assets/wallstreet.mp4" muted playsinline data-start="3" data-duration="2" data-media-start="6.4" data-track-index="1" style="z-index:2"></video>
+      <!-- 19H30 · En cuisine -->
+      <video id="v-wok" class="clip vid" src="assets/cuisine.mp4" muted playsinline data-start="5" data-duration="3.6" data-media-start="2" data-track-index="1" style="z-index:3"></video>
+      <video id="v-plate" class="clip vid" src="assets/kitchen.mp4" muted playsinline data-start="8.6" data-duration="1.8" data-media-start="2.6" data-track-index="1" style="z-index:4"></video>
+      <video id="v-dip" class="clip vid" src="assets/cuisine.mp4" muted playsinline data-start="10.4" data-duration="1.8" data-media-start="9.2" data-track-index="1" style="z-index:5"></video>
+      <video id="v-tiramisu" class="clip vid" src="assets/dessert.mp4" muted playsinline data-start="12.2" data-duration="1.6" data-media-start="0.5" data-track-index="1" style="z-index:6"></video>
+      <!-- 20H45 · Coup d'envoi -->
+      <video id="v-crowd" class="clip vid" src="assets/sport.mp4" muted playsinline data-start="13.8" data-duration="3.2" data-media-start="0.5" data-track-index="1" style="z-index:7"></video>
+      <video id="v-screen" class="clip vid" src="assets/sport.mp4" muted playsinline data-start="17" data-duration="1.6" data-media-start="24" data-track-index="1" style="z-index:8"></video>
+      <!-- 22H00 · Live music -->
+      <div class="crop-top" style="z-index:9">
+        <video id="v-band" class="clip vid" src="assets/live.mp4" muted playsinline data-start="18.6" data-duration="2.6" data-media-start="15" data-track-index="1"></video>
+        <video id="v-band2" class="clip vid" src="assets/live.mp4" muted playsinline data-start="21.2" data-duration="2.2" data-media-start="21" data-track-index="1"></video>
+      </div>
+
+      <!-- time-stamp band -->
+      <div id="st1800" data-composition-id="st1800" data-composition-src="compositions/st1800.html" data-start="0" data-duration="5" data-track-index="2" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:20"></div>
+      <div id="st1930" data-composition-id="st1930" data-composition-src="compositions/st1930.html" data-start="4.65" data-duration="9.15" data-track-index="3" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:21"></div>
+      <div id="st2045" data-composition-id="st2045" data-composition-src="compositions/st2045.html" data-start="13.45" data-duration="5.15" data-track-index="2" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:22"></div>
+      <div id="st2200" data-composition-id="st2200" data-composition-src="compositions/st2200.html" data-start="18.25" data-duration="5.15" data-track-index="3" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:23"></div>
+
+      <!-- claim on the lit façade, then the end card -->
+      <div id="finale" data-composition-id="finale" data-composition-src="compositions/finale.html" data-start="23.4" data-duration="7.6" data-track-index="4" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:30"></div>
+      <!-- sound: music bed (starts 26.295 s into the track so its natural ending lands on the end card) + effects on the sweeps, the dive and the logo -->
+      <audio id="a-music" class="clip" src="assets/bgm/pub-party-rock.mp3" data-start="0" data-duration="31" data-media-start="26.295" data-volume="0.8" data-fade-in="0.05" data-fade-out="1.2" data-track-index="10"></audio>
+      <audio id="a-sweep1" class="clip" src="assets/sfx/swoosh-short.mp3" data-start="4.833" data-duration="0.8" data-volume="1" data-track-index="11"></audio>
+      <audio id="a-sweep2" class="clip" src="assets/sfx/whoosh-swish.mp3" data-start="13.783" data-duration="0.45" data-volume="0.9" data-track-index="11"></audio>
+      <audio id="a-sweep3" class="clip" src="assets/sfx/whoosh-air.mp3" data-start="17.783" data-duration="1.4" data-volume="0.8" data-fade-out="0.4" data-track-index="11"></audio>
+      <audio id="a-dive" class="clip" src="assets/sfx/whoosh-air.mp3" data-start="26.683" data-duration="1.2" data-volume="0.8" data-fade-out="0.3" data-track-index="12"></audio>
+      <audio id="a-logo" class="clip" src="assets/sfx/boom-impact.mp3" data-start="27.52" data-duration="2.6" data-volume="0.55" data-fade-out="1.6" data-track-index="13"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

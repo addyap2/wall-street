@@ -1,0 +1,10 @@
+{
+  "slug": "exemple-match",
+  "type": "match",
+  "home": "Italie",
+  "away": "France",
+  "subtitle": "Ligue des Nations",
+  "date": "2026-11-12T20:45",
+  "footage": "sport.mp4",
+  "footageStart": 2
+}

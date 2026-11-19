@@ -1,0 +1,56 @@
+<html data-composition-variables='[{"id":"claim1","type":"string","label":"Claim ligne 1","default":"Le pub qui vit"},{"id":"claim2","type":"string","label":"Claim ligne 2","default":"au rythme"},{"id":"claim3","type":"string","label":"Claim ligne 3","default":"de"},{"id":"claimCity","type":"string","label":"Claim ville","default":"Fréjus"},{"id":"address","type":"string","label":"Adresse","default":"36 rue de l’Intendance"},{"id":"city","type":"string","label":"Ville","default":"Fréjus"},{"id":"cta","type":"string","label":"Bouton","default":"Réservez votre table"}]'>
+<template>
+  <style>
+    @font-face { font-family: 'Anton'; src: url('assets/fonts/Anton-Regular.ttf') format('truetype'); font-weight: 400; font-display: block; }
+    @font-face { font-family: 'Kaushan Script'; src: url('assets/fonts/KaushanScript-Regular.ttf') format('truetype'); font-weight: 400; font-display: block; }
+    #root { position: absolute; inset: 0; background: #1c2230; overflow: hidden; }
+    #fin-cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 288px 58px; }
+    #fin-facade { position: absolute; left: 0; top: -40px; width: 1080px; height: 1200px; object-fit: cover;
+      -webkit-mask-image: linear-gradient(#000 60%, transparent 84%); mask-image: linear-gradient(#000 60%, transparent 84%); }
+    #fin-claim { position: absolute; left: 120px; top: 880px; width: 660px; font-family: 'Anton', sans-serif; font-weight: 400;
+      font-size: 100px; line-height: 1.08; letter-spacing: 0.005em; color: #F4ECDD; }
+    #fin-claim .ln { display: block; }
+    #fin-city { color: #E85466; }
+    #fin-flood { position: absolute; inset: 0; background: #7897D0; }
+    #fin-logo { position: absolute; left: 160px; top: 250px; width: 580px; height: 725px; object-fit: cover; }
+    #fin-address { position: absolute; left: 120px; top: 960px; width: 660px; line-height: 1.15; text-align: center; font-family: 'Oswald', sans-serif;
+      font-weight: 500; font-size: 48px; letter-spacing: 0.02em; color: #223163; }
+    #fin-address span { display: inline-block; }
+    #fin-cta-wrap { position: absolute; left: 120px; top: 1110px; width: 660px; display: flex; justify-content: center; }
+    #fin-cta { background: #D23A50; color: #ffffff; border-radius: 14px; padding: 22px 48px; font-family: 'Oswald', sans-serif;
+      font-weight: 600; font-size: 48px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.1; }
+  </style>
+  <div id="root" data-composition-id="finale" data-width="1080" data-height="1920">
+    <div id="fin-cam" data-layout-allow-overflow>
+      <img id="fin-facade" src="assets/facade-night.jpg" alt="Façade du Wall Street la nuit" />
+      <div id="fin-claim">
+        <span class="ln" id="fin-l1" data-var-text="claim1">Le pub qui vit</span>
+        <span class="ln" id="fin-l2" data-var-text="claim2">au rythme</span>
+        <span class="ln" id="fin-l3"><span data-var-text="claim3">de</span> <span id="fin-city" data-var-text="claimCity">Fréjus</span></span>
+      </div>
+    </div>
+    <div id="fin-flood"></div>
+    <img id="fin-logo" src="assets/logo.jpg" alt="Wall Street Pub Restaurant" />
+    <div id="fin-address"><span id="fin-a1" data-var-text="address">36 rue de l’Intendance</span><br><span id="fin-a2" data-var-text="city">Fréjus</span></div>
+    <div id="fin-cta-wrap"><div id="fin-cta" data-var-text="cta">Réservez votre table</div></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // match cut lands on the night façade; claim lines blur in one after the other
+      tl.fromTo("#fin-l1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, 0.35);
+      tl.fromTo("#fin-l2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, 0.62);
+      tl.fromTo("#fin-l3", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, 0.89);
+      // claim leaves, camera dives into the sign's pink elephant
+      tl.to("#fin-claim", { opacity: 0, filter: "blur(8px)", duration: 0.15, ease: "power2.in" }, 3.3);
+      tl.fromTo("#fin-cam", { scale: 1 }, { scale: 9, duration: 0.75, ease: "power3.in" }, 3.35);
+      tl.fromTo("#fin-flood", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.inOut" }, 3.85);
+      // the elephant returns as the logo
+      tl.fromTo("#fin-logo", { clipPath: "circle(0% at 50% 42%)", scale: 1.12 }, { clipPath: "circle(75% at 50% 42%)", scale: 1, duration: 0.6, ease: "expo.out" }, 4.139);
+      tl.fromTo(["#fin-a1", "#fin-a2"], { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, stagger: 0.12, ease: "power2.out" }, 4.689);
+      tl.fromTo("#fin-cta", { scaleX: 0.15, opacity: 0, filter: "blur(10px)" }, { scaleX: 1, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out" }, 5.139);
+      window.__timelines["finale"] = tl;
+    })();
+  </script>
+</template>
+</html>

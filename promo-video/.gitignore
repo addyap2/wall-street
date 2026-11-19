@@ -1,0 +1,8 @@
+# rendered videos (re-render with: npx hyperframes render)
+renders/
+# HyperFrames caches, snapshots and scratch media
+.hyperframes/
+.media/
+.thumbnails/
+.transcode-cache/
+node_modules/
