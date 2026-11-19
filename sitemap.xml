@@ -8,9 +8,14 @@
   </url>
   <url>
     <loc>https://www.wallstreetfrejus.fr/blog</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.wallstreetfrejus.fr/blog/soiree-beaujolais-nouveau-frejus</loc>
+    <lastmod>2026-11-19</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.wallstreetfrejus.fr/blog/soiree-halloween-a-frejus</loc>
