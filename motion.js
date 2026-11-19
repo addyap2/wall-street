@@ -42,10 +42,28 @@
     setTimeout(startHero, 120);
   }
 
-  if (!MOTION) {
-    // Reduced motion / no-JS-motion: no curtain, no staging, just show.
+  // Arriving on a section link (e.g. /#menu from the blog): the locked body
+  // swallows the browser's jump to the anchor, so skip the curtain and
+  // scroll there ourselves — once now, again when images have loaded.
+  var hashTarget = null;
+  try { hashTarget = location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null; } catch (e) {}
+  function goToHash() {
+    if (!hashTarget) return;
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    var y = hashTarget.getBoundingClientRect().top + window.pageYOffset - (parseFloat(getComputedStyle(docEl).scrollPaddingTop) || 0);
+    window.scrollTo({ top: Math.max(0, y), behavior: 'instant' });
+  }
+
+  if (!MOTION || hashTarget) {
+    // Reduced motion / deep link: no curtain, no staging, just show.
     if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader);
     document.body.classList.remove('is-locked');
+    revealed = true;
+    if (MOTION) startHero();
+    if (hashTarget) {
+      requestAnimationFrame(goToHash);
+      window.addEventListener('load', function () { setTimeout(goToHash, 50); });
+    }
   } else {
     document.body.classList.add('is-locked');
     var minShow = 1100, t0 = performance.now();
