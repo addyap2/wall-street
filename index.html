@@ -722,8 +722,36 @@
     </div>
     <div class="hero__art" aria-hidden="true">
       <video id="heroVideo" class="hero__poster" poster="videos/ambiance-poster.jpg" width="720" height="1280" muted loop playsinline preload="none"></video>
+      <!-- Neon sign (rendered in Blender, see neon-sign/): flickers on once,
+           then loops its lit part. Reduced motion keeps the lit poster. -->
+      <div class="hero__neon">
+        <video id="heroNeon" poster="videos/neon-sign-poster.jpg" width="480" height="480" muted playsinline preload="none"></video>
+      </div>
     </div>
   </section>
+  <script>
+  (function(){
+    try {
+      var n = document.getElementById('heroNeon');
+      if (!n) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var LOOP_FROM = 3; // seconds: the flicker-on ends, the seamless lit loop begins
+      n.addEventListener('ended', function () {
+        n.currentTime = LOOP_FROM;
+        var p = n.play();
+        if (p && p.catch) p.catch(function(){});
+      });
+      n.setAttribute('src', 'videos/neon-sign.mp4');
+      n.setAttribute('preload', 'auto');
+      n.load();
+      // let the hero reveal settle so the flicker-on is actually seen
+      setTimeout(function () {
+        var p = n.play();
+        if (p && p.catch) p.catch(function(){});
+      }, 700);
+    } catch (e) {}
+  })();
+  </script>
   <!-- Halloween takeover: runs through closing time after the final night.
        The video source is assigned here so reduced-motion visitors receive
        a still poster and no unnecessary media is downloaded. -->
