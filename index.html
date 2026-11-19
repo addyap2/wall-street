@@ -634,11 +634,11 @@
       <picture><source srcset="images/logo.webp" type="image/webp" /><img src="images/logo.jpg" alt="Wall Street Pub Restaurant" class="brand__logo" width="52" height="52" decoding="async" fetchpriority="high" /></picture>
     </a>
     <nav class="nav" aria-label="Navigation principale">
+      <a href="#affiche" data-en="Coming up">À l'affiche</a>
       <a href="#concept" data-en="The concept">Le concept</a>
       <a href="#menu" data-en="Menu">La carte</a>
       <a href="#cuisine" data-en="Food">Cuisine</a>
       <a href="#agenda" data-en="Agenda">Agenda</a>
-      <a href="#affiche" data-en="Coming up">À l'affiche</a>
       <a href="#events" data-en="Live &amp; sport">Live &amp; matchs</a>
       <a href="#ambiance" data-en="Atmosphere">Ambiance</a>
       <a href="#programme" data-en="What's on">Programme</a>
@@ -670,11 +670,11 @@
 
   <!-- mobile menu -->
   <div class="mobile-menu" id="mobileMenu" hidden>
+    <a href="#affiche" data-en="Coming up">À l'affiche</a>
     <a href="#concept" data-en="The concept">Le concept</a>
     <a href="#menu" data-en="Menu">La carte</a>
     <a href="#cuisine" data-en="Food">Cuisine</a>
     <a href="#agenda" data-en="Agenda">Agenda</a>
-    <a href="#affiche" data-en="Coming up">À l'affiche</a>
     <a href="#events" data-en="Live &amp; sport">Live &amp; matchs</a>
     <a href="#ambiance" data-en="Atmosphere">Ambiance</a>
     <a href="#programme" data-en="What's on">Programme</a>
@@ -771,6 +771,41 @@
     } catch (e) {}
   })();
   </script>
+
+  <!-- ===== À L'AFFICHE / FEATURED EVENT =====
+       data-until="YYYY-MM-DD" = last day of the event. After that day the
+       section and its "À l'affiche" nav links hide themselves (script.js).
+       data-expires can set a precise after-midnight closing time. -->
+  <section class="affiche" id="affiche" data-date="2026-11-19T19:00" data-until="2026-11-19" data-expires="2026-11-20T00:30:00+01:00">
+    <div class="affiche__grid">
+      <figure class="affiche__poster">
+        <picture><source srcset="images/beaujolais-2026.webp" type="image/webp" /><img src="images/beaujolais-2026.jpg" alt="Camion rouge vintage chargé de paille et de caisses de Beaujolais Nouveau au Wall Street à Fréjus" width="1400" height="1050" loading="eager" decoding="async" /></picture>
+      </figure>
+      <div class="affiche__text">
+        <span class="eyebrow" data-en="Coming up">À l'affiche</span>
+        <h2 data-en="Beaujolais Nouveau night">Soirée Beaujolais Nouveau</h2>
+        <p class="affiche__lede" data-en="The Beaujolais Nouveau has arrived! The 2026 vintage is in at Wall Street tonight &mdash; come and raise a glass with us in Fréjus, with a sharing board to go with it.">Le Beaujolais Nouveau est arrivé&nbsp;! Le millésime 2026 débarque au Wall Street ce soir &mdash; venez trinquer avec nous à Fréjus, une planche à partager à côté.</p>
+        <ul class="affiche__facts">
+          <li>
+            <span class="affiche__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
+            <span data-en="Tonight · Thursday 19 November">Ce soir · jeudi 19 novembre</span>
+          </li>
+          <li>
+            <span class="affiche__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+            <span data-en="From 7pm · 2026 vintage">Dès 19h · millésime 2026</span>
+          </li>
+          <li>
+            <span class="affiche__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span>36 rue de l'Intendance, Fréjus</span>
+          </li>
+        </ul>
+        <div class="affiche__cta">
+          <a href="tel:+33498135445" class="btn btn--primary" data-en="Book a table">Réserver une table</a>
+          <a href="#infos" class="btn btn--ghost" data-en="Find us">Nous trouver</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ===== MARQUEE ===== -->
   <div class="marquee" aria-hidden="true">
@@ -1119,41 +1154,6 @@
       </li>
     </ul>
     <p class="agenda__note" data-en="Concerts and DJ sets several nights a week — the latest dates are on our socials.">Concerts et DJ sets plusieurs soirs par semaine — les dates du moment sont sur nos réseaux.</p>
-  </section>
-
-  <!-- ===== À L'AFFICHE / FEATURED EVENT =====
-       data-until="YYYY-MM-DD" = last day of the event. After that day the
-       section and its "À l'affiche" nav links hide themselves (script.js).
-       data-expires can set a precise after-midnight closing time. -->
-  <section class="affiche" id="affiche" data-date="2026-11-19T19:00" data-until="2026-11-19" data-expires="2026-11-20T00:30:00+01:00">
-    <div class="affiche__grid">
-      <figure class="affiche__poster">
-        <picture><source srcset="images/beaujolais-2026.webp" type="image/webp" /><img src="images/beaujolais-2026.jpg" alt="Camion rouge vintage chargé de paille et de caisses de Beaujolais Nouveau au Wall Street à Fréjus" width="1400" height="1050" loading="lazy" decoding="async" /></picture>
-      </figure>
-      <div class="affiche__text">
-        <span class="eyebrow" data-en="Coming up">À l'affiche</span>
-        <h2 data-en="Beaujolais Nouveau night">Soirée Beaujolais Nouveau</h2>
-        <p class="affiche__lede" data-en="The Beaujolais Nouveau has arrived! The 2026 vintage is in at Wall Street tonight &mdash; come and raise a glass with us in Fréjus, with a sharing board to go with it.">Le Beaujolais Nouveau est arrivé&nbsp;! Le millésime 2026 débarque au Wall Street ce soir &mdash; venez trinquer avec nous à Fréjus, une planche à partager à côté.</p>
-        <ul class="affiche__facts">
-          <li>
-            <span class="affiche__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
-            <span data-en="Tonight · Thursday 19 November">Ce soir · jeudi 19 novembre</span>
-          </li>
-          <li>
-            <span class="affiche__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
-            <span data-en="From 7pm · 2026 vintage">Dès 19h · millésime 2026</span>
-          </li>
-          <li>
-            <span class="affiche__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-            <span>36 rue de l'Intendance, Fréjus</span>
-          </li>
-        </ul>
-        <div class="affiche__cta">
-          <a href="tel:+33498135445" class="btn btn--primary" data-en="Book a table">Réserver une table</a>
-          <a href="#infos" class="btn btn--ghost" data-en="Find us">Nous trouver</a>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- ===== EVENTS ===== -->
