@@ -35,12 +35,22 @@ const { fontFamily: OSWALD } = loadOswald("normal", {
 const ANTON = "Anton";
 const SCRIPT = "Kaushan Script";
 
+/** Frames in brand/neon-intro.mp4 (the flicker-on); neon-loop.mp4 follows it seamlessly. */
+const NEON_INTRO = 90;
+
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const outExpo = Easing.bezier(0.16, 1, 0.3, 1);
 
-/** Anton is condensed: ~0.46em per capital. Fit a line into `width` px. */
-const fitAnton = (text: string, width: number, max: number) =>
-  Math.min(max, Math.round(width / (Math.max(text.length, 1) * 0.46)));
+/** Measure the rendered uppercase glyphs rather than estimating character widths. */
+const fitText = (text: string, width: number, max: number, family = ANTON) => {
+  if (typeof document === "undefined") return max;
+  const context = document.createElement("canvas").getContext("2d");
+  if (!context) return max;
+  context.font = `100px "${family}"`;
+  const measured = context.measureText(text.toUpperCase()).width;
+  return Math.min(max, Math.floor((width / Math.max(measured, 1)) * 100));
+};
+const fitAnton = (text: string, width: number, max: number) => fitText(text, width, max);
 
 /** A word that slams in: big → normal size, with a quick fade. */
 const Slam: React.FC<{
@@ -92,7 +102,7 @@ export const EventPromo: React.FC<EventProps> = (props) => {
   const cardIn = spring({ frame: frame - T.card, fps, config: { damping: 16 } });
   const timeIn = spring({ frame: frame - T.time, fps, config: { damping: 9, mass: 0.6 } });
 
-  const textShadow = `0 6px 0 ${C.ink}, 0 14px 40px rgba(0,0,0,.45)`;
+  const textShadow = "0 8px 30px rgba(0,0,0,.35)";
 
   return (
     <AbsoluteFill style={{ backgroundColor: C.ink, overflow: "hidden" }}>
@@ -118,13 +128,57 @@ export const EventPromo: React.FC<EventProps> = (props) => {
         }}
       />
 
+      <div style={{ position: "absolute", left: 80, top: 170, color: C.cream,
+        fontFamily: OSWALD, fontSize: 24, letterSpacing: ".22em" }}>
+        FRÉJUS / LIVE MUSIC & SPORTS
+      </div>
+      <div style={{ position: "absolute", left: 80, top: 411, width: 800, height: 2,
+        backgroundColor: C.blue, transformOrigin: "left", scale: `${interpolate(frame, [4, 26], [0, 1], clamp)} 1` }} />
+      <div style={{ position: "absolute", left: 80, top: 1625, color: C.blue,
+        fontFamily: OSWALD, fontSize: 24, letterSpacing: ".18em" }}>
+        GOOD FOOD · GOOD DRINKS · GOOD PEOPLE
+      </div>
+
       {/* ---------- Logo ---------- */}
+      {props.logo === "neon" ? (
+        // Blender render on black: "screen" drops the black and keeps only the glow.
+        <div
+          style={{
+            position: "absolute",
+            top: 180,
+            left: 80,
+            right: 160,
+            height: 250,
+            display: "flex",
+            justifyContent: "center",
+            mixBlendMode: "screen",
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              width: 250,
+              height: 250,
+              // the wall in the render isn't pure black: fade it out before the square edge
+              maskImage: "radial-gradient(circle closest-side, #000 86%, transparent 100%)",
+              WebkitMaskImage: "radial-gradient(circle closest-side, #000 86%, transparent 100%)",
+            }}
+          >
+            <Sequence from={T.logo} durationInFrames={NEON_INTRO} layout="none">
+              <Video src={staticFile("brand/neon-intro.mp4")} muted style={{ position: "absolute", inset: 0, width: 250, height: 250 }} />
+            </Sequence>
+            <Sequence from={T.logo + NEON_INTRO} layout="none">
+              <Video src={staticFile("brand/neon-loop.mp4")} muted loop style={{ position: "absolute", inset: 0, width: 250, height: 250 }} />
+            </Sequence>
+          </div>
+        </div>
+      ) : (
       <div
         style={{
           position: "absolute",
-          top: 110,
-          left: 0,
-          right: 0,
+          top: 220,
+          left: 80,
+          right: 160,
           display: "flex",
           justifyContent: "center",
           opacity: interpolate(frame, [T.logo, T.logo + 6], [0, 1], clamp),
@@ -134,22 +188,23 @@ export const EventPromo: React.FC<EventProps> = (props) => {
         <Img
           src={staticFile("brand/logo-card.png")}
           style={{
-            width: 250,
-            borderRadius: 26,
+            width: 164,
+            borderRadius: 16,
             border: `5px solid ${C.cream}`,
             boxShadow: "0 18px 50px rgba(0,0,0,.45)",
-            rotate: "-3deg",
+            rotate: "0deg",
           }}
         />
       </div>
+      )}
 
       {/* ---------- Title block ---------- */}
       <div
         style={{
           position: "absolute",
-          top: 430,
+          top: 490,
           left: 80,
-          right: 80,
+          right: 160,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -159,14 +214,14 @@ export const EventPromo: React.FC<EventProps> = (props) => {
         {/* Coral ribbon */}
         <div
           style={{
-            rotate: "-3deg",
+            rotate: "0deg",
             clipPath: `inset(0 ${interpolate(frame, [T.ribbon, T.ribbon + 12], [100, 0], { ...clamp, easing: outExpo })}% 0 0)`,
             backgroundColor: C.red,
             color: C.cream,
             fontFamily: OSWALD,
             fontWeight: 700,
-            fontSize: 58,
-            letterSpacing: "0.08em",
+            fontSize: fitText(kicker, 620, 46, OSWALD),
+            letterSpacing: "0.04em",
             textTransform: "uppercase",
             padding: "10px 40px 14px",
             boxShadow: `0 10px 0 ${C.ink}`,
@@ -187,14 +242,14 @@ export const EventPromo: React.FC<EventProps> = (props) => {
           {kicker}
         </div>
 
-        <div style={{ marginTop: 56, display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{ marginTop: 42, display: "flex", flexDirection: "column", alignItems: "center" }}>
           {isMatch ? (
             <>
               <Slam
                 at={T.title}
                 style={{
                   fontFamily: ANTON,
-                  fontSize: fitAnton(home, 920, 230),
+                  fontSize: fitAnton(home, 800, 195),
                   lineHeight: 1,
                   color: C.cream,
                   textTransform: "uppercase",
@@ -207,7 +262,7 @@ export const EventPromo: React.FC<EventProps> = (props) => {
                 at={T.title + 12}
                 style={{
                   fontFamily: SCRIPT,
-                  fontSize: 150,
+                  fontSize: 100,
                   lineHeight: 1.05,
                   color: C.red,
                   rotate: "-6deg",
@@ -221,7 +276,7 @@ export const EventPromo: React.FC<EventProps> = (props) => {
                 at={T.title + 24}
                 style={{
                   fontFamily: ANTON,
-                  fontSize: fitAnton(away, 920, 230),
+                  fontSize: fitAnton(away, 800, 195),
                   lineHeight: 1,
                   color: C.cream,
                   textTransform: "uppercase",
@@ -238,7 +293,7 @@ export const EventPromo: React.FC<EventProps> = (props) => {
                 at={T.title + i * 12}
                 style={{
                   fontFamily: ANTON,
-                  fontSize: fitAnton(line, 920, titleLines.length > 2 ? 190 : 230),
+                  fontSize: fitAnton(line, 800, titleLines.length > 2 ? 145 : 190),
                   lineHeight: 1.04,
                   color: i % 2 === 1 ? C.blue : C.cream,
                   textTransform: "uppercase",
@@ -256,7 +311,7 @@ export const EventPromo: React.FC<EventProps> = (props) => {
             style={{
               marginTop: 34,
               fontFamily: SCRIPT,
-              fontSize: 66,
+              fontSize: fitText(subtitle, 760, 48, SCRIPT),
               color: C.cream,
               textShadow: `0 4px 18px rgba(0,0,0,.6)`,
               opacity: interpolate(frame, [T.sub, T.sub + 10], [0, 1], clamp),
@@ -272,9 +327,10 @@ export const EventPromo: React.FC<EventProps> = (props) => {
       <div
         style={{
           position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 360,
+          left: 80,
+          right: 160,
+          top: 1250,
+          height: 118,
           display: "flex",
           justifyContent: "center",
           opacity: interpolate(frame, [T.card, T.card + 6], [0, 1], clamp),
@@ -285,7 +341,7 @@ export const EventPromo: React.FC<EventProps> = (props) => {
           style={{
             display: "flex",
             alignItems: "stretch",
-            rotate: "-2deg",
+            rotate: "0deg",
             boxShadow: `0 12px 0 ${C.ink}, 0 30px 60px rgba(0,0,0,.4)`,
             borderRadius: 18,
             overflow: "hidden",
@@ -297,7 +353,7 @@ export const EventPromo: React.FC<EventProps> = (props) => {
               color: C.ink,
               fontFamily: OSWALD,
               fontWeight: 700,
-              fontSize: 66,
+              fontSize: fitText(dayLabel, 390, 48, OSWALD),
               textTransform: "uppercase",
               letterSpacing: "0.02em",
               padding: "18px 36px",
@@ -312,7 +368,7 @@ export const EventPromo: React.FC<EventProps> = (props) => {
               backgroundColor: C.red,
               color: C.cream,
               fontFamily: ANTON,
-              fontSize: 110,
+              fontSize: fitAnton(timeLabel, 240, 82),
               lineHeight: 1,
               padding: "16px 34px 20px",
               display: "flex",
@@ -331,8 +387,8 @@ export const EventPromo: React.FC<EventProps> = (props) => {
         style={{
           position: "absolute",
           left: 80,
-          right: 80,
-          bottom: 120,
+          right: 160,
+          top: 1430,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -345,7 +401,7 @@ export const EventPromo: React.FC<EventProps> = (props) => {
           style={{
             fontFamily: OSWALD,
             fontWeight: 600,
-            fontSize: 50,
+            fontSize: 36,
             color: C.cream,
             letterSpacing: "0.04em",
             textTransform: "uppercase",
@@ -357,7 +413,7 @@ export const EventPromo: React.FC<EventProps> = (props) => {
           style={{
             fontFamily: OSWALD,
             fontWeight: 500,
-            fontSize: 44,
+            fontSize: 38,
             color: C.cream,
             border: `3px solid ${C.blue}`,
             borderRadius: 999,
@@ -367,6 +423,11 @@ export const EventPromo: React.FC<EventProps> = (props) => {
           Réservez au <b style={{ fontWeight: 700 }}>04 98 13 54 45</b>
         </div>
       </div>
+
+      {/* The brand-colour shutter opens onto the real pub, driven only by frame. */}
+      <AbsoluteFill style={{ pointerEvents: "none", backgroundColor: C.blue,
+        transform: `translateX(${interpolate(frame, [0, 18], [0, -140], { ...clamp, easing: outExpo })}%) skewX(-12deg)`,
+        transformOrigin: "bottom", opacity: frame >= 18 ? 0 : 1 }} />
 
       {/* ---------- Sound ---------- */}
       {music ? (

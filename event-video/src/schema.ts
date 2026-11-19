@@ -27,6 +27,8 @@ export const eventSchema = z.object({
   footageStart: z.number().min(0),
   /** Background music + sound effects (the website copy is muted anyway). */
   music: z.boolean(),
+  /** "neon" = the Blender neon sign flickering on (../neon-sign), "card" = the flat logo card. */
+  logo: z.enum(["neon", "card"]),
 });
 
 export type EventProps = z.infer<typeof eventSchema>;
@@ -54,4 +56,5 @@ export const defaultProps: EventProps = {
   footage: "sport.mp4",
   footageStart: 2,
   music: true,
+  logo: "neon",
 };

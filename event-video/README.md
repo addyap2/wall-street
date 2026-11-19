@@ -56,7 +56,24 @@ Par sécurité, le script refuse d'écraser une vidéo du site qu'il n'a pas pro
 | `expires` | non | heure précise de fin, après minuit (par défaut 1 h du matin le lendemain) |
 | `dayLabel`, `timeLabel` | non | forcer le texte de la date ou de l'heure |
 | `music` | non | `false` pour une vidéo sans son |
+| `logo` | non | `"neon"` (par défaut) : l'enseigne néon qui s'allume, rendue avec Blender (`../neon-sign`). `"card"` : le logo plat |
 | `slug` | non | forcer le nom des fichiers |
+
+## Vérifier les informations
+
+Avant de lancer le rendu, vérifiez le fichier sans créer de vidéo :
+
+```bash
+npm run event -- events/exemples/match.json --check
+```
+
+Le script vérifie la date, les équipes ou le titre, les noms de fichiers et la longueur des textes.
+Limites : 40 caractères par équipe, 40 pour le bandeau, 70 pour le sous-titre,
+100 pour le titre (3 lignes maximum), 30 pour la date et 10 pour l'heure.
+La mise en page mesure la largeur des lettres pour ajuster la taille du texte.
+Les informations essentielles sont placées entre 170 et 1590 pixels de hauteur,
+avec une marge plus large à droite pour les commandes des réseaux sociaux.
+Vérifiez aussi la prévisualisation sur la plateforme avant de publier.
 
 ## Prévisualiser et ajuster
 
