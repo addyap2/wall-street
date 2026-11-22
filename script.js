@@ -440,198 +440,219 @@ function wsActiveWeek() {
   setTimeout(function () { paint(); setInterval(paint, 86400000); }, msToMidnight + 1000);
 })();
 
-// ===== Food gallery: filters, "see more", lightbox (photos + videos) =====
+// ===== Photo galleries (food + ambiance): filters, "see more", shared lightbox =====
 (function () {
-  const gallery = document.getElementById('foodGallery');
-  if (!gallery) return;
-  const items = Array.prototype.slice.call(gallery.querySelectorAll('.food-gallery__item'));
-  if (!items.length) return;
-  const section = gallery.closest('section') || document;
-  const filterBtns = Array.prototype.slice.call(section.querySelectorAll('.food-filters [data-filter]'));
-  const moreWrap = section.querySelector('.food-more');
-  const moreBtn = moreWrap ? moreWrap.querySelector('.food-more__btn') : null;
-  const moreN = moreWrap ? moreWrap.querySelector('.food-more__n') : null;
+  const galleries = ['foodGallery', 'ambianceGallery']
+    .map(function (id) { return document.getElementById(id); })
+    .filter(Boolean);
+  if (!galleries.length) return;
 
   const isEn = function () { return document.documentElement.lang === 'en'; };
-  function enlargeLabel(item) {
-    if (item.hasAttribute('data-video')) return isEn() ? ' — play video' : ' — lire la vidéo';
-    return isEn() ? ' — enlarge photo' : ' — agrandir la photo';
-  }
   function capText(item) {
-    const c = item.querySelector('.food-gallery__cap');
+    const c = item.querySelector('figcaption');
     return c ? c.textContent.trim() : '';
   }
 
-  // ---- Filters + "see more" ----
-  // "All" shows the first few tiles (fewer on phones) until "see more" is pressed;
-  // a category always shows all of its tiles.
-  const mqSmall = window.matchMedia ? matchMedia('(max-width: 700px)') : null;
-  function initialCount() { return mqSmall && mqSmall.matches ? 8 : 12; }
-  let filter = 'all';
-  let expanded = false;
+  const lb = buildLightbox();
+  galleries.forEach(setupGallery);
 
-  filterBtns.forEach(function (b) {
-    const f = b.getAttribute('data-filter');
-    const n = f === 'all' ? items.length : items.filter(function (it) { return it.getAttribute('data-cat') === f; }).length;
-    const slot = b.querySelector('.food-filters__n');
-    if (slot) slot.textContent = n;
-  });
+  // ---- One gallery: tiles as buttons, optional filters + "see more" ----
+  // Filters (.food-filters) and the "see more" button (.food-more) are looked up
+  // in the gallery's section; a gallery without them simply shows every tile.
+  function setupGallery(gallery) {
+    const items = Array.prototype.slice.call(gallery.querySelectorAll('.food-gallery__item'));
+    if (!items.length) return;
+    const section = gallery.closest('section') || document;
+    const filterBtns = Array.prototype.slice.call(section.querySelectorAll('.food-filters [data-filter]'));
+    const moreWrap = section.querySelector('.food-more');
+    const moreBtn = moreWrap ? moreWrap.querySelector('.food-more__btn') : null;
+    const moreN = moreWrap ? moreWrap.querySelector('.food-more__n') : null;
 
-  function visibleItems() { return items.filter(function (it) { return !it.classList.contains('is-hidden'); }); }
+    // "All" shows the first few tiles (fewer on phones) until "see more" is pressed;
+    // a category always shows all of its tiles.
+    const mqSmall = window.matchMedia ? matchMedia('(max-width: 700px)') : null;
+    function initialCount() { return mqSmall && mqSmall.matches ? 8 : 12; }
+    let filter = 'all';
+    let expanded = false;
 
-  function apply(revealNew) {
-    const pool = items.filter(function (it) { return filter === 'all' || it.getAttribute('data-cat') === filter; });
-    const limit = filter === 'all' && !expanded ? initialCount() : Infinity;
-    let k = 0;
-    items.forEach(function (it) {
-      const inPool = pool.indexOf(it) !== -1;
-      const show = inPool && pool.indexOf(it) < limit;
-      const wasHidden = it.classList.contains('is-hidden');
-      it.classList.toggle('is-hidden', !show);
-      // Tiles that appear after load: short stagger instead of the long scroll stagger
-      if (show && wasHidden && revealNew) { it.style.setProperty('--delay', (k++ * 45) + 'ms'); }
-      else if (show && revealNew) { it.style.setProperty('--delay', '0ms'); }
-    });
-    const rest = pool.length - Math.min(pool.length, limit);
-    if (moreWrap) {
-      moreWrap.hidden = rest <= 0;
-      if (moreN) moreN.textContent = '(+' + rest + ')';
+    function enlargeLabel(item) {
+      if (item.hasAttribute('data-video')) return isEn() ? ' — play video' : ' — lire la vidéo';
+      return isEn() ? ' — enlarge photo' : ' — agrandir la photo';
     }
+    // everything in the active filter, including tiles behind "see more"
+    function pool() {
+      return items.filter(function (it) { return filter === 'all' || it.getAttribute('data-cat') === filter; });
+    }
+    function visibleItems() {
+      return items.filter(function (it) { return !it.classList.contains('is-hidden'); });
+    }
+
     filterBtns.forEach(function (b) {
-      const on = b.getAttribute('data-filter') === filter;
-      b.classList.toggle('is-active', on);
-      b.setAttribute('aria-pressed', String(on));
+      const f = b.getAttribute('data-filter');
+      const n = f === 'all' ? items.length : items.filter(function (it) { return it.getAttribute('data-cat') === f; }).length;
+      const slot = b.querySelector('.food-filters__n');
+      if (slot) slot.textContent = n;
     });
-  }
 
-  filterBtns.forEach(function (b) {
-    b.addEventListener('click', function () {
-      filter = b.getAttribute('data-filter');
-      apply(true);
-    });
-  });
-  if (moreBtn) {
-    moreBtn.addEventListener('click', function () {
-      const before = visibleItems().length;
-      expanded = true;
-      apply(true);
-      // keep keyboard users in place: focus the first newly shown tile
-      const next = visibleItems()[before];
-      if (next) next.focus({ preventScroll: true });
-    });
-  }
-  if (mqSmall && mqSmall.addEventListener) mqSmall.addEventListener('change', function () { apply(false); });
-  apply(false);
-
-  // ---- Lightbox ----
-  const box = document.createElement('div');
-  box.className = 'lightbox';
-  box.setAttribute('role', 'dialog');
-  box.setAttribute('aria-modal', 'true');
-  box.setAttribute('aria-hidden', 'true');
-  box.innerHTML =
-    '<button class="lightbox__btn lightbox__close" type="button" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
-    '<button class="lightbox__btn lightbox__prev" type="button" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>' +
-    '<img class="lightbox__img" alt="" />' +
-    '<video class="lightbox__video" muted loop playsinline controls preload="auto" hidden></video>' +
-    '<button class="lightbox__btn lightbox__next" type="button" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>' +
-    '<p class="lightbox__cap"><span class="lightbox__title"></span><span class="lightbox__count"></span></p>';
-  document.body.appendChild(box);
-
-  const bImg = box.querySelector('.lightbox__img');
-  const bVid = box.querySelector('.lightbox__video');
-  const bTitle = box.querySelector('.lightbox__title');
-  const bCount = box.querySelector('.lightbox__count');
-  const btnClose = box.querySelector('.lightbox__close');
-  const btnPrev = box.querySelector('.lightbox__prev');
-  const btnNext = box.querySelector('.lightbox__next');
-
-  let list = items;   // the tiles currently browsable (respects the active filter)
-  let current = -1;
-  let lastFocused = null;
-
-  function show(i) {
-    current = (i + list.length) % list.length;
-    const item = list[current];
-    const im = item.querySelector('img');
-    const v = item.querySelector('video');
-    if (v) {
-      bImg.hidden = true; bImg.removeAttribute('src');
-      bVid.hidden = false;
-      bVid.poster = v.getAttribute('poster') || '';
-      bVid.src = v.getAttribute('src');
-      bVid.setAttribute('aria-label', v.getAttribute('aria-label') || capText(item));
-      const p = bVid.play(); if (p && p.catch) p.catch(function () {});
-    } else {
-      bVid.pause(); bVid.removeAttribute('src'); bVid.load(); bVid.hidden = true;
-      bImg.hidden = false;
-      bImg.src = im ? (im.currentSrc || im.src) : '';
-      bImg.alt = im ? im.alt : '';
+    function apply(revealNew) {
+      const inPool = pool();
+      const limit = moreWrap && filter === 'all' && !expanded ? initialCount() : Infinity;
+      let k = 0;
+      items.forEach(function (it) {
+        const idx = inPool.indexOf(it);
+        const show = idx !== -1 && idx < limit;
+        const wasHidden = it.classList.contains('is-hidden');
+        it.classList.toggle('is-hidden', !show);
+        // Tiles that appear after load: short stagger instead of the long scroll stagger
+        if (show && wasHidden && revealNew) it.style.setProperty('--delay', (k++ * 45) + 'ms');
+        else if (show && revealNew) it.style.setProperty('--delay', '0ms');
+      });
+      const rest = inPool.length - Math.min(inPool.length, limit);
+      if (moreWrap) {
+        moreWrap.hidden = rest <= 0;
+        if (moreN) moreN.textContent = '(+' + rest + ')';
+      }
+      filterBtns.forEach(function (b) {
+        const on = b.getAttribute('data-filter') === filter;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
     }
-    bTitle.textContent = capText(item);
-    bCount.textContent = (current + 1) + ' / ' + list.length;
-    // warm the next photo
-    const nx = list[(current + 1) % list.length].querySelector('picture img');
-    if (nx) { const pre = new Image(); pre.src = nx.currentSrc || nx.src; }
-  }
-  function open(item) {
-    // browse everything in the active filter, including tiles behind "see more"
-    list = items.filter(function (it) { return filter === 'all' || it.getAttribute('data-cat') === filter; });
-    lastFocused = document.activeElement;
-    show(list.indexOf(item));
-    box.classList.add('is-open');
-    box.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    btnClose.focus();
-  }
-  function close() {
-    box.classList.remove('is-open');
-    box.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    bVid.pause();
-    if (lastFocused && lastFocused.focus) lastFocused.focus();
-  }
 
-  items.forEach(function (item) {
-    item.setAttribute('role', 'button');
-    item.setAttribute('tabindex', '0');
-    item.setAttribute('aria-label', capText(item) + enlargeLabel(item));
-    item.addEventListener('click', function () { open(item); });
-    item.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(item); }
+    filterBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        filter = b.getAttribute('data-filter');
+        apply(true);
+      });
     });
-  });
+    if (moreBtn) {
+      moreBtn.addEventListener('click', function () {
+        const before = visibleItems().length;
+        expanded = true;
+        apply(true);
+        // keep keyboard users in place: focus the first newly shown tile
+        const next = visibleItems()[before];
+        if (next) next.focus({ preventScroll: true });
+      });
+    }
+    if (moreWrap && mqSmall && mqSmall.addEventListener) mqSmall.addEventListener('change', function () { apply(false); });
+    apply(false);
 
-  btnClose.addEventListener('click', close);
-  btnPrev.addEventListener('click', function () { show(current - 1); });
-  btnNext.addEventListener('click', function () { show(current + 1); });
-  box.addEventListener('click', function (e) { if (e.target === box) close(); });
-  document.addEventListener('keydown', function (e) {
-    if (!box.classList.contains('is-open')) return;
-    if (e.key === 'Escape') close();
-    else if (e.key === 'ArrowLeft') show(current - 1);
-    else if (e.key === 'ArrowRight') show(current + 1);
-  });
+    items.forEach(function (item) {
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('aria-label', capText(item) + enlargeLabel(item));
+      item.addEventListener('click', function () { lb.open(pool(), item); });
+      item.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lb.open(pool(), item); }
+      });
+    });
 
-  // swipe left / right on touch screens
-  let x0 = null, y0 = null;
-  box.addEventListener('touchstart', function (e) {
-    if (e.touches.length !== 1) return;
-    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
-  }, { passive: true });
-  box.addEventListener('touchend', function (e) {
-    if (x0 === null) return;
-    const dx = e.changedTouches[0].clientX - x0;
-    const dy = e.changedTouches[0].clientY - y0;
-    x0 = null;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(current + (dx < 0 ? 1 : -1));
-  });
+    document.addEventListener('ws:langchange', function () {
+      items.forEach(function (item) { item.setAttribute('aria-label', capText(item) + enlargeLabel(item)); });
+    });
+  }
 
-  // Keep labels / open caption in sync with the language
-  document.addEventListener('ws:langchange', function () {
-    items.forEach(function (item) { item.setAttribute('aria-label', capText(item) + enlargeLabel(item)); });
-    if (box.classList.contains('is-open') && current >= 0) bTitle.textContent = capText(list[current]);
-  });
+  // ---- Lightbox (one, shared by every gallery; plays video tiles) ----
+  function buildLightbox() {
+    const box = document.createElement('div');
+    box.className = 'lightbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-hidden', 'true');
+    box.innerHTML =
+      '<button class="lightbox__btn lightbox__close" type="button" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+      '<button class="lightbox__btn lightbox__prev" type="button" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>' +
+      '<img class="lightbox__img" alt="" />' +
+      '<video class="lightbox__video" muted loop playsinline controls preload="auto" hidden></video>' +
+      '<button class="lightbox__btn lightbox__next" type="button" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>' +
+      '<p class="lightbox__cap"><span class="lightbox__title"></span><span class="lightbox__count"></span></p>';
+    document.body.appendChild(box);
+
+    const bImg = box.querySelector('.lightbox__img');
+    const bVid = box.querySelector('.lightbox__video');
+    const bTitle = box.querySelector('.lightbox__title');
+    const bCount = box.querySelector('.lightbox__count');
+    const btnClose = box.querySelector('.lightbox__close');
+    const btnPrev = box.querySelector('.lightbox__prev');
+    const btnNext = box.querySelector('.lightbox__next');
+
+    let list = [];      // tiles browsable right now (the opened gallery, active filter)
+    let current = -1;
+    let lastFocused = null;
+
+    function show(i) {
+      current = (i + list.length) % list.length;
+      const item = list[current];
+      const im = item.querySelector('img');
+      const v = item.querySelector('video');
+      if (v) {
+        bImg.hidden = true; bImg.removeAttribute('src');
+        bVid.hidden = false;
+        bVid.poster = v.getAttribute('poster') || '';
+        bVid.src = v.getAttribute('src');
+        bVid.setAttribute('aria-label', v.getAttribute('aria-label') || capText(item));
+        const p = bVid.play(); if (p && p.catch) p.catch(function () {});
+      } else {
+        bVid.pause(); bVid.removeAttribute('src'); bVid.load(); bVid.hidden = true;
+        bImg.hidden = false;
+        bImg.src = im ? (im.currentSrc || im.src) : '';
+        bImg.alt = im ? im.alt : '';
+      }
+      bTitle.textContent = capText(item);
+      bCount.textContent = (current + 1) + ' / ' + list.length;
+      // warm the next photo
+      const nx = list[(current + 1) % list.length].querySelector('picture img');
+      if (nx) { const pre = new Image(); pre.src = nx.currentSrc || nx.src; }
+    }
+    function open(tiles, item) {
+      list = tiles;
+      lastFocused = document.activeElement;
+      show(list.indexOf(item));
+      box.classList.add('is-open');
+      box.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      btnClose.focus();
+    }
+    function close() {
+      box.classList.remove('is-open');
+      box.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      bVid.pause();
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    btnClose.addEventListener('click', close);
+    btnPrev.addEventListener('click', function () { show(current - 1); });
+    btnNext.addEventListener('click', function () { show(current + 1); });
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (!box.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(current - 1);
+      else if (e.key === 'ArrowRight') show(current + 1);
+    });
+
+    // swipe left / right on touch screens
+    let x0 = null, y0 = null;
+    box.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) return;
+      x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+    }, { passive: true });
+    box.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      const dy = e.changedTouches[0].clientY - y0;
+      x0 = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(current + (dx < 0 ? 1 : -1));
+    });
+
+    document.addEventListener('ws:langchange', function () {
+      if (box.classList.contains('is-open') && current >= 0) bTitle.textContent = capText(list[current]);
+    });
+
+    return { open: open };
+  }
 })();
 
 // ===== Auto-expiring events =====

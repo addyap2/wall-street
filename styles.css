@@ -904,18 +904,29 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
 /* ============================================================
    AMBIANCE GALLERY
    ============================================================ */
+/* Desktop: the pub-tour reel sits beside a 3×3 photo mosaic.
+   Tiles share the food gallery's tile styles (.food-gallery__item: caption,
+   hover zoom, magnifier, focus ring) and its lightbox. */
+.ambiance__body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+.ambiance__body .ambiance__tour { margin: 0; align-items: flex-start; }
+.ambiance__tour .tour__media { width: 330px; }
+/* rows follow the reel's height (minmax(0, …) so photos don't stretch them) */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: 246px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-auto-flow: dense;
   gap: 1rem;
 }
-.gallery__item { overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow); }
-.gallery__item img, .gallery__item video { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .5s ease; }
-.gallery__item:hover video { transform: scale(1.06); }
+.gallery__item picture,
+.gallery__item img { position: absolute; inset: 0; width: 100%; height: 100%; }
 .gallery__item img.img-pos-taps { object-position: 50% 34%; }
 .gallery__item img.img-pos-top { object-position: 50% 28%; }
-.gallery__item:hover img { transform: scale(1.06); }
 .gallery__item--tall { grid-row: span 2; }
 .gallery__item--wide { grid-column: span 2; }
 
@@ -1515,16 +1526,20 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
   .events__list { text-align: left; }
   .events__media { max-width: 420px; margin: 0 auto; }
   .infos__grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 190px; }
-  .gallery__item--wide { grid-column: span 2; }
-  .gallery__item--tall { grid-row: span 1; }
+  .ambiance__body { grid-template-columns: 1fr; }
+  .ambiance__body .ambiance__tour { margin-bottom: .4rem; }
+  .ambiance__tour .tour__media { width: min(300px, 70vw); }
+  .gallery { grid-template-rows: none; grid-auto-rows: 180px; }
+}
+
+@media (max-width: 700px) {
+  .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; gap: .5rem; }
+  .gallery__item--wide-sm { grid-column: span 2; }
 }
 
 @media (max-width: 560px) {
   .features { grid-template-columns: 1fr; }
   .infos__grid { grid-template-columns: 1fr; }
-  .gallery { grid-template-columns: 1fr; grid-auto-rows: 240px; }
-  .gallery__item--wide { grid-column: span 1; }
   .hero__poster { transform: rotate(0); }
   .menu__tabs { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .5rem; }
   .tab { flex: 0 0 auto; }
