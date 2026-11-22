@@ -233,7 +233,7 @@
      HERO 3D POINTER TILT  (desktop only)
      Poster reacts to cursor as a shallow camera parallax.
      ============================================================ */
-  if (MOTION && finePointer && hero && !hero.classList.contains('is-halloween')) {
+  if (MOTION && finePointer && hero) {
     var poster = $('.hero__poster');
     var art = $('.hero__art');
     if (poster && art) {
