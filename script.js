@@ -42,8 +42,9 @@ if (toggle && mobileMenu) {
   );
 }
 
-// Menu tabs — accessible tabs pattern (ARIA + keyboard)
-const tabs = Array.from(document.querySelectorAll('.tab'));
+// Menu tabs — accessible tabs pattern (ARIA + keyboard).
+// Scoped to .menu__tabs: other controls (the gallery filter chips) reuse the .tab look.
+const tabs = Array.from(document.querySelectorAll('.menu__tabs .tab'));
 const panels = Array.from(document.querySelectorAll('.menu__panel'));
 
 tabs.forEach((tab, i) => {
@@ -69,6 +70,12 @@ tabs.forEach((tab, i) => {
     tab.setAttribute('tabindex', '0');
     if (panel) panel.classList.add('is-active');
     if (focus) tab.focus();
+    // phones: the tab row scrolls sideways; bring the chosen tab fully into view
+    const row = tab.parentElement;
+    if (row && row.scrollWidth > row.clientWidth) {
+      const dx = tab.getBoundingClientRect().left - row.getBoundingClientRect().left;
+      row.scrollTo({ left: row.scrollLeft + dx - (row.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' });
+    }
   }
 
   tab.addEventListener('click', () => activate(false));
@@ -81,6 +88,20 @@ tabs.forEach((tab, i) => {
     if (idx !== null) { e.preventDefault(); tabs[idx].click(); tabs[idx].focus(); }
   });
 });
+
+// Phones: the tab row scrolls sideways — fade the edge that has more tabs behind it
+(function () {
+  const row = document.querySelector('.menu__tabs');
+  if (!row) return;
+  function edges() {
+    const max = row.scrollWidth - row.clientWidth;
+    row.classList.toggle('has-more-left', row.scrollLeft > 4);
+    row.classList.toggle('has-more-right', row.scrollLeft < max - 4);
+  }
+  row.addEventListener('scroll', edges, { passive: true });
+  window.addEventListener('resize', edges);
+  edges();
+})();
 
 // Footer year (also re-applied after a language switch rebuilds the footer line)
 function fillYear() {
@@ -457,6 +478,49 @@ function wsActiveWeek() {
 
   const lb = buildLightbox();
   galleries.forEach(setupGallery);
+  linkMenuPhotos();
+
+  // ---- Menu dishes that have a photo in the food gallery ----
+  // <div class="dish" data-photo="food-2 food-12"> gets a round thumbnail after its
+  // name; it opens those gallery tiles in the lightbox. Keys are file names
+  // (images/food-2.jpg, videos/dessert.mp4) so the menu never repeats image paths.
+  function linkMenuPhotos() {
+    const food = document.getElementById('foodGallery');
+    if (!food) return;
+    const tiles = Array.prototype.slice.call(food.querySelectorAll('.food-gallery__item'));
+    function tileFor(key) {
+      return tiles.find(function (it) {
+        const v = it.querySelector('video'), im = it.querySelector('img');
+        const src = (v && v.getAttribute('src')) || (im && im.getAttribute('src')) || '';
+        return src.indexOf('/' + key + '.') !== -1;
+      });
+    }
+    document.querySelectorAll('.dish[data-photo]').forEach(function (dish) {
+      const shots = dish.getAttribute('data-photo').split(/\s+/).map(tileFor).filter(Boolean);
+      const name = dish.querySelector('.dish__name');
+      if (!shots.length || !name) return;
+      const src = shots[0].querySelector('picture source');
+      const im = shots[0].querySelector('img');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'dish__photo';
+      const thumb = document.createElement('img');
+      thumb.alt = ''; thumb.width = 56; thumb.height = 56;
+      thumb.loading = 'lazy'; thumb.decoding = 'async';
+      thumb.src = src ? src.getAttribute('srcset') : (im ? im.getAttribute('src') : '');
+      btn.appendChild(thumb);
+      function label() {
+        const t = name.childNodes[0] ? name.childNodes[0].textContent.trim() : name.textContent.trim();
+        const l = (isEn() ? 'See the photo: ' : 'Voir la photo : ') + t;
+        btn.setAttribute('aria-label', l);
+        btn.title = l;
+      }
+      label();
+      document.addEventListener('ws:langchange', label);
+      btn.addEventListener('click', function () { lb.open(shots, shots[0]); });
+      name.insertAdjacentElement('afterend', btn);
+    });
+  }
 
   // ---- One gallery: tiles as buttons, optional filters + "see more" ----
   // Filters (.food-filters) and the "see more" button (.food-more) are looked up

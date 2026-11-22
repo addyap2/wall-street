@@ -793,6 +793,23 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
 .dish__name small { font-weight: 400; font-size: .8em; opacity: .7; white-space: nowrap; }
 .dish__dots { flex: 1; border-bottom: 2px dotted rgba(58,75,135,.35); transform: translateY(-4px); min-width: 12px; }
 .dish__price { font-family: var(--font-cond); font-weight: 600; color: var(--blue-deep); white-space: nowrap; }
+/* round photo thumbnail after a dish name (opens the gallery photo in the lightbox) */
+.dish__photo {
+  flex: 0 0 auto;
+  align-self: center;
+  width: 30px; height: 30px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--cream-2);
+  box-shadow: 0 0 0 1px rgba(58,75,135,.25), 0 2px 6px rgba(28,34,48,.18);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.dish__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.dish__photo:hover { transform: scale(1.15); box-shadow: 0 0 0 2px var(--red), 0 4px 10px rgba(28,34,48,.25); }
+.dish__photo:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
 .dish__desc { color: var(--ink-soft); font-size: .92rem; margin-top: .2rem; max-width: 46ch; }
 
 .scoops { display: flex; gap: .8rem; flex-wrap: wrap; }
@@ -1563,7 +1580,13 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
   .hero__poster { aspect-ratio: 4 / 5; object-fit: cover; }
   .hero__tag { display: none; }
   .hero__cta { margin-bottom: 1.2rem; }
-  .menu__tabs { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .5rem; }
+  .menu__tabs { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .5rem; scrollbar-width: none; }
+  .menu__tabs::-webkit-scrollbar { display: none; }
+  .dish__photo { width: 36px; height: 36px; }
+  /* fade whichever edge still hides tabs (classes set by script.js) */
+  .menu__tabs.has-more-right { -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); }
+  .menu__tabs.has-more-left { -webkit-mask-image: linear-gradient(to left, #000 82%, transparent); mask-image: linear-gradient(to left, #000 82%, transparent); }
+  .menu__tabs.has-more-left.has-more-right { -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent); }
   .tab { flex: 0 0 auto; }
 }
 
