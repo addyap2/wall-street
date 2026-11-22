@@ -91,7 +91,7 @@
   /* Split a heading into per-word masks so each word rises on its own.
      Rebuilds from the element's current text, so it also re-runs after
      a FR/EN swap. Words carry a staggered --delay. */
-  var HEADING_SEL = '.section-head h2, .program__intro h2, .events__text h2';
+  var HEADING_SEL = '.section-head h2, .events__text h2';
   function escapeHtml(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
@@ -130,7 +130,7 @@
     // Events panel — text rises left, media from the right
     var evText = $('.events__text');
     if (evText) { var kids = $all(':scope > *', evText); kids.forEach(tagReveal); stagger(kids, 80); }
-    tagReveal($('.events__media'), 'reveal--right');
+    tagReveal($('.events__reels'), 'reveal--right');
 
     // Featured event — poster from the left, details rise on the right
     tagReveal($('.affiche__poster'), 'reveal--left');

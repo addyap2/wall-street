@@ -1,6 +1,8 @@
 // ===== Wall Street — interactions =====
 
-// Ambient videos (Live & matchs, La carte): poster underneath; play in view
+// Ambient videos (Live & matchs, La carte): poster underneath; play in view.
+// Keep them WITHOUT the autoplay attribute: autoplay overrides preload="none"
+// and makes browsers download every clip on page load.
 (function () {
   const vids = document.querySelectorAll('.js-ambient-video');
   if (!vids.length) return;
