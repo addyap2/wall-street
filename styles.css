@@ -1671,6 +1671,9 @@ section { padding: clamp(2.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2.5rem); }
 .article__body ul { margin: 0 0 1.2rem; padding-left: 1.2rem; }
 .article__body li { margin-bottom: .45rem; }
 .article__body strong { color: var(--blue-ink); }
+.article__figure { margin: 0 auto 1.4rem; max-width: 340px; }
+.article__figure img { width: 100%; height: auto; display: block; border-radius: var(--radius); box-shadow: var(--shadow); }
+.article__figure figcaption { margin-top: .5rem; font-size: .9rem; text-align: center; color: var(--ink); opacity: .75; }
 .article__body blockquote {
   margin: 1.4rem 0; padding: .8rem 1.2rem; border-left: 4px solid var(--red);
   background: var(--cream-2); border-radius: 0 var(--radius) var(--radius) 0;
